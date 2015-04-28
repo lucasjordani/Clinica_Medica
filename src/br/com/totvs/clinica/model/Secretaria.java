@@ -8,7 +8,6 @@ public class Secretaria {
 	private String telefone;
 	private int codLogin;
 	private int codEndereco;
-	
 		
 	public Secretaria(int codSecretaria, String nome, String rg,
 			String telefone, int codLogin, int codEndereco) {
@@ -22,6 +21,10 @@ public class Secretaria {
 
 	public Secretaria() {
 		
+	}
+	
+	public void cadastrarConsulta(){
+		System.out.println("Digite o nome do paciente");
 	}
 
 	public int getCodSecretaria() {

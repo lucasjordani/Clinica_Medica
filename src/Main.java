@@ -1,26 +1,13 @@
-import java.sql.Connection;
-import java.sql.SQLException;
-
+import br.com.totvs.clinica.model.Secretaria;
 
 
 public class Main {
 
 	public static void main(String[] args) {
-		Connection connection;
+		
+		Secretaria s1 = new Secretaria();
+		
+		s1.cadastrarConsulta();
 
-		try {
-			
-			connection = ConnectionProvider.getConnection();
-
-			Dao dao = new Dao(connection);
-
-			String text = "Hello again JDBC";
-
-			dao.save(text);
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
 	}
 }
