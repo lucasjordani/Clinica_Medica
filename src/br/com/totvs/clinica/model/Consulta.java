@@ -7,7 +7,6 @@ public class Consulta {
 	private StatusConsulta statusConsulta;
 	private int codMedico;
 	private int codPaciente;
-	public enum StatusConsulta {SemComparecimento, Agendada, Realizada;};
 	
 	public Consulta(int codConsulta, String dataHora,
 			int codMedico, int codPaciente) {
@@ -61,5 +60,5 @@ public class Consulta {
 	public void setCodPaciente(int codPaciente) {
 		this.codPaciente = codPaciente;
 	}
-	
+
 }

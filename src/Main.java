@@ -9,9 +9,7 @@ public class Main {
 		Connection connection;
 
 		try {
-
-
-
+			
 			connection = ConnectionProvider.getConnection();
 
 			Dao dao = new Dao(connection);
@@ -19,8 +17,6 @@ public class Main {
 			String text = "Hello again JDBC";
 
 			dao.save(text);
-
-
 
 		} catch (SQLException e) {
 

@@ -21,9 +21,6 @@ public class Dao {
 		String sql = "INSERT INTO test_table (text) VALUES (?)";
 		statement  = con.prepareStatement(sql);
 		
-		
-		
-		
 		statement.setString(1, text);
 		statement.execute();
 		
