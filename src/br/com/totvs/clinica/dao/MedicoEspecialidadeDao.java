@@ -43,7 +43,7 @@ public class MedicoEspecialidadeDao implements Dao<MedicoEspecialidade> {
 
 	@Override
 	public MedicoEspecialidade getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_paciente, nome, telefone, data_nascimento, cod_plano_saude, cod_endereco FROM paciente WHERE "+id+" = cod_paciente";
+		String sql = "SELECT cod_medico, cod_especialidade FROM medico_especialidade WHERE "+id+" = cod_paciente";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
