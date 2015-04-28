@@ -55,7 +55,7 @@ public class PlanoSaudeDao implements Dao<PlanoSaude>{
 	}
 
 	public void inserir(PlanoSaude planoSaude) throws SQLException {
-		String sql = "INSERT INTO plano_saude (plano_saude) VALUES (?)";
+		String sql = "INSERT INTO PLANO_SAUDE (plano_saude) VALUES (?)";
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		

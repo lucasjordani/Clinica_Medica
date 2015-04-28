@@ -46,7 +46,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 	}
 
 	public void inserir(LoginSenha loginSenha) throws SQLException {
-		String sql = "INSERT INTO login_senha (usuario, senha, nivel) VALUES (?,?,?)";
+		String sql = "INSERT INTO LOGIN_SENHA (usuario, senha, nivel) VALUES (?,?,?)";
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		
