@@ -16,7 +16,7 @@ public class Main {
 
 			String text = "Hello again JDBC";
 
-			dao.save(text);
+			//dao.save(text);
 
 		} catch (SQLException e) {
 
