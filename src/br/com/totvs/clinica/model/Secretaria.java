@@ -22,10 +22,6 @@ public class Secretaria {
 	public Secretaria() {
 		
 	}
-	
-	public void cadastrarConsulta(){
-		System.out.println("Digite o nome do paciente");
-	}
 
 	public int getCodSecretaria() {
 		return codSecretaria;

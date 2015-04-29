@@ -17,6 +17,11 @@ public class LoginSenha {
 	public LoginSenha() {
 		
 	}
+	
+	public int validaLogin(String login, String senha){
+		
+		return codLogin;
+	}
 
 	public int getCodLogin() {
 		return codLogin;

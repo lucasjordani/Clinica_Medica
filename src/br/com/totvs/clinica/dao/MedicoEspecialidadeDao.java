@@ -43,37 +43,38 @@ public class MedicoEspecialidadeDao implements Dao<MedicoEspecialidade> {
 
 	@Override
 	public MedicoEspecialidade getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_medico, cod_especialidade FROM medico_especialidade WHERE "+id+" = cod_paciente";
-		PreparedStatement statement = conexao.prepareStatement(sql);
-
-		ResultSet result = statement.executeQuery();
-
-		MedicoEspecialidade paciente = new Paciente();
-		while(result.next()){
-			paciente.setCodPaciente(result.getInt("cod_paciente"));
-			paciente.setNome(result.getString("nome"));
-			paciente.setTelefone(result.getString("telefone"));
-			paciente.setCodPlano(result.getInt("cod_plano_saude"));
-			paciente.setCodEndereco(result.getInt("cod_endereco"));
-		}
-		return paciente;
+//		String sql = "SELECT cod_medico, cod_especialidade FROM medico_especialidade WHERE "+id+" = cod_paciente";
+//		PreparedStatement statement = conexao.prepareStatement(sql);
+//
+//		ResultSet result = statement.executeQuery();
+//
+//		MedicoEspecialidade paciente = new Paciente();
+//		while(result.next()){
+//			paciente.setCodPaciente(result.getInt("cod_paciente"));
+//			paciente.setNome(result.getString("nome"));
+//			paciente.setTelefone(result.getString("telefone"));
+//			paciente.setCodPlano(result.getInt("cod_plano_saude"));
+//			paciente.setCodEndereco(result.getInt("cod_endereco"));
+//		}
+//		return paciente;
+		return null;
 	}
 
 	@Override
 	public void inserir(MedicoEspecialidade paciente) throws SQLException {
-		
-		String sql = " INSERT INTO PACIENTE (nome, telefone, data_nascimento, cod_plano_saude, cod_endereco) "
-				   + " VALUES (?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = conexao.prepareStatement(sql);
-
-		statement.setString(1, paciente.getNome());
-		statement.setString(2, paciente.getTelefone());
-		statement.setString(3, paciente.getDataNascimento());
-		statement.setInt(4, paciente.getCodPlano());
-		statement.setInt(5, paciente.getCodEndereco());
-
-		statement.execute();
+//		
+//		String sql = " INSERT INTO PACIENTE (nome, telefone, data_nascimento, cod_plano_saude, cod_endereco) "
+//				   + " VALUES (?, ?, ?, ?, ?)";
+//
+//		PreparedStatement statement = conexao.prepareStatement(sql);
+//
+//		statement.setString(1, paciente.getNome());
+//		statement.setString(2, paciente.getTelefone());
+//		statement.setString(3, paciente.getDataNascimento());
+//		statement.setInt(4, paciente.getCodPlano());
+//		statement.setInt(5, paciente.getCodEndereco());
+//
+//		statement.execute();
 
 	}
 

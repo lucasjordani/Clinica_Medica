@@ -67,9 +67,9 @@ public class SecretariaDao implements Dao<Secretaria>{
 	public void inserir(Secretaria secretaria) throws SQLException {
 		
 		String sql = " INSERT INTO SECRETARIA (nome, rg, "
-				   + "                     telefone, celular, cod_login, "
+				   + "                     telefone, cod_login, "
 				   + "                     cod_endereco) "
-				   + " VALUES  (?, ?, ?, ?, ?, ?)";
+				   + " VALUES  (?, ?, ?, ?, ?)";
 		
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
