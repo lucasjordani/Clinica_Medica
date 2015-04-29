@@ -7,16 +7,16 @@ public class Secretaria {
 	private String rg;
 	private String telefone;
 	private int codLogin;
-	private int codEndereco;
+	private Endereco endereco;
 		
 	public Secretaria(int codSecretaria, String nome, String rg,
-			String telefone, int codLogin, int codEndereco) {
+			String telefone, int codLogin, Endereco endereco) {
 		this.codSecretaria = codSecretaria;
 		this.nome = nome;
 		this.rg = rg;
 		this.telefone = telefone;
 		this.codLogin = codLogin;
-		this.codEndereco = codEndereco;
+		this.endereco = endereco;
 	}
 
 	public Secretaria() {
@@ -63,12 +63,12 @@ public class Secretaria {
 		this.codLogin = codLogin;
 	}
 
-	public int getCodEndereco() {
-		return codEndereco;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setCodEndereco(int codEndereco) {
-		this.codEndereco = codEndereco;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 		

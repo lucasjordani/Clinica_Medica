@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.Secretaria;
 
 public class SecretariaDao implements Dao<Secretaria>{
@@ -18,7 +19,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 
 	@Override
 	public List<Secretaria> getTodos() throws SQLException {
-		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, cod_endereco FROM secretaria";
+		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, endereco FROM secretaria";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -34,7 +35,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 			secretaria.setRg(result.getString("rg"));
 			secretaria.setTelefone(result.getString("telefone"));
 			secretaria.setCodLogin(result.getInt("cod_login"));
-			secretaria.setCodEndereco(result.getInt("cod_endereco"));
+			secretaria.setEndereco((Endereco) result.getObject("endereco"));
 
 			secretarias.add(secretaria);
 		}
@@ -46,7 +47,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 
 	@Override
 	public Secretaria getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, cod_endereco FROM secretaria WHERE "+id+" = cod_secretaria";
+		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, endereco FROM secretaria WHERE "+id+" = cod_secretaria";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
@@ -58,7 +59,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 			secretaria.setRg(result.getString("rg"));
 			secretaria.setTelefone(result.getString("telefone"));
 			secretaria.setCodLogin(result.getInt("cod_login"));
-			secretaria.setCodEndereco(result.getInt("cod_endereco"));
+			secretaria.setEndereco((Endereco) result.getObject("endereco"));
 		}
 		return secretaria;
 	}
@@ -68,7 +69,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 		
 		String sql = " INSERT INTO SECRETARIA (nome, rg, "
 				   + "                     telefone, cod_login, "
-				   + "                     cod_endereco) "
+				   + "                     endereco) "
 				   + " VALUES  (?, ?, ?, ?, ?)";
 		
 
@@ -78,7 +79,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 		statement.setString(2, secretaria.getRg());
 		statement.setString(3, secretaria.getTelefone());
 		statement.setInt(4, secretaria.getCodLogin());
-		statement.setInt(5, secretaria.getCodEndereco());
+		statement.setObject(5, secretaria.getEndereco());
 
 		statement.execute();
 

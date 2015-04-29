@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.Medico;
 
 public class MedicoDao implements Dao<Medico> {
@@ -19,7 +20,7 @@ public class MedicoDao implements Dao<Medico> {
 
 	@Override
 	public List<Medico> getTodos() throws SQLException {
-		String sql = "SELECT cod_medico, nome, rg, telefone, celular, cod_login, cod_endereco FROM medico";
+		String sql = "SELECT cod_medico, nome, rg, telefone, celular, cod_login, endereco FROM medico";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -35,7 +36,7 @@ public class MedicoDao implements Dao<Medico> {
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
 			medico.setCodLogin(result.getInt("cod_login"));
-			medico.setCodEndereco(result.getInt("cod_endereco"));
+			medico.setEndereco((Endereco) result.getObject("endereco"));
 
 			medicos.add(medico);
 		}
@@ -47,7 +48,7 @@ public class MedicoDao implements Dao<Medico> {
 
 	@Override
 	public Medico getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_medico, nome, rg, telefone, celular, cod_login, cod_endereco FROM medico WHERE "+id+" = cod_medico";
+		String sql = "SELECT cod_medico, nome, rg, telefone, celular, cod_login, endereco FROM medico WHERE "+id+" = cod_medico";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
@@ -59,7 +60,7 @@ public class MedicoDao implements Dao<Medico> {
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
 			medico.setCodLogin(result.getInt("cod_login"));
-			medico.setCodEndereco(result.getInt("cod_endereco"));
+			medico.setEndereco((Endereco) result.getObject("endereco"));
 		}
 		return medico;
 	}
@@ -69,7 +70,7 @@ public class MedicoDao implements Dao<Medico> {
 		
 		String sql = " INSERT INTO MEDICO (nome, rg, "
 				   + "                     telefone, cod_login, "
-				   + "                     cod_endereco) "
+				   + "                     endereco) "
 				   + " VALUES (?, ?, ?, ?, ?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
@@ -78,7 +79,7 @@ public class MedicoDao implements Dao<Medico> {
 		statement.setString(2, medico.getRg());
 		statement.setString(3, medico.getTelefone());
 		statement.setInt(4, medico.getCodLogin());
-		statement.setInt(5, medico.getCodEndereco());
+		statement.setObject(5, medico.getEndereco());
 
 		statement.execute();
 

@@ -7,17 +7,16 @@ public class Administrador {
 	private String rg;
 	private String telefone;
 	private int codLogin;
-	private int codEndereco;
-	
+	private Endereco endereco;
 		
 	public Administrador(int codAdministrador, String nome, String rg,
-			String telefone, int codLogin, int codEndereco) {
+			String telefone, int codLogin, Endereco endereco) {
 		this.codAdministrador = codAdministrador;
 		this.nome = nome;
 		this.rg = rg;
 		this.telefone = telefone;
 		this.codLogin = codLogin;
-		this.codEndereco = codEndereco;
+		this.endereco = endereco;
 	}
 
 	public Administrador() {
@@ -64,13 +63,12 @@ public class Administrador {
 		this.codLogin = codLogin;
 	}
 
-	public int getCodEndereco() {
-		return codEndereco;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setCodEndereco(int codEndereco) {
-		this.codEndereco = codEndereco;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
-
 		
 }

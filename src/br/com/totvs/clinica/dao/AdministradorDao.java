@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.totvs.clinica.model.Administrador;
+import br.com.totvs.clinica.model.Endereco;
 
 public class AdministradorDao implements Dao<Administrador> {
 	
@@ -19,7 +20,7 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	@Override
 	public List<Administrador> getTodos() throws SQLException {
-		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, cod_endereco FROM administrador";
+		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, endereco FROM administrador";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -35,7 +36,7 @@ public class AdministradorDao implements Dao<Administrador> {
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
 			administrador.setCodLogin(result.getInt("cod_login"));
-			administrador.setCodEndereco(result.getInt("cod_endereco"));
+			administrador.setEndereco((Endereco) result.getObject("endereco"));
 
 			administradores.add(administrador);
 		}
@@ -47,7 +48,7 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	@Override
 	public Administrador getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, cod_endereco FROM administrador WHERE "+id+" = cod_administrador";
+		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, endereco FROM administrador WHERE "+id+" = cod_administrador";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
@@ -59,7 +60,7 @@ public class AdministradorDao implements Dao<Administrador> {
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
 			administrador.setCodLogin(result.getInt("cod_login"));
-			administrador.setCodEndereco(result.getInt("cod_endereco"));
+			administrador.setEndereco((Endereco) result.getObject("endereco"));
 		}
 		return administrador;
 	}
@@ -69,7 +70,7 @@ public class AdministradorDao implements Dao<Administrador> {
 		
 		String sql = " INSERT INTO ADMINISTRADOR (nome, rg, "
 				   + "                     telefone, cod_login, "
-				   + "                     cod_endereco) "
+				   + "                     endereco) "
 				   + " VALUES (?, ?, ?, ?, ?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
@@ -78,7 +79,7 @@ public class AdministradorDao implements Dao<Administrador> {
 		statement.setString(2, administrador.getRg());
 		statement.setString(3, administrador.getTelefone());
 		statement.setInt(4, administrador.getCodLogin());
-		statement.setInt(5, administrador.getCodEndereco());
+		statement.setObject(5, administrador.getEndereco());
 
 		statement.execute();
 

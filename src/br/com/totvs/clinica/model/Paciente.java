@@ -7,17 +7,16 @@ public class Paciente {
 	private String telefone;
 	private String dataNascimento;
 	private int codPlano;
-	private int codEndereco;
-		
+	private Endereco endereco;
 		
 	public Paciente(int codPaciente, String nome, String telefone,
-			String dataNascimento, int codPlano, int codEndereco) {
+			String dataNascimento, int codPlano, Endereco endereco) {
 		this.codPaciente = codPaciente;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.codPlano = codPlano;
-		this.codEndereco = codEndereco;
+		this.endereco = endereco;
 	}
 
 	public Paciente() {
@@ -64,12 +63,12 @@ public class Paciente {
 		this.codPlano = codPlano;
 	}
 
-	public int getCodEndereco() {
-		return codEndereco;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setCodEndereco(int codEndereco) {
-		this.codEndereco = codEndereco;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 		
