@@ -10,9 +10,15 @@ import br.com.totvs.clinica.model.LoginSenha;
 public class Main {
 
 	public static void iniciaAdmin(){
-		LoginSenha adminLogin = new LoginSenha(1, "admin", "1234", 1);
-		
-		Administrador admin = new Administrador(1, "administrador", null, null, 1, 0);
+		LoginSenha adminLogin = new LoginSenha();
+		adminLogin.setUsuario("admin");
+		adminLogin.setSenha("1234");
+		Endereco endereco = new Endereco("Av. Ipiranga", 6681, "Partenon", "Porto Alegre");
+		Administrador admin = new Administrador();
+		admin.setNome(adminLogin.getUsuario());
+		admin.setRg("0123456789");
+		admin.setTelefone("00000000");
+		admin.setEndereco(endereco);
 		
 		LoginSenhaDao loginDao;
 		
@@ -25,13 +31,7 @@ public class Main {
 	}
 	
 	public static void main(String[] args) throws SQLException {
-		
-		Administrador admin = new Administrador();
-		admin.setNome("administrador");
-		Endereco endereco = new Endereco();
-		admin.setCodEndereco(endereco.getCodEndereco());
-		AdministradorDao adminDao = new AdministradorDao();
-		adminDao.inserir(admin);
+
 
 //		LoginSenhaDao usuario;
 //		LoginSenha loginSenha;

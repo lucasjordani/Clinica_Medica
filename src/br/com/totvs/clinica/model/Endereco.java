@@ -2,31 +2,20 @@ package br.com.totvs.clinica.model;
 
 public class Endereco {
 	
-	private int codEndereco;
 	private String rua;
 	private int numero;
 	private String bairro;
 	private String cidade;	
 	
-	public Endereco(int codEndereco, String rua, int numero, String bairro, String cidade) {
-		this.codEndereco = codEndereco;
+	public Endereco(String rua, int numero, String bairro, String cidade) {
 		this.rua = rua;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
-		
 	}
 
 	public Endereco() {
 		
-	}
-
-	public int getCodEndereco() {
-		return codEndereco;
-	}
-
-	public void setCodEndereco(int codEndereco) {
-		this.codEndereco = codEndereco;
 	}
 
 	public String getRua() {
@@ -60,7 +49,5 @@ public class Endereco {
 	public void setCdidade(String cidade) {
 		this.cidade = cidade;
 	}
-
-	
 
 }
