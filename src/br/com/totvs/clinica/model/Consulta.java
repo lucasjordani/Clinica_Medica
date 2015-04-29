@@ -3,20 +3,27 @@ package br.com.totvs.clinica.model;
 public class Consulta {
 	
 	private int codConsulta;
+	private int codPaciente;
+	private int codMedico;
+	private String planoSaude;
 	private String dataHora;
 	private StatusConsulta statusConsulta;
-	private int codMedico;
-	private int codPaciente;
+	private String observacao;
 	
-	public Consulta(int codConsulta, String dataHora,
-			int codMedico, int codPaciente) {
+		
+	public Consulta(int codConsulta, int codPaciente, int codMedico,
+			String planoSaude, String dataHora, StatusConsulta statusConsulta,
+			String observacao) {
+		super();
 		this.codConsulta = codConsulta;
-		this.dataHora = dataHora;
-		this.codMedico = codMedico;
 		this.codPaciente = codPaciente;
-		this.statusConsulta = StatusConsulta.Agendada;
+		this.codMedico = codMedico;
+		this.planoSaude = planoSaude;
+		this.dataHora = dataHora;
+		this.statusConsulta = statusConsulta;
+		this.observacao = observacao;
 	}
-	
+
 	public Consulta() {
 				
 	}
@@ -27,6 +34,30 @@ public class Consulta {
 
 	public void setCodConsulta(int codConsulta) {
 		this.codConsulta = codConsulta;
+	}
+
+	public int getCodPaciente() {
+		return codPaciente;
+	}
+
+	public void setCodPaciente(int codPaciente) {
+		this.codPaciente = codPaciente;
+	}
+
+	public int getCodMedico() {
+		return codMedico;
+	}
+
+	public void setCodMedico(int codMedico) {
+		this.codMedico = codMedico;
+	}
+
+	public String getPlanoSaude() {
+		return planoSaude;
+	}
+
+	public void setPlanoSaude(String planoSaude) {
+		this.planoSaude = planoSaude;
 	}
 
 	public String getDataHora() {
@@ -45,20 +76,13 @@ public class Consulta {
 		this.statusConsulta = statusConsulta;
 	}
 
-	public int getCodMedico() {
-		return codMedico;
+	public String getObservacao() {
+		return observacao;
 	}
 
-	public void setCodMedico(int codMedico) {
-		this.codMedico = codMedico;
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
-	public int getCodPaciente() {
-		return codPaciente;
-	}
-
-	public void setCodPaciente(int codPaciente) {
-		this.codPaciente = codPaciente;
-	}
-
+	
 }
