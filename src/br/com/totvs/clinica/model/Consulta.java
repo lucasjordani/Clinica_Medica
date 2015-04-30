@@ -3,29 +3,25 @@ package br.com.totvs.clinica.model;
 public class Consulta {
 	
 	private int codConsulta;
-	private int codPaciente;
-	private int codMedico;
+	private String paciente;
+	private String medico;
 	private String planoSaude;
 	private String dataHora;
 	private StatusConsulta statusConsulta;
 	private String observacao;
 	
-		
-	public Consulta(int codConsulta, int codPaciente, int codMedico,
+	public Consulta() {}
+	
+	public Consulta(int codConsulta, String paciente, String medico,
 			String planoSaude, String dataHora, StatusConsulta statusConsulta,
 			String observacao) {
-		super();
 		this.codConsulta = codConsulta;
-		this.codPaciente = codPaciente;
-		this.codMedico = codMedico;
+		this.paciente = paciente;
+		this.medico = medico;
 		this.planoSaude = planoSaude;
 		this.dataHora = dataHora;
 		this.statusConsulta = statusConsulta;
 		this.observacao = observacao;
-	}
-
-	public Consulta() {
-				
 	}
 
 	public int getCodConsulta() {
@@ -35,21 +31,21 @@ public class Consulta {
 	public void setCodConsulta(int codConsulta) {
 		this.codConsulta = codConsulta;
 	}
-
-	public int getCodPaciente() {
-		return codPaciente;
+	
+	public String getPaciente() {
+		return paciente;
 	}
 
-	public void setCodPaciente(int codPaciente) {
-		this.codPaciente = codPaciente;
+	public void setPaciente(String paciente) {
+		this.paciente = paciente;
 	}
 
-	public int getCodMedico() {
-		return codMedico;
+	public String getMedico() {
+		return medico;
 	}
 
-	public void setCodMedico(int codMedico) {
-		this.codMedico = codMedico;
+	public void setMedico(String medico) {
+		this.medico = medico;
 	}
 
 	public String getPlanoSaude() {

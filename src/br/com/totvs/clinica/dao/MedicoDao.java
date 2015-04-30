@@ -20,8 +20,8 @@ public class MedicoDao implements Dao<Medico> {
 
 	@Override
 	public List<Medico> getTodos() throws SQLException {
-		String sql = "SELECT cod_medico, nome, rg, telefone, logradouro, bairro, cidade, "
-				+ "cod_login FROM medico";
+		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade,"
+				+ "especialidades FROM medico";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -32,15 +32,15 @@ public class MedicoDao implements Dao<Medico> {
 		while (result.next()) {
 			Medico medico = new Medico();
 
-			medico.setCodMedico(result.getInt("cod_medico"));
 			medico.setNome(result.getString("nome"));
+			medico.setLogin(result.getString("login"));
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
 			endereco.setLogradouro(result.getString("logradouro"));
 			endereco.setBairro(result.getString("bairro"));
 			endereco.setCidade(result.getString("cidade"));
 			medico.setEndereco(endereco);
-			medico.setCodLogin(result.getInt("cod_login"));
+			medico.setEspecialidades(result.getString("especialidades"));
 
 			medicos.add(medico);
 		}
@@ -51,9 +51,9 @@ public class MedicoDao implements Dao<Medico> {
 	}
 
 	@Override
-	public Medico getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_medico, nome, rg, telefone, logradouro, bairro, cidade, "
-				+ "cod_login FROM medico WHERE "+id+" = cod_medico";
+	public Medico getPorLogin(String login) throws SQLException {
+		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade,"
+				+ "especialidades FROM medico WHERE "+login+" = login";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
@@ -61,15 +61,15 @@ public class MedicoDao implements Dao<Medico> {
 		Medico medico = new Medico();
 		Endereco endereco = new Endereco();
 		while(result.next()){
-			medico.setCodMedico(result.getInt("cod_medico"));
 			medico.setNome(result.getString("nome"));
+			medico.setLogin(result.getString("login"));
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
 			endereco.setLogradouro(result.getString("logradouro"));
 			endereco.setBairro(result.getString("bairro"));
 			endereco.setCidade(result.getString("cidade"));
 			medico.setEndereco(endereco);
-			medico.setCodLogin(result.getInt("cod_login"));
+			medico.setEspecialidades(result.getString("especialidades"));
 		}
 		return medico;
 	}
@@ -77,20 +77,21 @@ public class MedicoDao implements Dao<Medico> {
 	@Override
 	public void inserir(Medico medico) throws SQLException {
 		
-		String sql = " INSERT INTO MEDICO (nome, rg, "
+		String sql = " INSERT INTO MEDICO (nome, login, rg"
 				   + "                     telefone, logradouro, bairro,"
-				   + "                     cidade, cod_login) "
+				   + "                     cidade, especialidades) "
 				   + " VALUES (?,?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		statement.setString(1, medico.getNome());
-		statement.setString(2, medico.getRg());
-		statement.setString(3, medico.getTelefone());
-		statement.setString(4, medico.getEndereco().getLogradouro());
-		statement.setString(5, medico.getEndereco().getBairro());
-		statement.setString(6, medico.getEndereco().getCidade());
-		statement.setInt(7, medico.getCodLogin());
+		statement.setString(2, medico.getLogin());
+		statement.setString(3, medico.getRg());
+		statement.setString(4, medico.getTelefone());
+		statement.setString(5, medico.getEndereco().getLogradouro());
+		statement.setString(6, medico.getEndereco().getBairro());
+		statement.setString(7, medico.getEndereco().getCidade());
+		statement.setString(8, medico.getEspecialidades());
 
 		statement.execute();
 

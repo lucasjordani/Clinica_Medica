@@ -20,7 +20,8 @@ public class ConsultaDao implements Dao<Consulta>{
 
 		@Override
 		public List<Consulta> getTodos() throws SQLException {
-			String sql = "SELECT cod_consulta, cod_paciente, cod_medico, plano_saude, data_hora, status_consulta, observacao FROM consulta";
+			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao FROM consulta";
 
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -32,8 +33,8 @@ public class ConsultaDao implements Dao<Consulta>{
 				Consulta consulta = new Consulta();
 
 				consulta.setCodConsulta(result.getInt("cod_consulta"));
-				consulta.setCodPaciente(result.getInt("cod_paciente"));
-				consulta.setCodMedico(result.getInt("cod_medico"));
+				consulta.setPaciente(result.getString("paciente"));
+				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
@@ -41,15 +42,19 @@ public class ConsultaDao implements Dao<Consulta>{
 				
 				consultas.add(consulta);
 			}
-
 			result.close();
 
 			return consultas;
 		}
-
+		
 		@Override
+		public Consulta getPorLogin(String login) throws SQLException {
+			return null;
+		}
+
 		public Consulta getPorId(int id) throws SQLException {
-			String sql = "SELECT cod_consulta, cod_paciente, cod_medico, plano_saude, data_hora, status_consulta, observacao FROM consulta WHERE "+id+" = cod_consulta";
+			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao FROM consulta WHERE "+id+" = cod_consulta";
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
@@ -57,8 +62,8 @@ public class ConsultaDao implements Dao<Consulta>{
 			Consulta consulta = new Consulta();
 			while(result.next()){
 				consulta.setCodConsulta(result.getInt("cod_consulta"));
-				consulta.setCodPaciente(result.getInt("cod_paciente"));
-				consulta.setCodMedico(result.getInt("cod_medico"));
+				consulta.setPaciente(result.getString("paciente"));
+				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
@@ -70,18 +75,39 @@ public class ConsultaDao implements Dao<Consulta>{
 		@Override
 		public void inserir(Consulta consulta) throws SQLException {
 			
-			String sql = " INSERT INTO CONSULTA (cod_paciente, cod_medico, plano_saude, data_hora, status_consulta, observacao)"
+			String sql = " INSERT INTO CONSULTA (cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao"
 					   + " VALUES (?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
-			statement.setInt(1, consulta.getCodPaciente());
-			statement.setInt(2, consulta.getCodMedico());
+			statement.setString(1, consulta.getPaciente());
+			statement.setString(2, consulta.getMedico());
 			statement.setString(3, consulta.getPlanoSaude());
 			statement.setString(4, consulta.getDataHora());
 			statement.setObject(5, consulta.getStatusConsulta());
 			statement.setString(6, consulta.getObservacao());
 			statement.execute();
 
+		}
+		
+		public Consulta getPorPaciente (String paciente) throws SQLException {
+			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao FROM consulta WHERE "+paciente+" = paciente";
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			ResultSet result = statement.executeQuery();
+
+			Consulta consulta = new Consulta();
+			while(result.next()){
+				consulta.setCodConsulta(result.getInt("cod_consulta"));
+				consulta.setPaciente(result.getString("paciente"));
+				consulta.setMedico(result.getString("medico"));
+				consulta.setPlanoSaude(result.getString("plano_saude"));
+				consulta.setDataHora(result.getString("data_hora"));
+				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setObservacao(result.getString("observacao"));
+			}
+			return consulta;
 		}
 }

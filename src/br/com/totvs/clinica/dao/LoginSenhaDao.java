@@ -17,8 +17,9 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		this.conexao = conexao;		
 	}
 
+	@Override
 	public List<LoginSenha> getTodos() throws SQLException {		
-		String sql = "SELECT cod_login, usuario, senha, nivel FROM login_senha";
+		String sql = "SELECT login, senha, nivel FROM login_senha";
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		
@@ -28,10 +29,10 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		
 		while(result.next()){
 			LoginSenha loginSenha = new LoginSenha();
-
-			loginSenha.setCodLogin(result.getInt("cod_login"));
-			loginSenha.setUsuario(result.getString("usuario"));
+			
+			loginSenha.setLogin(result.getString("login"));
 			loginSenha.setSenha(result.getString("senha"));
+			loginSenha.setNivel(result.getInt("nivel"));
 			
 			loginsSenhas.add(loginSenha);
 		}
@@ -42,25 +43,8 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 	}
 	
 	@Override
-	public LoginSenha getPorId(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}	
-
-	public void inserir(LoginSenha loginSenha) throws SQLException {
-		String sql = "INSERT INTO LOGIN_SENHA (usuario, senha, nivel) VALUES (?,?,?)";
-		
-		PreparedStatement statement = conexao.prepareStatement(sql);
-		
-		statement.setString(1, loginSenha.getUsuario());
-		statement.setString(2, loginSenha.getSenha());
-		statement.setInt(3, loginSenha.getNivel());
-		
-		statement.execute();		
-	}
-
-	public LoginSenha getPorUsuario(String usuario) throws SQLException {
-		String sql = "SELECT cod_login, usuario, senha, nivel FROM login_senha WHERE "+usuario+" = usuario";
+	public LoginSenha getPorLogin(String login) throws SQLException {
+		String sql = "SELECT login, senha, nivel FROM login_senha WHERE "+login+" = login";
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -68,12 +52,24 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		
 		LoginSenha loginSenha = new LoginSenha();
 		while(result.next()){
-			loginSenha.setCodLogin(result.getInt("cod_login"));
-			loginSenha.setUsuario(result.getString("usuario"));
+			loginSenha.setLogin(result.getString("login"));
 			loginSenha.setSenha(result.getString("senha"));
 			loginSenha.setNivel(result.getInt("nivel"));
 		}
 		return loginSenha;
+	}
+
+	@Override
+	public void inserir(LoginSenha loginSenha) throws SQLException {
+		String sql = "INSERT INTO LOGIN_SENHA (login, senha, nivel) VALUES (?,?,?)";
+		
+		PreparedStatement statement = conexao.prepareStatement(sql);
+		
+		statement.setString(1, loginSenha.getLogin());
+		statement.setString(2, loginSenha.getSenha());
+		statement.setInt(3, loginSenha.getNivel());
+		
+		statement.execute();		
 	}
 
 }

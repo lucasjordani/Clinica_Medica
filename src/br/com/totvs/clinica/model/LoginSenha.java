@@ -2,41 +2,24 @@ package br.com.totvs.clinica.model;
 
 public class LoginSenha {
 	
-	private int codLogin;
-	private String usuario;
+	private String login;
 	private String senha;
 	private int nivel;
 	
-	public LoginSenha(int codLogin, String usuario, String senha, int nivel) {
-		this.codLogin = codLogin;
-		this.usuario = usuario;
+	public LoginSenha() {}
+	
+	public LoginSenha(int codLogin, String login, String senha, int nivel) {
+		this.login = login;
 		this.senha = senha;
 		this.nivel = nivel;
 	}
-	
-	public LoginSenha() {
-		
-	}
-	
-	public int validaLogin(String login, String senha){
-		
-		return codLogin;
+
+	public String getLogin() {
+		return login;
 	}
 
-	public int getCodLogin() {
-		return codLogin;
-	}
-
-	public void setCodLogin(int codLogin) {
-		this.codLogin = codLogin;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getSenha() {

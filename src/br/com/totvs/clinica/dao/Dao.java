@@ -7,7 +7,7 @@ public interface Dao<T> {
 
 	public List<T> getTodos() throws SQLException;
 
-	public T getPorId(int id) throws SQLException;
+	public T getPorLogin(String login) throws SQLException;
 
 	public void inserir(T t) throws SQLException;
 

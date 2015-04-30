@@ -2,23 +2,21 @@ package br.com.totvs.clinica.model;
 
 public class Paciente {
 	
-	private int codPaciente;
+	private int codPaciente; 
 	private String nome;
 	private String telefone;
 	private Endereco endereco;
 	private String dataNascimento;
+	
+	public Paciente() {}
 		
-	public Paciente(int codPaciente, String nome, String telefone, Endereco endereco,
-			String dataNascimento) {
+	public Paciente(int codPaciente, String nome, String telefone, 
+			Endereco endereco, String dataNascimento) {
 		this.codPaciente = codPaciente;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.endereco = endereco;
 		this.dataNascimento = dataNascimento;
-	}
-
-	public Paciente() {
-		
 	}
 
 	public int getCodPaciente() {
