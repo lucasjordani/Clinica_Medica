@@ -5,18 +5,16 @@ public class Paciente {
 	private int codPaciente;
 	private String nome;
 	private String telefone;
-	private String dataNascimento;
-	private int codPlano;
 	private Endereco endereco;
+	private String dataNascimento;
 		
-	public Paciente(int codPaciente, String nome, String telefone,
-			String dataNascimento, int codPlano, Endereco endereco) {
+	public Paciente(int codPaciente, String nome, String telefone, Endereco endereco,
+			String dataNascimento) {
 		this.codPaciente = codPaciente;
 		this.nome = nome;
 		this.telefone = telefone;
-		this.dataNascimento = dataNascimento;
-		this.codPlano = codPlano;
 		this.endereco = endereco;
+		this.dataNascimento = dataNascimento;
 	}
 
 	public Paciente() {
@@ -46,23 +44,7 @@ public class Paciente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	public String getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public int getCodPlano() {
-		return codPlano;
-	}
-
-	public void setCodPlano(int codPlano) {
-		this.codPlano = codPlano;
-	}
-
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -71,5 +53,12 @@ public class Paciente {
 		this.endereco = endereco;
 	}
 
-		
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	
 }

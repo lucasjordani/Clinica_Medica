@@ -6,17 +6,17 @@ public class Secretaria {
 	private String nome;
 	private String rg;
 	private String telefone;
-	private int codLogin;
 	private Endereco endereco;
+	private int codLogin;
 		
 	public Secretaria(int codSecretaria, String nome, String rg,
-			String telefone, int codLogin, Endereco endereco) {
+			String telefone, Endereco endereco, int codLogin) {
 		this.codSecretaria = codSecretaria;
 		this.nome = nome;
 		this.rg = rg;
 		this.telefone = telefone;
-		this.codLogin = codLogin;
 		this.endereco = endereco;
+		this.codLogin = codLogin;
 	}
 
 	public Secretaria() {
@@ -54,15 +54,7 @@ public class Secretaria {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	public int getCodLogin() {
-		return codLogin;
-	}
-
-	public void setCodLogin(int codLogin) {
-		this.codLogin = codLogin;
-	}
-
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -71,5 +63,12 @@ public class Secretaria {
 		this.endereco = endereco;
 	}
 
+	public int getCodLogin() {
+		return codLogin;
+	}
+
+	public void setCodLogin(int codLogin) {
+		this.codLogin = codLogin;
+	}
 		
 }

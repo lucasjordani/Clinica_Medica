@@ -11,13 +11,13 @@ public class Medico {
 	
 		
 	public Medico(int codMedico, String nome, String rg, String telefone,
-			int codLogin, Endereco endereco) {
+			Endereco endereco, int codLogin) {
 		this.codMedico = codMedico;
 		this.nome = nome;
 		this.rg = rg;
 		this.telefone = telefone;
-		this.codLogin = codLogin;
 		this.endereco = endereco;
+		this.codLogin = codLogin;
 	}
 
 	public Medico() {
@@ -55,15 +55,7 @@ public class Medico {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	public int getCodLogin() {
-		return codLogin;
-	}
-
-	public void setCodLogin(int codLogin) {
-		this.codLogin = codLogin;
-	}
-
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -72,5 +64,12 @@ public class Medico {
 		this.endereco = endereco;
 	}
 
+	public int getCodLogin() {
+		return codLogin;
+	}
+
+	public void setCodLogin(int codLogin) {
+		this.codLogin = codLogin;
+	}
 	
 }

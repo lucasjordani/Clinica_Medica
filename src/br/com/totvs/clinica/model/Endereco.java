@@ -2,14 +2,12 @@ package br.com.totvs.clinica.model;
 
 public class Endereco {
 	
-	private String rua;
-	private int numero;
+	private String logradouro;
 	private String bairro;
 	private String cidade;	
 	
-	public Endereco(String rua, int numero, String bairro, String cidade) {
-		this.rua = rua;
-		this.numero = numero;
+	public Endereco(String logradouro, String bairro, String cidade) {
+		this.logradouro = logradouro;
 		this.bairro = bairro;
 		this.cidade = cidade;
 	}
@@ -18,20 +16,12 @@ public class Endereco {
 		
 	}
 
-	public String getRua() {
-		return rua;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-	
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
 	public String getBairro() {
@@ -46,7 +36,7 @@ public class Endereco {
 		return cidade;
 	}
 
-	public void setCdidade(String cidade) {
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 

@@ -20,14 +20,15 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	@Override
 	public List<Administrador> getTodos() throws SQLException {
-		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, endereco FROM administrador";
+		String sql = "SELECT cod_administrador, nome, rg, telefone, logradouro, bairro, cidade, "
+				+ "cod_login  FROM administrador";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
 
 		List<Administrador> administradores = new ArrayList<Administrador>();
-
+		Endereco endereco = new Endereco();
 		while (result.next()) {
 			Administrador administrador = new Administrador();
 
@@ -35,8 +36,11 @@ public class AdministradorDao implements Dao<Administrador> {
 			administrador.setNome(result.getString("nome"));
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
+			endereco.setLogradouro(result.getString("logradouro"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setCidade(result.getString("cidade"));
+			administrador.setEndereco(endereco);
 			administrador.setCodLogin(result.getInt("cod_login"));
-			administrador.setEndereco((Endereco) result.getObject("endereco"));
 
 			administradores.add(administrador);
 		}
@@ -48,19 +52,25 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	@Override
 	public Administrador getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_administrador, nome, rg, telefone, celular, cod_login, endereco FROM administrador WHERE "+id+" = cod_administrador";
+		String sql = "SELECT cod_administrador, nome, rg, telefone, logradouro, bairro, cidade, "
+				+ "cod_login  FROM administrador WHERE "+id+" = cod_administrador";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
 
 		Administrador administrador = new Administrador();
+		Endereco endereco = new Endereco();
 		while(result.next()){
 			administrador.setCodAdministrador(result.getInt("cod_administrador"));
 			administrador.setNome(result.getString("nome"));
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
+			endereco.setLogradouro(result.getString("logradouro"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setCidade(result.getString("cidade"));
+			administrador.setEndereco(endereco);
 			administrador.setCodLogin(result.getInt("cod_login"));
-			administrador.setEndereco((Endereco) result.getObject("endereco"));
+			
 		}
 		return administrador;
 	}
@@ -69,17 +79,19 @@ public class AdministradorDao implements Dao<Administrador> {
 	public void inserir(Administrador administrador) throws SQLException {
 		
 		String sql = " INSERT INTO ADMINISTRADOR (nome, rg, "
-				   + "                     telefone, cod_login, "
-				   + "                     endereco) "
-				   + " VALUES (?, ?, ?, ?, ?)";
+				   + "                     telefone, logradouro, bairro,"
+				   + "                     cidade, cod_login) "
+				   + " VALUES (?,?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		statement.setString(1, administrador.getNome());
 		statement.setString(2, administrador.getRg());
 		statement.setString(3, administrador.getTelefone());
-		statement.setInt(4, administrador.getCodLogin());
-		statement.setObject(5, administrador.getEndereco());
+		statement.setString(4, administrador.getEndereco().getLogradouro());
+		statement.setString(5, administrador.getEndereco().getBairro());
+		statement.setString(6, administrador.getEndereco().getCidade());
+		statement.setInt(7, administrador.getCodLogin());
 
 		statement.execute();
 

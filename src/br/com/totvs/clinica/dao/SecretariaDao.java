@@ -19,14 +19,15 @@ public class SecretariaDao implements Dao<Secretaria>{
 
 	@Override
 	public List<Secretaria> getTodos() throws SQLException {
-		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, endereco FROM secretaria";
+		String sql = "SELECT cod_secretaria, nome, rg, telefone, logradouro, bairro, cidade, "
+				+ "cod_login FROM secretaria";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
 
 		List<Secretaria> secretarias = new ArrayList<Secretaria>();
-
+		Endereco endereco = new Endereco();
 		while (result.next()) {
 			Secretaria secretaria = new Secretaria();
 
@@ -34,8 +35,11 @@ public class SecretariaDao implements Dao<Secretaria>{
 			secretaria.setNome(result.getString("nome"));
 			secretaria.setRg(result.getString("rg"));
 			secretaria.setTelefone(result.getString("telefone"));
+			endereco.setLogradouro(result.getString("logradouro"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setCidade(result.getString("cidade"));
+			secretaria.setEndereco(endereco);
 			secretaria.setCodLogin(result.getInt("cod_login"));
-			secretaria.setEndereco((Endereco) result.getObject("endereco"));
 
 			secretarias.add(secretaria);
 		}
@@ -47,19 +51,24 @@ public class SecretariaDao implements Dao<Secretaria>{
 
 	@Override
 	public Secretaria getPorId(int id) throws SQLException {
-		String sql = "SELECT cod_secretaria, nome, rg, telefone, celular, cod_login, endereco FROM secretaria WHERE "+id+" = cod_secretaria";
+		String sql = "SELECT cod_secretaria, nome, rg, telefone, logradouro, bairro, cidade, "
+				+ "cod_login FROM secretaria WHERE "+id+" = cod_secretaria";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
 
 		Secretaria secretaria = new Secretaria();
+		Endereco endereco = new Endereco();
 		while(result.next()){
 			secretaria.setCodSecretaria(result.getInt("cod_secretaria"));
 			secretaria.setNome(result.getString("nome"));
 			secretaria.setRg(result.getString("rg"));
 			secretaria.setTelefone(result.getString("telefone"));
+			endereco.setLogradouro(result.getString("logradouro"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setCidade(result.getString("cidade"));
+			secretaria.setEndereco(endereco);
 			secretaria.setCodLogin(result.getInt("cod_login"));
-			secretaria.setEndereco((Endereco) result.getObject("endereco"));
 		}
 		return secretaria;
 	}
@@ -68,8 +77,8 @@ public class SecretariaDao implements Dao<Secretaria>{
 	public void inserir(Secretaria secretaria) throws SQLException {
 		
 		String sql = " INSERT INTO SECRETARIA (nome, rg, "
-				   + "                     telefone, cod_login, "
-				   + "                     endereco) "
+				   + "                     telefone,  logradouro, bairro, cidade,"
+				   + "                     cod_login) "
 				   + " VALUES  (?, ?, ?, ?, ?)";
 		
 
@@ -78,8 +87,10 @@ public class SecretariaDao implements Dao<Secretaria>{
 		statement.setString(1, secretaria.getNome());
 		statement.setString(2, secretaria.getRg());
 		statement.setString(3, secretaria.getTelefone());
-		statement.setInt(4, secretaria.getCodLogin());
-		statement.setObject(5, secretaria.getEndereco());
+		statement.setString(4, secretaria.getEndereco().getLogradouro());
+		statement.setString(5, secretaria.getEndereco().getBairro());
+		statement.setString(6, secretaria.getEndereco().getCidade());
+		statement.setInt(7, secretaria.getCodLogin());
 
 		statement.execute();
 

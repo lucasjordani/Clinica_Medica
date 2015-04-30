@@ -52,9 +52,9 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		
-		statement.setString(2, loginSenha.getUsuario());
-		statement.setString(3, loginSenha.getSenha());
-		statement.setInt(4, loginSenha.getNivel());
+		statement.setString(1, loginSenha.getUsuario());
+		statement.setString(2, loginSenha.getSenha());
+		statement.setInt(3, loginSenha.getNivel());
 		
 		statement.execute();		
 	}
