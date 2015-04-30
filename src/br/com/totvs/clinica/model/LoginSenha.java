@@ -8,7 +8,7 @@ public class LoginSenha {
 	
 	public LoginSenha() {}
 	
-	public LoginSenha(int codLogin, String login, String senha, int nivel) {
+	public LoginSenha(String login, String senha, int nivel) {
 		this.login = login;
 		this.senha = senha;
 		this.nivel = nivel;

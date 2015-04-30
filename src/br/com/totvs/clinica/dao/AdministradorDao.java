@@ -77,7 +77,7 @@ public class AdministradorDao implements Dao<Administrador> {
 	public void inserir(Administrador administrador) throws SQLException {
 		
 		String sql = " INSERT INTO ADMINISTRADOR (nome, login, rg, telefone, "
-				+ "								logradouro, bairro, cidade"
+				+ "								logradouro, bairro, cidade)"
 				   + " VALUES (?,?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
