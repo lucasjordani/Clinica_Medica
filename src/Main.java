@@ -50,8 +50,8 @@ public class Main {
 		System.out.println("Digite o nome do usuário: ");
 		String login = sc.next();
 		loginSenhaDao = new LoginSenhaDao();
-		loginSenha = loginSenhaDao.getPorLogin("'"+login+"'");
-		
+		loginSenha = loginSenhaDao.getPorLogin(login);
+		System.out.println(loginSenha.getLogin());
 		if (loginSenha.getLogin().equals(login))
 		{
 			System.out.println("Digite a senha: ");
