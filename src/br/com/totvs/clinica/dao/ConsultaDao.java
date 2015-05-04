@@ -53,7 +53,7 @@ public class ConsultaDao implements Dao<Consulta>{
 
 		public Consulta getPorId(int id) throws SQLException {
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
-					+ "status_consulta, observacao FROM consulta WHERE "+id+" = cod_consulta";
+					+ "status_consulta, observacao FROM consulta WHERE cod_consulta =" +id;
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();

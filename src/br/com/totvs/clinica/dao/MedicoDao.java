@@ -51,8 +51,9 @@ public class MedicoDao implements Dao<Medico> {
 
 	@Override
 	public Medico getPorLogin(String login) throws SQLException {
+		login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade,"
-				+ "especialidades FROM medico WHERE "+login+" = login";
+				+ "especialidades FROM medico WHERE login =" + login;
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();

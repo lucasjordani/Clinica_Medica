@@ -30,7 +30,7 @@ public class Administrador extends Usuario {
 				case 0:
 					return 0;
 				case 1:
-					cadastraUsuario();
+					cadastrar();
 					break;
 				case 2:
 					editaUsuario();
@@ -47,7 +47,7 @@ public class Administrador extends Usuario {
 		return 0;
 	}
 	
-	public void cadastraUsuario() {
+	public void cadastrar() {
 		boolean loop = false;
 		Scanner sc = new Scanner(System.in);
 		int op;
@@ -112,6 +112,46 @@ public class Administrador extends Usuario {
 		
 	}
 	
+	private void cadastraAministrador() {
+		Scanner sc = new Scanner(System.in);
+		Administrador adm = new Administrador();
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Cadastrar Administrador:");
+		System.out.println("Digite o nome:");
+		adm.setNome(sc.nextLine());
+		System.out.println("Digite o RG:");
+		adm.setRg(sc.next());
+		System.out.println("Digite o telefone:");
+		adm.setTelefone(sc.next());
+		
+		adm.setEndereco(cadastraEndereco());
+		cadastraLoginSenha(loginSenha, adm);
+		loginSenha.setNivel(1);
+		boolean op = false;
+		try{
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenhaDao.inserir(loginSenha);
+			AdministradorDao admDao = new AdministradorDao();
+			admDao.inserir(adm);
+			op = true;
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		if (op == true)
+			System.out.println("Usuário cadastrado com sucesso!");
+		else
+			System.out.println("Usuário não cadastrado!");
+		return;
+	}
+
+	private void cadastraMedico() {
+		
+	}
+	
+	private void cadastraSecretaria() {
+		
+	}
+	
 	private void editaAdministrador(LoginSenha loginSenha) {
 		Administrador adm = new Administrador();
 		AdministradorDao admDao;
@@ -167,58 +207,6 @@ public class Administrador extends Usuario {
 	private void editaSecretaria(LoginSenha loginSenha) {
 		
 	}
-
-	private void cadastraAministrador() {
-		Scanner sc = new Scanner(System.in);
-		Administrador adm = new Administrador();
-		LoginSenha loginSenha = new LoginSenha();
-		System.out.println("Cadastrar Administrador:");
-		System.out.println("Digite o nome:");
-		adm.setNome(sc.nextLine());
-		System.out.println("Digite o RG:");
-		adm.setRg(sc.next());
-		System.out.println("Digite o telefone:");
-		adm.setTelefone(sc.next());
-		Endereco endereco = new Endereco();
-		System.out.println("Endereço:");
-		System.out.println("Digite o logradouro:");
-		sc.next();
-		endereco.setLogradouro(sc.nextLine());
-		System.out.println("Digite o bairro:");
-		endereco.setBairro(sc.nextLine());
-		System.out.println("Digite a cidade:");
-		endereco.setCidade(sc.nextLine());
-		adm.setEndereco(endereco);
-		System.out.println("Digite o login:");
-		adm.setLogin(sc.next());
-		loginSenha.setLogin(adm.getLogin());
-		System.out.println("Digite a senha:");
-		loginSenha.setSenha(sc.next());
-		loginSenha.setNivel(1);
-		boolean op = false;
-		try{
-			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
-			loginSenhaDao.inserir(loginSenha);
-			AdministradorDao admDao = new AdministradorDao();
-			admDao.inserir(adm);
-			op = true;
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		if (op == true)
-			System.out.println("Usuário cadastrado com sucesso!");
-		else
-			System.out.println("Usuário não cadastrado!");
-		return;
-	}
-
-	private void cadastraMedico() {
-		
-	}
-	
-	private void cadastraSecretaria() {
-		
-	}
 	
 	public void buscaAministrador(LoginSenha loginSenha) throws SQLException{
 		Administrador administrador = new Administrador();
@@ -251,4 +239,28 @@ public class Administrador extends Usuario {
 		System.out.println("Digite 8 para editar a senha;");
 		System.out.println("Digite 0 para voltar a tela anterior.");
 	}
+
+	private Endereco cadastraEndereco(){
+		Scanner sc = new Scanner(System.in);
+		Endereco endereco = new Endereco();
+		System.out.println("Endereço:");
+		System.out.println("Digite o logradouro:");
+		sc.next();
+		endereco.setLogradouro(sc.nextLine());
+		System.out.println("Digite o bairro:");
+		endereco.setBairro(sc.nextLine());
+		System.out.println("Digite a cidade:");
+		endereco.setCidade(sc.nextLine());
+		return endereco;
+	}
+
+	private void cadastraLoginSenha(LoginSenha loginSenha, Usuario usuario){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Digite o login:");
+		usuario.setLogin(sc.next());
+		loginSenha.setLogin(usuario.getLogin());
+		System.out.println("Digite a senha:");
+		loginSenha.setSenha(sc.next());
+	}
+
 }
