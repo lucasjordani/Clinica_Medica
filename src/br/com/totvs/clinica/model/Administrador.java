@@ -182,7 +182,7 @@ public class Administrador extends Usuario {
 		Endereco endereco = new Endereco();
 		System.out.println("Endereço:");
 		System.out.println("Digite o logradouro:");
-		endereco.setLogradouro(sc.next());
+		sc.next();
 		endereco.setLogradouro(sc.nextLine());
 		System.out.println("Digite o bairro:");
 		endereco.setBairro(sc.nextLine());
@@ -195,15 +195,21 @@ public class Administrador extends Usuario {
 		System.out.println("Digite a senha:");
 		loginSenha.setSenha(sc.next());
 		loginSenha.setNivel(1);
+		boolean op = false;
 		try{
-			AdministradorDao admDao = new AdministradorDao();
-			admDao.inserir(adm);
 			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
 			loginSenhaDao.inserir(loginSenha);
+			AdministradorDao admDao = new AdministradorDao();
+			admDao.inserir(adm);
+			op = true;
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		System.out.println("Usuário cadastrado com sucesso!");
+		if (op == true)
+			System.out.println("Usuário cadastrado com sucesso!");
+		else
+			System.out.println("Usuário não cadastrado!");
+		return;
 	}
 
 	private void cadastraMedico() {
