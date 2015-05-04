@@ -44,7 +44,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 	
 	@Override
 	public LoginSenha getPorLogin(String login) throws SQLException {
-		String sql = "SELECT login, senha, nivel FROM login_senha WHERE "+login+" = login";
+		String sql = "SELECT login, senha, nivel FROM login_senha WHERE login = login";
 		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -69,7 +69,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.setString(2, loginSenha.getSenha());
 		statement.setInt(3, loginSenha.getNivel());
 		
-		statement.execute();		
+		statement.execute();
 	}
 
 }

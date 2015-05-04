@@ -60,17 +60,13 @@ public class Main {
 			
 			if (senha.equals(loginSenha.getSenha())){
 				if (loginSenha.getNivel() == 1){
-					System.out.println(loginSenha.getLogin());
-					Administrador admin = buscaAministrador(loginSenha);
-					System.out.println("Seja Bem-Vindo "+ admin.getNome());
+					Administrador adm = buscaAministrador(loginSenha);
+					System.out.println("Seja Bem-Vindo "+ adm.getNome());
 				} else if (loginSenha.getNivel() == 2){
 					Medico medico = new Medico();
 				} else{
 					Secretaria secretaria = new Secretaria();
 				}
-					
-				System.out.println("Seja Bem-Vindo ");
-				System.out.println("Usuario existente no sistema!!!!");
 
 				
 			}else{
@@ -86,8 +82,8 @@ public class Main {
 	
 	public static Administrador buscaAministrador(LoginSenha loginSenha) throws SQLException{
 		Administrador administrador = new Administrador();
-		AdministradorDao adminDao = new AdministradorDao(new ConnectionProvider().getConnection());
-		administrador = adminDao.getPorLogin(loginSenha.getLogin());
+		AdministradorDao admDao = new AdministradorDao(new ConnectionProvider().getConnection());
+		administrador = admDao.getPorLogin(loginSenha.getLogin());
 		return administrador;
 	}
 	
@@ -97,8 +93,6 @@ public class Main {
 //		Secretaria secretaria = new Secretaria();
 //		Medico medico = new Medico();
 //		LoginSenha loginSenha;
-		
-		
 		
 		validaUsuario();
 	}
