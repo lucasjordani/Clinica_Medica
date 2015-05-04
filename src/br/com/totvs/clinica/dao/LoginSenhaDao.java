@@ -72,5 +72,13 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.execute();
 		statement.close();
 	}
-
+	
+	public void editar() throws SQLException{
+		String sql = "SELECT login, senha, nivel FROM login_senha WHERE login = login";
+		PreparedStatement statement = conexao.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+		LoginSenha loginSenha = new LoginSenha();
+		
+	}
+	
 }

@@ -1,5 +1,4 @@
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -13,7 +12,6 @@ import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.LoginSenha;
 import br.com.totvs.clinica.model.Medico;
 import br.com.totvs.clinica.model.Secretaria;
-import br.com.totvs.clinica.model.Usuario;
 
 public class Main {
 
@@ -54,32 +52,35 @@ public class Main {
 		loginSenhaDao = new LoginSenhaDao(new ConnectionProvider().getConnection());
 		loginSenha = loginSenhaDao.getPorLogin("'"+login+"'");
 		
-		if (loginSenha.getLogin() != null)
+		if (loginSenha.getLogin().equals(login))
 		{
 			System.out.println("Digite a senha: ");
 			String senha = sc.next();
-			sc.close();
 			if (senha.equals(loginSenha.getSenha())){
 				int op;
 				switch (loginSenha.getNivel()){
-				case 1:
-					Administrador adm = buscaAministrador(loginSenha);
-					System.out.println("Seja Bem-Vindo "+ adm.getNome());
-					op = adm.operaAdministrador();
-					if (op == 0)
-						iniciaSistema();
-				case 2:
-					Medico medico = buscaMedico(loginSenha);
-					System.out.println("Seja Bem-Vindo "+ medico.getNome());
-					op = medico.operaMedico();
-					if (op == 0)
-						iniciaSistema();
-				default:
-					Secretaria secretaria = buscaSecretaria(loginSenha);
-					System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
-					op = secretaria.operaSecretaria();
-					if (op == 0)
-						iniciaSistema();
+					case 1:
+						Administrador adm = new Administrador();
+						adm.buscaAministrador(loginSenha);
+						System.out.println("Seja Bem-Vindo "+ adm.getNome());
+						op = adm.operaAdministrador();
+						if (op == 0)
+							iniciaSistema();
+						break;
+					case 2:
+						Medico medico = buscaMedico(loginSenha);
+						System.out.println("Seja Bem-Vindo "+ medico.getNome());
+						op = medico.operaMedico();
+						if (op == 0)
+							iniciaSistema();
+						break;
+					default:
+						Secretaria secretaria = buscaSecretaria(loginSenha);
+						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
+						op = secretaria.operaSecretaria();
+						if (op == 0)
+							iniciaSistema();
+						break;
 				}
 			}else{
 				System.out.println("Senha inválida!");
@@ -91,12 +92,6 @@ public class Main {
 		}
 	}
 
-	public static Administrador buscaAministrador(LoginSenha loginSenha) throws SQLException{
-		Administrador administrador = new Administrador();
-		AdministradorDao admDao = new AdministradorDao(new ConnectionProvider().getConnection());
-		administrador = admDao.getPorLogin(loginSenha.getLogin());
-		return administrador;
-	}
 	
 	public static Secretaria buscaSecretaria(LoginSenha loginSenha) throws SQLException{
 		Secretaria secretaria = new Secretaria();

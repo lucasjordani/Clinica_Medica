@@ -10,5 +10,7 @@ public interface Dao<T> {
 	public T getPorLogin(String login) throws SQLException;
 
 	public void inserir(T t) throws SQLException;
+	
+	//public void editar(T t) throws SQLException;
 
 }
