@@ -11,7 +11,7 @@ import br.com.totvs.clinica.model.Administrador;
 import br.com.totvs.clinica.model.Endereco;
 
 public class AdministradorDao implements Dao<Administrador> {
-	
+
 	private Connection conexao;
 
 	public AdministradorDao() throws SQLException {
@@ -47,19 +47,19 @@ public class AdministradorDao implements Dao<Administrador> {
 		result.close();
 		return administradores;
 	}
-	
+
 	@Override
 	public Administrador getPorLogin(String login) throws SQLException {
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
 				+ " FROM administrador WHERE login = login";
-		
+
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
-		
+
 		Administrador administrador = new Administrador();
 		Endereco endereco = new Endereco();
-		while(result.next()){
+		while (result.next()) {
 			administrador.setNome(result.getString("nome"));
 			administrador.setLogin(result.getString("login"));
 			administrador.setRg(result.getString("rg"));
@@ -75,10 +75,10 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	@Override
 	public void inserir(Administrador administrador) throws SQLException {
-		
+
 		String sql = " INSERT INTO ADMINISTRADOR (nome, login, rg, telefone, "
 				+ "								logradouro, bairro, cidade)"
-				   + " VALUES (?,?,?,?,?,?,?)";
+				+ " VALUES (?,?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -92,5 +92,18 @@ public class AdministradorDao implements Dao<Administrador> {
 
 		statement.execute();
 		statement.close();
+	}
+
+	public void excluirPorLogin(String login) throws SQLException {
+
+		String sql = "DELETE FROM administrador WHERE login = login";
+
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		statement.executeUpdate();
+
+		statement.close();
+		conexao.close();
+
 	}
 }

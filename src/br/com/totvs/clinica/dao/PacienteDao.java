@@ -116,5 +116,7 @@ public class PacienteDao implements Dao<Paciente> {
 		result.close();
 		return paciente;
 	}
+	
+	
 
 }

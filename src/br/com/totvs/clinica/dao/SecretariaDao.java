@@ -92,6 +92,19 @@ public class SecretariaDao implements Dao<Secretaria>{
 		statement.execute();
 		statement.close();
 	}
+	
+	public void excluirPorLogin(String login) throws SQLException {
+
+		String sql = "DELETE FROM secretaria WHERE login = login";
+
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		statement.executeUpdate();
+
+		statement.close();
+		conexao.close();
+
+	}
 
 }
 

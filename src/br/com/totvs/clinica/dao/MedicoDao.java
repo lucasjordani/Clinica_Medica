@@ -96,5 +96,18 @@ public class MedicoDao implements Dao<Medico> {
 		statement.execute();
 		statement.close();
 	}
+	
+	public void excluirPorLogin(String login) throws SQLException {
+
+		String sql = "DELETE FROM medico WHERE login = login";
+
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		statement.executeUpdate();
+
+		statement.close();
+		conexao.close();
+
+	}
 
 }
