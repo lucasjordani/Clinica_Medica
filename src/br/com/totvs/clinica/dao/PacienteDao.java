@@ -45,7 +45,6 @@ public class PacienteDao implements Dao<Paciente> {
 		}
 
 		result.close();
-
 		return pacientes;
 	}
 
@@ -70,6 +69,7 @@ public class PacienteDao implements Dao<Paciente> {
 			paciente.setEndereco(endereco);
 			paciente.setDataNascimento("data_nascimento");
 		}
+		result.close();
 		return paciente;
 	}
 
@@ -89,11 +89,11 @@ public class PacienteDao implements Dao<Paciente> {
 		statement.setString(6, paciente.getDataNascimento());
 
 		statement.execute();
-
+		statement.close();
 	}
 	
 	
-	public Paciente getPorId(String id) throws SQLException {
+	public Paciente getPorId(int id) throws SQLException {
 		String sql = "SELECT cod_paciente, nome, telefone, logradouro, bairro, cidade, "
 				+ "data_nascimento FROM paciente WHERE "+id+" = cod_paciente";
 		PreparedStatement statement = conexao.prepareStatement(sql);
@@ -113,6 +113,7 @@ public class PacienteDao implements Dao<Paciente> {
 			paciente.setEndereco(endereco);
 			paciente.setDataNascimento("data_nascimento");
 		}
+		result.close();
 		return paciente;
 	}
 

@@ -45,7 +45,6 @@ public class AdministradorDao implements Dao<Administrador> {
 		}
 
 		result.close();
-
 		return administradores;
 	}
 	
@@ -70,6 +69,7 @@ public class AdministradorDao implements Dao<Administrador> {
 			endereco.setCidade(result.getString("cidade"));
 			administrador.setEndereco(endereco);
 		}
+		result.close();
 		return administrador;
 	}
 
@@ -91,6 +91,6 @@ public class AdministradorDao implements Dao<Administrador> {
 		statement.setString(7, administrador.getEndereco().getCidade());
 
 		statement.execute();
-
+		statement.close();
 	}
 }

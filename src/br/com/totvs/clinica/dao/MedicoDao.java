@@ -46,7 +46,6 @@ public class MedicoDao implements Dao<Medico> {
 		}
 
 		result.close();
-
 		return medicos;
 	}
 
@@ -71,6 +70,7 @@ public class MedicoDao implements Dao<Medico> {
 			medico.setEndereco(endereco);
 			medico.setEspecialidades(result.getString("especialidades"));
 		}
+		result.close();
 		return medico;
 	}
 
@@ -94,7 +94,7 @@ public class MedicoDao implements Dao<Medico> {
 		statement.setString(8, medico.getEspecialidades());
 
 		statement.execute();
-
+		statement.close();
 	}
 
 }

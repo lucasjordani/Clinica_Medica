@@ -38,7 +38,6 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		}
 		
 		result.close();
-		
 		return loginsSenhas;
 	}
 	
@@ -56,6 +55,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 			loginSenha.setSenha(result.getString("senha"));
 			loginSenha.setNivel(result.getInt("nivel"));
 		}
+		result.close();
 		return loginSenha;
 	}
 
@@ -70,6 +70,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.setInt(3, loginSenha.getNivel());
 		
 		statement.execute();
+		statement.close();
 	}
 
 }

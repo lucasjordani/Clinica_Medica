@@ -43,7 +43,6 @@ public class ConsultaDao implements Dao<Consulta>{
 				consultas.add(consulta);
 			}
 			result.close();
-
 			return consultas;
 		}
 		
@@ -69,6 +68,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
 				consulta.setObservacao(result.getString("observacao"));
 			}
+			result.close();
 			return consulta;
 		}
 
@@ -88,7 +88,7 @@ public class ConsultaDao implements Dao<Consulta>{
 			statement.setObject(5, consulta.getStatusConsulta());
 			statement.setString(6, consulta.getObservacao());
 			statement.execute();
-
+			statement.close();
 		}
 		
 		public Consulta getPorPaciente (String paciente) throws SQLException {
@@ -108,6 +108,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
 				consulta.setObservacao(result.getString("observacao"));
 			}
+			result.close();
 			return consulta;
 		}
 }

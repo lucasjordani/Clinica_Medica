@@ -19,5 +19,10 @@ public class Medico extends Usuario {
 	public void setEspecialidades(String especialidades) {
 		this.especialidades = especialidades;
 	}
+
+	public int operaMedico() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

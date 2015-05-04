@@ -44,7 +44,6 @@ public class SecretariaDao implements Dao<Secretaria>{
 		}
 
 		result.close();
-
 		return secretarias;
 	}
 
@@ -68,6 +67,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 			endereco.setCidade(result.getString("cidade"));
 			secretaria.setEndereco(endereco);
 		}
+		result.close();
 		return secretaria;
 	}
 
@@ -90,7 +90,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 		statement.setString(7, secretaria.getEndereco().getCidade());
 
 		statement.execute();
-
+		statement.close();
 	}
 
 }
