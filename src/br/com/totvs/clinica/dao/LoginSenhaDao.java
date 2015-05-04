@@ -13,8 +13,8 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 	
 	private Connection conexao;
 	
-	public LoginSenhaDao(Connection conexao) {
-		this.conexao = conexao;		
+	public LoginSenhaDao() throws SQLException {
+		this.conexao = new ConnectionProvider().getConnection();		
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.close();
 	}
 	
-	public void editar() throws SQLException{
+	public void editar(String busca, int cod) throws SQLException{
 		String sql = "SELECT login, senha, nivel FROM login_senha WHERE login = login";
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();

@@ -14,8 +14,8 @@ public class ConsultaDao implements Dao<Consulta>{
 
 		private Connection conexao;
 
-		public ConsultaDao(Connection conexao) {
-			this.conexao = conexao;
+		public ConsultaDao() throws SQLException {
+			this.conexao = new ConnectionProvider().getConnection();
 		}
 
 		@Override

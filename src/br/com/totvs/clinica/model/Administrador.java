@@ -36,7 +36,7 @@ public class Administrador extends Usuario {
 					editaUsuario();
 					break;
 				case 3:
-					exluiUsuario();
+					excluiUsuario();
 					break;
 				default:
 					System.out.println("Opção Inválida!");
@@ -53,9 +53,9 @@ public class Administrador extends Usuario {
 		int op;
 		do{
 			System.out.println("Que tipo de usuario deseja cadastrar?");
-			System.out.println("Digite 1 para cadastradar novo administrador;");
-			System.out.println("Digite 2 para cadastradar novo médico;");
-			System.out.println("Digite 3 para cadastradar nova secretária;");
+			System.out.println("Digite 1 para cadastrar novo administrador;");
+			System.out.println("Digite 2 para cadastrar novo médico;");
+			System.out.println("Digite 3 para cadastrar nova secretária;");
 			System.out.println("Digite 0 para voltar a tela anterior.");
 			op = sc.nextInt();
 			switch (op){
@@ -85,7 +85,7 @@ public class Administrador extends Usuario {
 		LoginSenhaDao loginSenhaDao;
 		LoginSenha loginSenha = null;
 		try{
-			loginSenhaDao = new LoginSenhaDao(new ConnectionProvider().getConnection());
+			loginSenhaDao = new LoginSenhaDao();
 			loginSenha = loginSenhaDao.getPorLogin("'"+login+"'");
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
@@ -108,7 +108,7 @@ public class Administrador extends Usuario {
 		} while (!loginSenha.getLogin().equals(login));
 	}
 
-	private void exluiUsuario() {
+	private void excluiUsuario() {
 		
 	}
 	
@@ -116,7 +116,7 @@ public class Administrador extends Usuario {
 		Administrador adm = new Administrador();
 		AdministradorDao admDao;
 		try{
-			admDao = new AdministradorDao(new ConnectionProvider().getConnection());
+			admDao = new AdministradorDao();
 			adm.buscaAministrador(loginSenha);
 		} catch(SQLException e){
 			System.out.println(e.getMessage());
@@ -169,7 +169,41 @@ public class Administrador extends Usuario {
 	}
 
 	private void cadastraAministrador() {
-		System.out.println("Digite o nome do usuário"); 
+		Scanner sc = new Scanner(System.in);
+		Administrador adm = new Administrador();
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Cadastrar Administrador:");
+		System.out.println("Digite o nome:");
+		adm.setNome(sc.nextLine());
+		System.out.println("Digite o RG:");
+		adm.setRg(sc.next());
+		System.out.println("Digite o telefone:");
+		adm.setTelefone(sc.next());
+		Endereco endereco = new Endereco();
+		System.out.println("Endereço:");
+		System.out.println("Digite o logradouro:");
+		endereco.setLogradouro(sc.next());
+		endereco.setLogradouro(sc.nextLine());
+		System.out.println("Digite o bairro:");
+		endereco.setBairro(sc.nextLine());
+		System.out.println("Digite a cidade:");
+		endereco.setCidade(sc.nextLine());
+		adm.setEndereco(endereco);
+		System.out.println("Digite o login:");
+		adm.setLogin(sc.next());
+		loginSenha.setLogin(adm.getLogin());
+		System.out.println("Digite a senha:");
+		loginSenha.setSenha(sc.next());
+		loginSenha.setNivel(1);
+		try{
+			AdministradorDao admDao = new AdministradorDao();
+			admDao.inserir(adm);
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenhaDao.inserir(loginSenha);
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		System.out.println("Usuário cadastrado com sucesso!");
 	}
 
 	private void cadastraMedico() {
@@ -183,7 +217,7 @@ public class Administrador extends Usuario {
 	public void buscaAministrador(LoginSenha loginSenha) throws SQLException{
 		Administrador administrador = new Administrador();
 		try{
-			AdministradorDao admDao = new AdministradorDao(new ConnectionProvider().getConnection());
+			AdministradorDao admDao = new AdministradorDao();
 			administrador = admDao.getPorLogin(loginSenha.getLogin());
 		}catch(SQLException e){
 			System.out.println(e.getMessage());

@@ -14,8 +14,8 @@ public class MedicoDao implements Dao<Medico> {
 
 	private Connection conexao;
 
-	public MedicoDao(Connection conexao) {
-		this.conexao = conexao;
+	public MedicoDao() throws SQLException {
+		this.conexao = new ConnectionProvider().getConnection();
 	}
 
 	@Override

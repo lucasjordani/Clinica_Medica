@@ -14,8 +14,8 @@ public class AdministradorDao implements Dao<Administrador> {
 	
 	private Connection conexao;
 
-	public AdministradorDao(Connection conexao) {
-		this.conexao = conexao;
+	public AdministradorDao() throws SQLException {
+		this.conexao = new ConnectionProvider().getConnection();
 	}
 
 	@Override

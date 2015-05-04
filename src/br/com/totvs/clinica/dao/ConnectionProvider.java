@@ -11,7 +11,7 @@ public class ConnectionProvider {
 
 	private static Connection connection;
 
-	public static Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException {
 		if (connection == null) { 
 
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);

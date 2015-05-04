@@ -33,9 +33,9 @@ public class Main {
 		LoginSenhaDao loginDao;
 		
 		try {
-			loginDao = new LoginSenhaDao(new ConnectionProvider().getConnection());
+			loginDao = new LoginSenhaDao();
 			loginDao.inserir(adminLogin);
-			adminDao = new AdministradorDao(new ConnectionProvider().getConnection());
+			adminDao = new AdministradorDao();
 			adminDao.inserir(admin);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Digite o nome do usuário: ");
 		String login = sc.next();
-		loginSenhaDao = new LoginSenhaDao(new ConnectionProvider().getConnection());
+		loginSenhaDao = new LoginSenhaDao();
 		loginSenha = loginSenhaDao.getPorLogin("'"+login+"'");
 		
 		if (loginSenha.getLogin().equals(login))
@@ -74,7 +74,7 @@ public class Main {
 						if (op == 0)
 							iniciaSistema();
 						break;
-					default:
+					case 3:
 						Secretaria secretaria = buscaSecretaria(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
 						op = secretaria.operaSecretaria();
@@ -95,14 +95,14 @@ public class Main {
 	
 	public static Secretaria buscaSecretaria(LoginSenha loginSenha) throws SQLException{
 		Secretaria secretaria = new Secretaria();
-		SecretariaDao secDao = new SecretariaDao(new ConnectionProvider().getConnection());
+		SecretariaDao secDao = new SecretariaDao();
 		secretaria = secDao.getPorLogin(loginSenha.getLogin());
 		return secretaria;
 	}
 	
 	public static Medico buscaMedico(LoginSenha loginSenha) throws SQLException{
 		Medico medico = new Medico();
-		MedicoDao medicoDao = new MedicoDao(new ConnectionProvider().getConnection());
+		MedicoDao medicoDao = new MedicoDao();
 		medico = medicoDao.getPorLogin(loginSenha.getLogin());
 		return medico;
 	}

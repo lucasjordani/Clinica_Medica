@@ -14,8 +14,8 @@ public class PacienteDao implements Dao<Paciente> {
 
 	private Connection conexao;
 
-	public PacienteDao(Connection conexao) {
-		this.conexao = conexao;
+	public PacienteDao() throws SQLException {
+		this.conexao = new ConnectionProvider().getConnection();
 	}
 
 	@Override

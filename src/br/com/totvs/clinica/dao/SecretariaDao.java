@@ -13,8 +13,8 @@ import br.com.totvs.clinica.model.Secretaria;
 public class SecretariaDao implements Dao<Secretaria>{
 	private Connection conexao;
 
-	public SecretariaDao(Connection conexao) {
-		this.conexao = conexao;
+	public SecretariaDao() throws SQLException {
+		this.conexao = new ConnectionProvider().getConnection();
 	}
 
 	@Override
