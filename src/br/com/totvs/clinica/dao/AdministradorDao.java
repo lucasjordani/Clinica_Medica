@@ -52,13 +52,8 @@ public class AdministradorDao implements Dao<Administrador> {
 	public Administrador getPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
-<<<<<<< HEAD
-				+ " FROM administrador WHERE login = login";
-
-=======
 				+ " FROM administrador WHERE login = "+ login;
 		
->>>>>>> c75fa0fb62af2ae85300e4dcd9484d512ae3eb5a
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
@@ -102,7 +97,7 @@ public class AdministradorDao implements Dao<Administrador> {
 
 	public void excluirPorLogin(String login) throws SQLException {
 
-		String sql = "DELETE FROM administrador WHERE login = login";
+		String sql = "DELETE FROM administrador WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 

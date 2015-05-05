@@ -25,4 +25,11 @@ public class Medico extends Usuario {
 		return 0;
 	}
 	
+	@Override
+	public String toString() {
+		return "Nome: " + this.getNome() + "\nLogin: " + this.getLogin() + "\nRG: " + this.getRg()
+				+ "\nTelefone: " + this.getTelefone() + "\nEspecialidades: " + this.getEspecialidades()
+				+ this.getEndereco().toString();
+	}
+	
 }

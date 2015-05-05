@@ -6,6 +6,8 @@ import java.util.Scanner;
 import br.com.totvs.clinica.dao.AdministradorDao;
 import br.com.totvs.clinica.dao.ConnectionProvider;
 import br.com.totvs.clinica.dao.LoginSenhaDao;
+import br.com.totvs.clinica.dao.MedicoDao;
+import br.com.totvs.clinica.dao.SecretariaDao;
 
 public class Administrador extends Usuario {
 
@@ -16,10 +18,10 @@ public class Administrador extends Usuario {
 	}
 	
 	public int operaAdministrador() {
-		boolean loop = false;
+		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
 		int op;
-		do{
+		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar novo usuario;");
 			System.out.println("Digite 2 para editar um usuário cadastrado;");
@@ -43,15 +45,15 @@ public class Administrador extends Usuario {
 					System.out.println("Tente novamente.");
 					break;
 			}
-		}while (loop == false);
+		}
 		return 0;
 	}
 	
-	public void cadastrar() {
-		boolean loop = false;
+	private void cadastrar() {
+		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
 		int op;
-		do{
+		while (loop == true){
 			System.out.println("Que tipo de usuario deseja cadastrar?");
 			System.out.println("Digite 1 para cadastrar novo administrador;");
 			System.out.println("Digite 2 para cadastrar novo médico;");
@@ -75,7 +77,7 @@ public class Administrador extends Usuario {
 					System.out.println("Tente novamente.");
 					break;
 			}
-		}while (loop == false);
+		}
 	}
 	
 	private void editaUsuario() {
@@ -86,7 +88,7 @@ public class Administrador extends Usuario {
 		LoginSenha loginSenha = null;
 		try{
 			loginSenhaDao = new LoginSenhaDao();
-			loginSenha = loginSenhaDao.getPorLogin("'"+login+"'");
+			loginSenha = loginSenhaDao.getPorLogin(login);
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
@@ -94,16 +96,17 @@ public class Administrador extends Usuario {
 			switch (loginSenha.getNivel()){
 				case 1:
 					editaAdministrador(loginSenha);
-					break;
+					return;
 				case 2:
 					editaMedico(loginSenha);
-					break;
+					return;
 				case 3:
 					editaSecretaria(loginSenha);
-					break;
+					return;
 				default: 
 					System.out.println("Usuário inexistente!");
 					System.out.println("Tente novamente.");
+					break;
 			}	
 		} while (!loginSenha.getLogin().equals(login));
 	}
@@ -116,40 +119,128 @@ public class Administrador extends Usuario {
 		Scanner sc = new Scanner(System.in);
 		Administrador adm = new Administrador();
 		LoginSenha loginSenha = new LoginSenha();
-		System.out.println("Cadastrar Administrador:");
+		System.out.println("Cadastrar Administrador");
 		System.out.println("Digite o nome:");
 		adm.setNome(sc.nextLine());
 		System.out.println("Digite o RG:");
 		adm.setRg(sc.next());
 		System.out.println("Digite o telefone:");
 		adm.setTelefone(sc.next());
-		
 		adm.setEndereco(cadastraEndereco());
 		cadastraLoginSenha(loginSenha, adm);
 		loginSenha.setNivel(1);
-		boolean op = false;
-		try{
-			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
-			loginSenhaDao.inserir(loginSenha);
-			AdministradorDao admDao = new AdministradorDao();
-			admDao.inserir(adm);
-			op = true;
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
+		int op;
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("Confirma o cadastro do Administrador?\n" + adm.toString());
+			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+			op = sc.nextInt();
+			switch (op){
+				case 0:
+					System.out.println("Operação Cancelada!\nUsuário não cadastrado!");
+					return;
+				case 1:
+					try{
+						LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+						loginSenhaDao.inserir(loginSenha);
+						AdministradorDao admDao = new AdministradorDao();
+						admDao.inserir(adm);
+					}catch(SQLException e){
+						System.out.println(e.getMessage());
+					}
+						System.out.println("Usuário cadastrado com sucesso!");
+					return;
+				default:
+					System.out.println("Opção Inválida!\nTenta novamente.");
+					break;
+			}
 		}
-		if (op == true)
-			System.out.println("Usuário cadastrado com sucesso!");
-		else
-			System.out.println("Usuário não cadastrado!");
-		return;
 	}
 
 	private void cadastraMedico() {
-		
+		Scanner sc = new Scanner(System.in);
+		Medico medico = new Medico();
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Cadastrar Médico");
+		System.out.println("Digite o nome:");
+		medico.setNome(sc.nextLine());
+		System.out.println("Digite o RG:");
+		medico.setRg(sc.next());
+		System.out.println("Digite o telefone:");
+		medico.setTelefone(sc.next());
+		medico.setEndereco(cadastraEndereco());
+		System.out.println("Digite as especialidades do médico:");
+		medico.setEspecialidades(sc.next() + sc.nextLine());
+		cadastraLoginSenha(loginSenha, medico);
+		loginSenha.setNivel(2);
+		int op;
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("Confirma o cadastro do Médico?\n" + medico.toString());
+			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+			op = sc.nextInt();
+			switch (op){
+				case 0:
+					System.out.println("Operação Cancelada!\nMédico não cadastrado!");
+					return;
+				case 1:
+					try{
+						LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+						loginSenhaDao.inserir(loginSenha);
+						MedicoDao medicoDao = new MedicoDao();
+						medicoDao.inserir(medico);
+					}catch(SQLException e){
+						System.out.println(e.getMessage());
+					}
+						System.out.println("Usuário cadastrado com sucesso!");
+					return;
+				default:
+					System.out.println("Opção Inválida!\nTenta novamente.");
+					break;
+			}
+		}
 	}
 	
 	private void cadastraSecretaria() {
-		
+		Scanner sc = new Scanner(System.in);
+		Secretaria secretaria = new Secretaria();
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Cadastrar Secretária");
+		System.out.println("Digite o nome:");
+		secretaria.setNome(sc.nextLine());
+		System.out.println("Digite o RG:");
+		secretaria.setRg(sc.next());
+		System.out.println("Digite o telefone:");
+		secretaria.setTelefone(sc.next());
+		secretaria.setEndereco(cadastraEndereco());
+		cadastraLoginSenha(loginSenha, secretaria);
+		loginSenha.setNivel(3);
+		int op;
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("Confirma o cadastro da Secretária?\n" + secretaria.toString());
+			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+			op = sc.nextInt();
+			switch (op){
+				case 0:
+					System.out.println("Operação Cancelada!\nUsuário não cadastrado!");
+					return;
+				case 1:
+					try{
+						LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+						loginSenhaDao.inserir(loginSenha);
+						SecretariaDao secretariaDao = new SecretariaDao();
+						secretariaDao.inserir(secretaria);
+					}catch(SQLException e){
+						System.out.println(e.getMessage());
+					}
+						System.out.println("Usuário cadastrado com sucesso!");
+					return;
+				default:
+					System.out.println("Opção Inválida!\nTenta novamente.");
+					break;
+			}
+		}
 	}
 	
 	private void editaAdministrador(LoginSenha loginSenha) {
@@ -245,7 +336,6 @@ public class Administrador extends Usuario {
 		Endereco endereco = new Endereco();
 		System.out.println("Endereço:");
 		System.out.println("Digite o logradouro:");
-		sc.next();
 		endereco.setLogradouro(sc.nextLine());
 		System.out.println("Digite o bairro:");
 		endereco.setBairro(sc.nextLine());

@@ -44,14 +44,11 @@ public class Main {
 	
 	public static void iniciaSistema() throws SQLException{
 		
-		LoginSenhaDao loginSenhaDao;
-		LoginSenha loginSenha;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Digite o nome do usuário: ");
 		String login = sc.next();
-		loginSenhaDao = new LoginSenhaDao();
-		loginSenha = loginSenhaDao.getPorLogin(login);
-		System.out.println(loginSenha.getLogin());
+		LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+		LoginSenha loginSenha = loginSenhaDao.getPorLogin(login);
 		if (loginSenha.getLogin().equals(login))
 		{
 			System.out.println("Digite a senha: ");
@@ -109,8 +106,12 @@ public class Main {
 	
 	public static void main(String[] args) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		
-		iniciaAdmin();
-		iniciaSistema();
+		//iniciaAdmin();
+		//iniciaSistema();
+		
+		Administrador adm = new Administrador();
+		//adm.cadastraMedico();
+		//adm.cadastraSecretaria();
 		
 	}
 }

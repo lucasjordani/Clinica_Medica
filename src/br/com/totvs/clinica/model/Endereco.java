@@ -40,4 +40,10 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
+	@Override
+	public String toString() {
+		return "\nLogradouro: " + logradouro + "\nBairro: " + bairro + "\nCidade: " + cidade;
+	}
+
+	
 }

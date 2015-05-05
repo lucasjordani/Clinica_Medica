@@ -51,11 +51,11 @@ public class MedicoDao implements Dao<Medico> {
 
 	@Override
 	public Medico getPorLogin(String login) throws SQLException {
-		login = "'"+login+"'";
+		//login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade,"
-				+ "especialidades FROM medico WHERE login =" + login;
+				+ "especialidades FROM medico WHERE login = ?";
 		PreparedStatement statement = conexao.prepareStatement(sql);
-
+		statement.setString(1, login);
 		ResultSet result = statement.executeQuery();
 
 		Medico medico = new Medico();
@@ -78,10 +78,10 @@ public class MedicoDao implements Dao<Medico> {
 	@Override
 	public void inserir(Medico medico) throws SQLException {
 		
-		String sql = " INSERT INTO MEDICO (nome, login, rg"
+		String sql = " INSERT INTO MEDICO (nome, login, rg,"
 				   + "                     telefone, logradouro, bairro,"
 				   + "                     cidade, especialidades) "
-				   + " VALUES (?,?,?,?,?,?,?)";
+				   + " VALUES (?,?,?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
@@ -100,7 +100,7 @@ public class MedicoDao implements Dao<Medico> {
 	
 	public void excluirPorLogin(String login) throws SQLException {
 
-		String sql = "DELETE FROM medico WHERE login = login";
+		String sql = "DELETE FROM medico WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 

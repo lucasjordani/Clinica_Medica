@@ -1,5 +1,7 @@
 package br.com.totvs.clinica.model;
 
+import java.util.Scanner;
+
 public class Usuario {
 	
 	private String nome;
@@ -57,5 +59,11 @@ public class Usuario {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Nome: " + nome + "\nLogin: " + login + "\nRG: " + rg
+				+ "\nTelefone: " + telefone + endereco.toString();
+	}
+
 }

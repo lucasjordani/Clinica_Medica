@@ -75,9 +75,9 @@ public class SecretariaDao implements Dao<Secretaria>{
 	@Override
 	public void inserir(Secretaria secretaria) throws SQLException {
 		
-		String sql = " INSERT INTO SECRETARIA (nome, rg, login,"
-				   + "                     telefone,  logradouro, bairro, cidade"
-				   + " VALUES  (?, ?, ?, ?, ?)";
+		String sql = " INSERT INTO SECRETARIA (nome, login, rg, telefone, "
+				+ "								logradouro, bairro, cidade)"
+				+ " VALUES (?,?,?,?,?,?,?)";
 		
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
@@ -96,7 +96,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 	
 	public void excluirPorLogin(String login) throws SQLException {
 
-		String sql = "DELETE FROM secretaria WHERE login = login";
+		String sql = "DELETE FROM secretaria WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
