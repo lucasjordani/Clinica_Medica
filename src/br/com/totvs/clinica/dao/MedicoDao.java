@@ -99,7 +99,7 @@ public class MedicoDao implements Dao<Medico> {
 	}
 	
 	public void excluirPorLogin(String login) throws SQLException {
-
+		login = "'"+login+"'";
 		String sql = "DELETE FROM medico WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
