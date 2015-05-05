@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.com.totvs.clinica.model.Administrador;
 import br.com.totvs.clinica.model.Endereco;
+import br.com.totvs.clinica.model.Usuario;
 
 public class AdministradorDao implements Dao<Administrador> {
 
@@ -94,6 +95,43 @@ public class AdministradorDao implements Dao<Administrador> {
 		statement.execute();
 		statement.close();
 	}
+	
+	public void editar(String dado, int cod, Administrador adm) throws SQLException {
+		String login = "'"+adm.getLogin()+"'";
+		String sql = null;
+		switch(cod){
+			case 1:
+				System.out.println("Entrei no case 1 Update Nome");
+				sql = "UPDATE ADMINISTRADOR SET nome = " + dado + "WHERE login = " + login;
+				break;
+			case 2:
+				sql = "UPDATE ADMINISTRADOR SET login = " + dado + "WHERE login = " + login;
+				break;
+			case 3:
+				sql = "UPDATE ADMINISTRADOR SET rg = " + dado + "WHERE login = " + login;
+				break;
+			case 4:
+				sql = "UPDATE ADMINISTRADOR SET telefone = " + dado + "WHERE login = " + login;
+				break;
+			case 5:
+				sql = "UPDATE ADMINISTRADOR SET logradouro = " + dado + "WHERE login = " + login;
+				break;
+			case 6:
+				sql = "UPDATE ADMINISTRADOR SET bairro = " + dado + "WHERE login = " + login;
+				break;
+			case 7:
+				sql = "UPDATE ADMINISTRADOR SET cidade = " + dado + "WHERE login = " + login;
+				break;
+			default:
+				System.out.println("Entrei no dafault AdministradorDao");
+				return;
+		}
+		System.out.println("Executando a Statement");
+		PreparedStatement statement = conexao.prepareStatement(sql);
+		statement.executeUpdate();
+		statement.close();
+		System.out.println("Executei a Statement");
+	}
 
 	public void excluirPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
@@ -104,7 +142,7 @@ public class AdministradorDao implements Dao<Administrador> {
 		statement.executeUpdate();
 
 		statement.close();
-//		conexao.close();
 
 	}
+
 }

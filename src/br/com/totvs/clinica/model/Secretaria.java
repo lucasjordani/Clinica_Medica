@@ -12,5 +12,9 @@ public class Secretaria extends Usuario {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public void buscaSecretaria() {
+		// TODO Auto-generated method stub
+	}
 			
 }

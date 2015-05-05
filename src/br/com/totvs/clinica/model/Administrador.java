@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.AdministradorDao;
-import br.com.totvs.clinica.dao.ConnectionProvider;
 import br.com.totvs.clinica.dao.LoginSenhaDao;
 import br.com.totvs.clinica.dao.MedicoDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
@@ -81,18 +80,17 @@ public class Administrador extends Usuario {
 	}
 	
 	private void editaUsuario() {
-		System.out.println("Digite o Login do usuário a ser editado:");
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Digite o Login do usuário a ser editado:");
 		String login = sc.next();
-		LoginSenhaDao loginSenhaDao;
 		LoginSenha loginSenha = null;
 		try{
-			loginSenhaDao = new LoginSenhaDao();
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
 			loginSenha = loginSenhaDao.getPorLogin(login);
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		do{
+		if (loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
 			switch (loginSenha.getNivel()){
 				case 1:
 					editaAdministrador(loginSenha);
@@ -103,21 +101,18 @@ public class Administrador extends Usuario {
 				case 3:
 					editaSecretaria(loginSenha);
 					return;
-				default: 
-					System.out.println("Usuário inexistente!");
-					System.out.println("Tente novamente.");
-					break;
-			}	
-		} while (!loginSenha.getLogin().equals(login));
+			}
+		} else{
+			System.out.println("Login inexistente!");
+			return;
+		}
 	}
 
 	private void excluiUsuario(){
-		boolean loop = false;
+		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
-		LoginSenhaDao loginSenhaDao;
-		LoginSenha loginSenha = null;
 		int op;
-		do{
+		while (loop == true){
 			System.out.println("Que tipo de usuario deseja excluir?");
 			System.out.println("Digite 1 para excluir administrador;");
 			System.out.println("Digite 2 para excluir médico;");
@@ -128,22 +123,20 @@ public class Administrador extends Usuario {
 				case 0:
 					return;
 				case 1:
-					excluirAdministrador();
-					break;
+					excluiAdministrador();
+					return;
 				case 2:
-					//Não implementado
-//					excluirMedico();
-					break;
+					excluiMedico();
+					return;
 				case 3:
-					//Não implementado
-//					excluirSecretaria();
-					break;
+					excluiSecretaria();
+					return;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
 					break;
 			}
-		}while (loop == false);
+		}
 	}
 	
 	private void cadastraAministrador() {
@@ -276,50 +269,66 @@ public class Administrador extends Usuario {
 	
 	private void editaAdministrador(LoginSenha loginSenha) {
 		Administrador adm = new Administrador();
-		AdministradorDao admDao;
-		try{
-			admDao = new AdministradorDao();
-			adm.buscaAministrador(loginSenha);
-		} catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		boolean loop = false;
+		adm.buscaAministrador(loginSenha);
 		Scanner sc = new Scanner(System.in);
-		do{
+		boolean loop = true;
+		int op;
+		String dado = "";
+		while (loop == true){
+			System.out.println("O que deseja editar no Administrador " + adm.getNome());
 			menuEditar();
-			int op = sc.nextInt();
+			op = sc.nextInt();
 			switch (op){
 				case 0:
 					return;
 				case 1:
 					System.out.println("Digite o novo nome:");
-					return;
+					dado = (sc.next() + sc.nextLine());
+					System.out.println(dado);
+					break;
 				case 2:
 					System.out.println("Digite o novo login:");
-					return;
+					dado = sc.next();
+					break;
 				case 3:
 					System.out.println("Digite o novo RG:");
-					return;
+					dado = sc.next();
+					break;
 				case 4:
 					System.out.println("Digite o novo telefone:");
-					return;
+					dado = sc.next();
+					break;
 				case 5:
 					System.out.println("Digite o novo logradouro:");
-					return;
+					dado = (sc.next() + sc.nextLine());
+					break;
 				case 6:
 					System.out.println("Digite o novo bairro:");
-					return;
+					dado = (sc.next() + sc.nextLine());
+					break;
 				case 7:
 					System.out.println("Digite a nova cidade:");
-					return;
+					dado = (sc.next() + sc.nextLine());
+					break;
 				case 8:
 					System.out.println("Digite a nova senha:");
-					return;
+					dado = sc.next();
+					break;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
 			}
-		} while (loop == false);
+			try {
+				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+				loginSenhaDao.editar(dado, op, adm);
+				AdministradorDao administradorDao = new AdministradorDao();
+				administradorDao.editar(dado, op, adm);
+			} catch(SQLException e){
+			System.out.println(e.getMessage());
+			}
+			System.out.println("Atualização de Administrador realizada com sucesso!");
+			return;
+		}
 	}
 	
 	private void editaMedico(LoginSenha loginSenha) {
@@ -330,25 +339,91 @@ public class Administrador extends Usuario {
 		
 	}
 	
-	private void excluirAdministrador(){
+	private void excluiAdministrador(){
 		Scanner sc = new Scanner(System.in);
-		Administrador adm = new Administrador();
-		AdministradorDao admDao;
-		LoginSenha login = new LoginSenha();
-		LoginSenhaDao loginDao;
+		LoginSenha loginSenha = new LoginSenha();
 		System.out.println("Digite o login do Administrador a ser excluído:");
-		String log = sc.next();
+		String login = sc.next();
 		try{
-			loginDao = new LoginSenhaDao();
-			admDao = new AdministradorDao();
-			admDao.excluirPorLogin(log);
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenha = loginSenhaDao.getPorLogin(login);
 		} catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-//		loginDao.excluirPorLogin(log); NÃO ESTÁ APAGANDO NA TABELA LOGIN_SENHA
+		if(loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
+			try{
+				AdministradorDao admDao = new AdministradorDao();
+				admDao.excluirPorLogin(login);
+				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+				loginSenhaDao.excluirPorLogin(login);
+			} catch(SQLException e){
+				System.out.println(e.getMessage());
+			}
+			System.out.println("Administrador excluído com sucesso!");
+			return;
+		} else {
+			System.out.println("Login inexistente!");
+			return;
+		}
 	}
 	
-	public void buscaAministrador(LoginSenha loginSenha) throws SQLException{
+	private void excluiMedico(){
+		Scanner sc = new Scanner(System.in);
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Digite o login do Médico a ser excluído:");
+		String login = sc.next();
+		try{
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenha = loginSenhaDao.getPorLogin(login);
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		if(loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
+			try{
+				MedicoDao medicoDao = new MedicoDao();
+				medicoDao.excluirPorLogin(login);
+				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+				loginSenhaDao.excluirPorLogin(login);
+			} catch(SQLException e){
+				System.out.println(e.getMessage());
+			}
+			System.out.println("Médico excluído com sucesso!");
+			return;
+		} else {
+			System.out.println("Login inexistente!");
+			return;
+		}
+	}
+	
+	private void excluiSecretaria(){
+		Scanner sc = new Scanner(System.in);
+		LoginSenha loginSenha = new LoginSenha();
+		System.out.println("Digite o login do Secretária a ser excluído:");
+		String login = sc.next();
+		try{
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenha = loginSenhaDao.getPorLogin(login);
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		if(loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
+			try{
+				//SecretariaDao secretariaDao = new SecretariaDao();
+				//secretariaDao.excluirPorLogin(login);
+				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+				loginSenhaDao.excluirPorLogin(login);
+			} catch(SQLException e){
+				System.out.println(e.getMessage());
+			}
+			System.out.println("Secretária excluída com sucesso!");
+			return;
+		} else {
+			System.out.println("Login inexistente!");
+			return;
+		}
+	}
+	
+	public void buscaAministrador(LoginSenha loginSenha){
 		Administrador administrador = new Administrador();
 		try{
 			AdministradorDao admDao = new AdministradorDao();
@@ -368,7 +443,6 @@ public class Administrador extends Usuario {
 	}
 	
 	private void menuEditar(){
-		System.out.println("O que deseja editar no usuário?");
 		System.out.println("Digite 1 para editar o nome;");
 		System.out.println("Digite 2 para editar o login;");
 		System.out.println("Digite 3 para editar o RG;");
@@ -377,7 +451,7 @@ public class Administrador extends Usuario {
 		System.out.println("Digite 6 para editar o bairro;");
 		System.out.println("Digite 7 para editar a cidade;");
 		System.out.println("Digite 8 para editar a senha;");
-		System.out.println("Digite 0 para voltar a tela anterior.");
+		System.out.println("Digite 0 para voltar a tela inicial.");
 	}
 
 	private Endereco cadastraEndereco(){

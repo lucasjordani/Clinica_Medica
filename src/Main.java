@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.AdministradorDao;
 import br.com.totvs.clinica.dao.LoginSenhaDao;
-import br.com.totvs.clinica.dao.MedicoDao;
-import br.com.totvs.clinica.dao.SecretariaDao;
 import br.com.totvs.clinica.model.Administrador;
 import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.LoginSenha;
@@ -49,8 +47,7 @@ public class Main {
 		String login = sc.next();
 		LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
 		LoginSenha loginSenha = loginSenhaDao.getPorLogin(login);
-		if (loginSenha.getLogin().equals(login))
-		{
+		if (loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
 			System.out.println("Digite a senha: ");
 			String senha = sc.next();
 			if (senha.equals(loginSenha.getSenha())){
@@ -65,14 +62,16 @@ public class Main {
 							iniciaSistema();
 						break;
 					case 2:
-						Medico medico = buscaMedico(loginSenha);
+						Medico medico = new Medico();
+						medico.buscaMedico();
 						System.out.println("Seja Bem-Vindo "+ medico.getNome());
 						op = medico.operaMedico();
 						if (op == 0)
 							iniciaSistema();
 						break;
 					case 3:
-						Secretaria secretaria = buscaSecretaria(loginSenha);
+						Secretaria secretaria = new Secretaria();
+						secretaria.buscaSecretaria();
 						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
 						op = secretaria.operaSecretaria();
 						if (op == 0)
@@ -89,29 +88,12 @@ public class Main {
 		}
 	}
 
-	
-	public static Secretaria buscaSecretaria(LoginSenha loginSenha) throws SQLException{
-		Secretaria secretaria = new Secretaria();
-		SecretariaDao secDao = new SecretariaDao();
-		secretaria = secDao.getPorLogin(loginSenha.getLogin());
-		return secretaria;
-	}
-	
-	public static Medico buscaMedico(LoginSenha loginSenha) throws SQLException{
-		Medico medico = new Medico();
-		MedicoDao medicoDao = new MedicoDao();
-		medico = medicoDao.getPorLogin(loginSenha.getLogin());
-		return medico;
-	}
-	
 	public static void main(String[] args) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
 		
 		//iniciaAdmin();
-		//iniciaSistema();
+		iniciaSistema();
 		
 		Administrador adm = new Administrador();
-		//adm.cadastraMedico();
-		//adm.cadastraSecretaria();
 		
 	}
 }

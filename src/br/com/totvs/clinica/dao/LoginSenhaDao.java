@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.totvs.clinica.model.LoginSenha;
+import br.com.totvs.clinica.model.Usuario;
 
 public class LoginSenhaDao implements Dao<LoginSenha>{
 	
@@ -74,25 +75,34 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.close();
 	}
 	
-	public void editar(String busca, int cod) throws SQLException{
-		String sql = "SELECT login, senha, nivel FROM login_senha WHERE login = login";
+	public void editar(String dado, int cod, Usuario usuario) throws SQLException{
+		String login = "'"+usuario.getLogin()+"'";
+		String sql = null;
+		switch(cod){
+			case 2:
+				sql = "UPDATE LOGIN_SENHA SET login = " + dado + "WHERE login = " + login;
+				break;
+			case 8:
+				sql = "UPDATE LOGIN_SENHA SET senha = " + dado + "WHERE login = " + login;
+				break;
+			default:
+				System.out.println("Entrei no dafault LoginSenhaDao");
+				return;
+		}
 		PreparedStatement statement = conexao.prepareStatement(sql);
-		ResultSet result = statement.executeQuery();
-		LoginSenha loginSenha = new LoginSenha();
-		
+		statement.executeUpdate();
+		statement.close();
 	}
 	
 	public void excluirPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
-		String sql = "DELETE FROM administrador WHERE login = " + login;
+		String sql = "DELETE FROM LOGIN_SENHA WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		statement.executeUpdate();
 
 		statement.close();
-//		conexao.close();
-
 	}
 	
 }

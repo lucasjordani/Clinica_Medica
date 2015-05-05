@@ -96,14 +96,13 @@ public class SecretariaDao implements Dao<Secretaria>{
 	
 	public void excluirPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
-		String sql = "DELETE FROM administrador WHERE login = " + login;
+		String sql = "DELETE FROM secretaria WHERE login = " + login;
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		statement.executeUpdate();
 
 		statement.close();
-		conexao.close();
 
 	}
 

@@ -25,6 +25,10 @@ public class Medico extends Usuario {
 		return 0;
 	}
 	
+	public void buscaMedico() {
+		// TODO Auto-generated method stub
+	}
+	
 	@Override
 	public String toString() {
 		return "Nome: " + this.getNome() + "\nLogin: " + this.getLogin() + "\nRG: " + this.getRg()

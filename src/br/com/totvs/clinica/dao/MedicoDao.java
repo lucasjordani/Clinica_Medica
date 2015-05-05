@@ -107,7 +107,6 @@ public class MedicoDao implements Dao<Medico> {
 		statement.executeUpdate();
 
 		statement.close();
-		conexao.close();
 
 	}
 
