@@ -82,4 +82,17 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		
 	}
 	
+	public void excluirPorLogin(String login) throws SQLException {
+		login = "'"+login+"'";
+		String sql = "DELETE FROM administrador WHERE login = " + login;
+
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		statement.executeUpdate();
+
+		statement.close();
+//		conexao.close();
+
+	}
+	
 }
