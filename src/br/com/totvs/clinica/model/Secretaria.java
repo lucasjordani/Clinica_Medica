@@ -60,7 +60,6 @@ public class Secretaria extends Usuario {
 	
 	public void buscaSecretaria(LoginSenha loginSenha){
 		Secretaria secretaria = new Secretaria();
-		secretaria.setEndereco(new Endereco());
 		try{
 			SecretariaDao secretariaDao = new SecretariaDao();
 			secretaria = secretariaDao.getPorLogin(loginSenha.getLogin());
