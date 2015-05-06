@@ -59,6 +59,18 @@ public class Usuario {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+	
+	public void setLogradouro(String logradouro){
+		this.endereco.setLogradouro(logradouro);
+	}
+	
+	public void setBairro(String bairro){
+		this.endereco.setBairro(bairro);
+	}
+	
+	public void setCidade(String cidade){
+		this.endereco.setCidade(cidade);
+	}
 
 	@Override
 	public String toString() {

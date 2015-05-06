@@ -25,7 +25,7 @@ public class Medico extends Usuario {
 		return 0;
 	}
 	
-	public void buscaMedico() {
+	public void buscaMedico(LoginSenha loginSenha) {
 		// TODO Auto-generated method stub
 	}
 	

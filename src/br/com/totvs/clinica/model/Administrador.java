@@ -19,15 +19,13 @@ public class Administrador extends Usuario {
 	public int operaAdministrador() {
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
-		int op;
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar novo usuario;");
 			System.out.println("Digite 2 para editar um usuário cadastrado;");
 			System.out.println("Digite 3 para excluir um usuário cadastrado;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					return 0;
 				case 1:
@@ -49,17 +47,15 @@ public class Administrador extends Usuario {
 	}
 	
 	private void cadastrar() {
-		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
-		int op;
+		boolean loop = true;
 		while (loop == true){
 			System.out.println("Que tipo de usuario deseja cadastrar?");
 			System.out.println("Digite 1 para cadastrar novo administrador;");
 			System.out.println("Digite 2 para cadastrar novo médico;");
 			System.out.println("Digite 3 para cadastrar nova secretária;");
 			System.out.println("Digite 0 para voltar a tela anterior.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					return;
 				case 1:
@@ -111,15 +107,13 @@ public class Administrador extends Usuario {
 	private void excluiUsuario(){
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
-		int op;
 		while (loop == true){
 			System.out.println("Que tipo de usuario deseja excluir?");
 			System.out.println("Digite 1 para excluir administrador;");
 			System.out.println("Digite 2 para excluir médico;");
 			System.out.println("Digite 3 para excluir secretária;");
 			System.out.println("Digite 0 para voltar a tela anterior.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					return;
 				case 1:
@@ -144,22 +138,15 @@ public class Administrador extends Usuario {
 		Administrador adm = new Administrador();
 		LoginSenha loginSenha = new LoginSenha();
 		System.out.println("Cadastrar Administrador");
-		System.out.println("Digite o nome:");
-		adm.setNome(sc.nextLine());
-		System.out.println("Digite o RG:");
-		adm.setRg(sc.next());
-		System.out.println("Digite o telefone:");
-		adm.setTelefone(sc.next());
-		adm.setEndereco(cadastraEndereco());
+		cadastraUsuario(adm);
+		cadastraEndereco(adm);
 		cadastraLoginSenha(loginSenha, adm);
 		loginSenha.setNivel(1);
-		int op;
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Confirma o cadastro do Administrador?\n" + adm.toString());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nUsuário não cadastrado!");
 					return;
@@ -186,24 +173,17 @@ public class Administrador extends Usuario {
 		Medico medico = new Medico();
 		LoginSenha loginSenha = new LoginSenha();
 		System.out.println("Cadastrar Médico");
-		System.out.println("Digite o nome:");
-		medico.setNome(sc.nextLine());
-		System.out.println("Digite o RG:");
-		medico.setRg(sc.next());
-		System.out.println("Digite o telefone:");
-		medico.setTelefone(sc.next());
-		medico.setEndereco(cadastraEndereco());
+		cadastraUsuario(medico);
+		cadastraEndereco(medico);
 		System.out.println("Digite as especialidades do médico:");
 		medico.setEspecialidades(sc.next() + sc.nextLine());
 		cadastraLoginSenha(loginSenha, medico);
 		loginSenha.setNivel(2);
-		int op;
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Confirma o cadastro do Médico?\n" + medico.toString());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nMédico não cadastrado!");
 					return;
@@ -230,22 +210,15 @@ public class Administrador extends Usuario {
 		Secretaria secretaria = new Secretaria();
 		LoginSenha loginSenha = new LoginSenha();
 		System.out.println("Cadastrar Secretária");
-		System.out.println("Digite o nome:");
-		secretaria.setNome(sc.nextLine());
-		System.out.println("Digite o RG:");
-		secretaria.setRg(sc.next());
-		System.out.println("Digite o telefone:");
-		secretaria.setTelefone(sc.next());
-		secretaria.setEndereco(cadastraEndereco());
+		cadastraUsuario(secretaria);
+		cadastraEndereco(secretaria);
 		cadastraLoginSenha(loginSenha, secretaria);
 		loginSenha.setNivel(3);
-		int op;
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Confirma o cadastro da Secretária?\n" + secretaria.toString());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nUsuário não cadastrado!");
 					return;
@@ -270,65 +243,27 @@ public class Administrador extends Usuario {
 	private void editaAdministrador(LoginSenha loginSenha) {
 		Administrador adm = new Administrador();
 		adm.buscaAministrador(loginSenha);
+		String login = adm.getLogin();
 		Scanner sc = new Scanner(System.in);
 		boolean loop = true;
-		int op;
-		String dado = "";
 		while (loop == true){
 			System.out.println("O que deseja editar no Administrador " + adm.getNome());
-			menuEditar();
-			op = sc.nextInt();
-			switch (op){
-				case 0:
-					return;
-				case 1:
-					System.out.println("Digite o novo nome:");
-					dado = (sc.next() + sc.nextLine());
-					System.out.println(dado);
-					break;
-				case 2:
-					System.out.println("Digite o novo login:");
-					dado = sc.next();
-					break;
-				case 3:
-					System.out.println("Digite o novo RG:");
-					dado = sc.next();
-					break;
-				case 4:
-					System.out.println("Digite o novo telefone:");
-					dado = sc.next();
-					break;
-				case 5:
-					System.out.println("Digite o novo logradouro:");
-					dado = (sc.next() + sc.nextLine());
-					break;
-				case 6:
-					System.out.println("Digite o novo bairro:");
-					dado = (sc.next() + sc.nextLine());
-					break;
-				case 7:
-					System.out.println("Digite a nova cidade:");
-					dado = (sc.next() + sc.nextLine());
-					break;
-				case 8:
-					System.out.println("Digite a nova senha:");
-					dado = sc.next();
-					break;
-				default:
-					System.out.println("Opção Inválida!");
-					System.out.println("Tente novamente.");
-			}
-			try {
-				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
-				loginSenhaDao.editar(dado, op, adm);
-				AdministradorDao administradorDao = new AdministradorDao();
-				administradorDao.editar(dado, op, adm);
-			} catch(SQLException e){
-			System.out.println(e.getMessage());
-			}
-			System.out.println("Atualização de Administrador realizada com sucesso!");
-			return;
+			menuEditar(loginSenha, adm);
+			System.out.println("Deseja alterar mais algum dado?");
+			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+			if (sc.nextInt() == 0)
+				break;
 		}
+		try {
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenhaDao.editar(loginSenha, login);
+			AdministradorDao administradorDao = new AdministradorDao();
+			administradorDao.editar(adm, login);
+		} catch(SQLException e){
+		System.out.println(e.getMessage());
+		}
+		System.out.println("Atualização de Administrador realizada com sucesso!");
+		return;
 	}
 	
 	private void editaMedico(LoginSenha loginSenha) {
@@ -336,7 +271,29 @@ public class Administrador extends Usuario {
 	}
 	
 	private void editaSecretaria(LoginSenha loginSenha) {
-		
+		Secretaria secretaria = new Secretaria();
+		secretaria.buscaSecretaria(loginSenha);
+		String login = secretaria.getLogin();
+		Scanner sc = new Scanner(System.in);
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("O que deseja editar no Secretaria " + secretaria.getNome());
+			menuEditar(loginSenha, secretaria);
+			System.out.println("Deseja alterar mais algum dado?");
+			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+			if (sc.nextInt() == 0)
+				break;
+		}
+		try {
+			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
+			loginSenhaDao.editar(loginSenha, login);
+			SecretariaDao secretariaDao = new SecretariaDao();
+			secretariaDao.editar(secretaria, login);
+		} catch(SQLException e){
+		System.out.println(e.getMessage());
+		}
+		System.out.println("Atualização de Secretaria realizada com sucesso!");
+		return;
 	}
 	
 	private void excluiAdministrador(){
@@ -408,8 +365,8 @@ public class Administrador extends Usuario {
 		}
 		if(loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
 			try{
-				//SecretariaDao secretariaDao = new SecretariaDao();
-				//secretariaDao.excluirPorLogin(login);
+				SecretariaDao secretariaDao = new SecretariaDao();
+				secretariaDao.excluirPorLogin(login);
 				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
 				loginSenhaDao.excluirPorLogin(login);
 			} catch(SQLException e){
@@ -435,14 +392,12 @@ public class Administrador extends Usuario {
 		this.setLogin(administrador.getLogin());
 		this.setRg(administrador.getRg());
 		this.setTelefone(administrador.getTelefone());
-		Endereco endereco = new Endereco();
-		endereco.setLogradouro(administrador.getEndereco().getLogradouro());
-		endereco.setBairro(administrador.getEndereco().getBairro());
-		endereco.setCidade(administrador.getEndereco().getCidade());
-		this.setEndereco(endereco);
+		this.setLogradouro(administrador.getEndereco().getLogradouro());
+		this.setBairro(administrador.getEndereco().getBairro());
+		this.setCidade(administrador.getEndereco().getCidade());
 	}
 	
-	private void menuEditar(){
+	private void menuEditar(LoginSenha loginSenha, Usuario usuario){
 		System.out.println("Digite 1 para editar o nome;");
 		System.out.println("Digite 2 para editar o login;");
 		System.out.println("Digite 3 para editar o RG;");
@@ -451,20 +406,71 @@ public class Administrador extends Usuario {
 		System.out.println("Digite 6 para editar o bairro;");
 		System.out.println("Digite 7 para editar a cidade;");
 		System.out.println("Digite 8 para editar a senha;");
-		System.out.println("Digite 0 para voltar a tela inicial.");
+		System.out.println("Digite 0 para voltar.");
+		Scanner sc = new Scanner(System.in);
+		switch (sc.nextInt()){
+			case 0:
+				return;
+			case 1:
+				System.out.println("Digite o novo nome:");
+				usuario.setNome((sc.next() + sc.nextLine()));
+				System.out.println(usuario.getNome());
+				break;
+			case 2:
+				System.out.println("Digite o novo login:");
+				usuario.setLogin(sc.next());
+				loginSenha.setLogin(usuario.getLogin());
+				break;
+			case 3:
+				System.out.println("Digite o novo RG:");
+				usuario.setRg(sc.next());
+				break;
+			case 4:
+				System.out.println("Digite o novo telefone:");
+				usuario.setTelefone(sc.next());
+				break;
+			case 5:
+				System.out.println("Digite o novo logradouro:");
+				usuario.setLogradouro(sc.next() + sc.nextLine());
+				break;
+			case 6:
+				System.out.println("Digite o novo bairro:");
+				usuario.setBairro(sc.next() + sc.nextLine());
+				break;
+			case 7:
+				System.out.println("Digite a nova cidade:");
+				usuario.setCidade(sc.next() + sc.nextLine());
+				break;
+			case 8:
+				System.out.println("Digite a nova senha:");
+				loginSenha.setSenha(sc.next());
+				break;
+			default:
+				System.out.println("Opção Inválida!");
+				System.out.println("Tente novamente.");
+		}
 	}
 
-	private Endereco cadastraEndereco(){
+	private void cadastraUsuario(Usuario usuario){
 		Scanner sc = new Scanner(System.in);
-		Endereco endereco = new Endereco();
+		System.out.println("Digite o nome:");
+		usuario.setNome(sc.nextLine());
+		System.out.println("Digite o RG:");
+		usuario.setRg(sc.next());
+		System.out.println("Digite o telefone:");
+		usuario.setTelefone(sc.next());
+	}
+	
+	private void cadastraEndereco(Usuario usuario){
+		usuario.setEndereco(new Endereco());
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Endereço:");
 		System.out.println("Digite o logradouro:");
-		endereco.setLogradouro(sc.nextLine());
+		usuario.setLogradouro(sc.nextLine());
 		System.out.println("Digite o bairro:");
-		endereco.setBairro(sc.nextLine());
+		usuario.setBairro(sc.nextLine());
 		System.out.println("Digite a cidade:");
-		endereco.setCidade(sc.nextLine());
-		return endereco;
+		usuario.setCidade(sc.nextLine());
 	}
 
 	private void cadastraLoginSenha(LoginSenha loginSenha, Usuario usuario){
