@@ -51,7 +51,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 	public Secretaria getPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
-				+ "FROM secretaria WHERE login = " + login;
+				+ " FROM secretaria WHERE login = " + login;
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();
