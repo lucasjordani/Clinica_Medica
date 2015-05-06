@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.totvs.clinica.model.Administrador;
 import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.Medico;
 
@@ -53,10 +52,10 @@ public class MedicoDao implements Dao<Medico> {
 	@Override
 	public Medico getPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
-		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade, "
-				+ "especialidades FROM medico WHERE login = " + login;
+		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade, especialidades"
+				+ " FROM medico WHERE login = " + login;
 		PreparedStatement statement = conexao.prepareStatement(sql);
-		statement.setString(1, login);
+
 		ResultSet result = statement.executeQuery();
 
 		Medico medico = new Medico();

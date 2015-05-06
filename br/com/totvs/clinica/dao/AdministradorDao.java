@@ -50,7 +50,7 @@ public class AdministradorDao implements Dao<Administrador> {
 	}
 
 	@Override
-	public Administrador getPorLogin(String login) throws SQLException {
+	public Administrador getPorLogin(String login) throws SQLException{
 		login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
 				+ " FROM administrador WHERE login = "+ login;

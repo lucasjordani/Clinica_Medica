@@ -8,7 +8,9 @@ public class Paciente {
 	private Endereco endereco;
 	private String dataNascimento;
 	
-	public Paciente() {}
+	public Paciente() {
+		endereco = new Endereco();
+	}
 		
 	public Paciente(int codPaciente, String nome, String telefone, 
 			Endereco endereco, String dataNascimento) {
