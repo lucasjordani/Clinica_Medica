@@ -46,6 +46,7 @@ public class Administrador extends Usuario {
 		return 0;
 	}
 	
+	
 	private void cadastrar() {
 		Scanner sc = new Scanner(System.in);
 		boolean loop = true;

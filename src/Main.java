@@ -64,7 +64,10 @@ public class Main {
 						break;
 					case 2:
 						Medico medico = new Medico();
+<<<<<<< HEAD
 						medico.setEndereco(new Endereco());
+=======
+>>>>>>> 42a6fd15997141a59ce7a2422164308210e939ea
 						medico.buscaMedico(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ medico.getNome());
 						op = medico.operaMedico();
@@ -73,7 +76,10 @@ public class Main {
 						break;
 					case 3:
 						Secretaria secretaria = new Secretaria();
+<<<<<<< HEAD
 						secretaria.setEndereco(new Endereco());
+=======
+>>>>>>> 42a6fd15997141a59ce7a2422164308210e939ea
 						secretaria.buscaSecretaria(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
 						op = secretaria.operaSecretaria();

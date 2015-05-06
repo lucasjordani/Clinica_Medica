@@ -3,6 +3,7 @@ package br.com.totvs.clinica.model;
 import java.sql.SQLException;
 
 import br.com.totvs.clinica.dao.AdministradorDao;
+import java.util.Scanner;
 import br.com.totvs.clinica.dao.SecretariaDao;
 
 public class Secretaria extends Usuario {
@@ -14,12 +15,52 @@ public class Secretaria extends Usuario {
 	}
 
 	public int operaSecretaria() {
-		// TODO Auto-generated method stub
+		boolean loop = true;
+		Scanner sc = new Scanner(System.in);
+		int op;
+		while (loop == true){
+			System.out.println("O que deseja fazer no sistema?");
+			System.out.println("Digite 1 para cadastrar uma nova consulta;");
+			System.out.println("Digite 2 para cadastrar um paciente (cadastro básico);");
+			System.out.println("Digite 3 para cadastrar um paciente (cadastro complementar);");
+			System.out.println("Digite 4 para editar um paciente cadastrado;");
+			System.out.println("Digite 5 para editar o status de uma consulta marcada;");
+			System.out.println("Digite 6 para excluir uma consulta marcada;");
+			System.out.println("Digite 0 para se deslogar do sistema.");
+			op = sc.nextInt();
+			switch (op){
+				case 0:
+					return 0;
+//				case 1:
+//					cadastrar();
+//					break;
+//				case 2:
+//					editaUsuario();
+//					break;
+//				case 3:
+//					excluiUsuario();
+//					break;
+//				case 4:
+//					excluiUsuario();
+//					break;
+//				case 5:
+//					excluiUsuario();
+//					break;
+//				case 6:
+//					excluiUsuario();
+//					break;
+				default:
+					System.out.println("Opção Inválida!");
+					System.out.println("Tente novamente.");
+					break;
+			}
+		}
 		return 0;
 	}
 	
-	public void buscaSecretaria(LoginSenha loginSenha) {
+	public void buscaSecretaria(LoginSenha loginSenha){
 		Secretaria secretaria = new Secretaria();
+		secretaria.setEndereco(new Endereco());
 		try{
 			SecretariaDao secretariaDao = new SecretariaDao();
 			secretaria = secretariaDao.getPorLogin(loginSenha.getLogin());
@@ -33,6 +74,7 @@ public class Secretaria extends Usuario {
 		this.setLogradouro(secretaria.getEndereco().getLogradouro());
 		this.setBairro(secretaria.getEndereco().getBairro());
 		this.setCidade(secretaria.getEndereco().getCidade());
+
 	}
 			
 }
