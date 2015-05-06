@@ -72,5 +72,13 @@ public class Paciente {
 	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
+	public String toStringBasico() {
+		return "Nome: " + nome + "\nTelefone: " + telefone;
+	}
+	
+	public String toStringComplementar() {
+		return "Data de nascimento: " + dataNascimento + endereco.toString();
+	}
 	
 }

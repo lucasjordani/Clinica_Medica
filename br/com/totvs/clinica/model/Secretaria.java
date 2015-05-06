@@ -114,7 +114,7 @@ public class Secretaria extends Usuario {
 		int op;
 		boolean loop = true;
 		while (loop == true){
-			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toString());
+			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toStringBasico());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
 			op = sc.nextInt();
 			switch (op){
@@ -148,7 +148,7 @@ public class Secretaria extends Usuario {
 		int op;
 		boolean loop = true;
 		while (loop == true){
-			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toString());
+			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toStringComplementar());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
 			op = sc.nextInt();
 			switch (op){

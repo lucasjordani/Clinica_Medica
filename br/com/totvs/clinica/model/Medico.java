@@ -3,6 +3,7 @@ package br.com.totvs.clinica.model;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import br.com.totvs.clinica.dao.ConsultaDao;
 import br.com.totvs.clinica.dao.MedicoDao;
 
 public class Medico extends Usuario {
@@ -52,6 +53,14 @@ public class Medico extends Usuario {
 	}
 	
 	public void registraObservacoes(){
+
+		boolean loop = true;
+		Scanner sc = new Scanner(System.in);
+		int op;
+		while (loop == true){
+			System.out.println("Digite o código da consulta na qual deseja registrar observações. \nLista das consultas:\n");
+			System.out.println();
+		}
 		
 	}
 	

@@ -78,7 +78,7 @@ public class PacienteDao implements Dao<Paciente> {
 	public void inserir(Paciente paciente) throws SQLException {
 		
 		String sql = " INSERT INTO PACIENTE (nome, telefone, logradouro, bairro, cidade, "
-				+ "data_nascimento VALUES (?,?,?,?,?,?)";
+				+ "data_nascimento) VALUES (?,?,?,?,?,?)";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
