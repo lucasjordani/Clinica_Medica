@@ -48,6 +48,7 @@ public class Administrador extends Usuario {
 		return 0;
 	}
 	
+	
 	private void cadastrar() {
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
@@ -408,8 +409,8 @@ public class Administrador extends Usuario {
 		}
 		if(loginSenha.getLogin() != null && loginSenha.getLogin().equals(login)){
 			try{
-				//SecretariaDao secretariaDao = new SecretariaDao();
-				//secretariaDao.excluirPorLogin(login);
+				SecretariaDao secretariaDao = new SecretariaDao();
+				secretariaDao.excluirPorLogin(login);
 				LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
 				loginSenhaDao.excluirPorLogin(login);
 			} catch(SQLException e){

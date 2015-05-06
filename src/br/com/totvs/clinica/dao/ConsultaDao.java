@@ -111,4 +111,15 @@ public class ConsultaDao implements Dao<Consulta>{
 			result.close();
 			return consulta;
 		}
+		
+		public void excluirPorId(int id) throws SQLException {
+			String sql = "DELETE FROM consulta WHERE cod_consulta = " + id;
+			
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.executeUpdate();
+
+			statement.close();
+
+		}
 }

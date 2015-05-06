@@ -63,7 +63,7 @@ public class Main {
 						break;
 					case 2:
 						Medico medico = new Medico();
-						medico.buscaMedico();
+						medico.buscaMedico(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ medico.getNome());
 						op = medico.operaMedico();
 						if (op == 0)
@@ -71,7 +71,7 @@ public class Main {
 						break;
 					case 3:
 						Secretaria secretaria = new Secretaria();
-						secretaria.buscaSecretaria();
+						secretaria.buscaSecretaria(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
 						op = secretaria.operaSecretaria();
 						if (op == 0)
