@@ -1,12 +1,14 @@
 package br.com.totvs.clinica.model;
 
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.AdministradorDao;
 import br.com.totvs.clinica.dao.ConsultaDao;
 import br.com.totvs.clinica.dao.LoginSenhaDao;
 import br.com.totvs.clinica.dao.PacienteDao;
+
+import java.util.Scanner;
+
 import br.com.totvs.clinica.dao.SecretariaDao;
 
 public class Secretaria extends Usuario {
@@ -211,11 +213,10 @@ public class Secretaria extends Usuario {
 		this.setLogin(secretaria.getLogin());
 		this.setRg(secretaria.getRg());
 		this.setTelefone(secretaria.getTelefone());
-		Endereco endereco = new Endereco();
-		endereco.setLogradouro(secretaria.getEndereco().getLogradouro());
-		endereco.setBairro(secretaria.getEndereco().getBairro());
-		endereco.setCidade(secretaria.getEndereco().getCidade());
-		this.setEndereco(endereco);
+		this.setLogradouro(secretaria.getEndereco().getLogradouro());
+		this.setBairro(secretaria.getEndereco().getBairro());
+		this.setCidade(secretaria.getEndereco().getCidade());
+
 	}
 	
 	private Endereco cadastraEndereco(){

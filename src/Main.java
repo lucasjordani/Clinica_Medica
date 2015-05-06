@@ -55,6 +55,7 @@ public class Main {
 				switch (loginSenha.getNivel()){
 					case 1:
 						Administrador adm = new Administrador();
+						adm.setEndereco(new Endereco());
 						adm.buscaAministrador(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ adm.getNome());
 						op = adm.operaAdministrador();
@@ -63,6 +64,7 @@ public class Main {
 						break;
 					case 2:
 						Medico medico = new Medico();
+						medico.setEndereco(new Endereco());
 						medico.buscaMedico(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ medico.getNome());
 						op = medico.operaMedico();
@@ -71,6 +73,7 @@ public class Main {
 						break;
 					case 3:
 						Secretaria secretaria = new Secretaria();
+						secretaria.setEndereco(new Endereco());
 						secretaria.buscaSecretaria(loginSenha);
 						System.out.println("Seja Bem-Vindo "+ secretaria.getNome());
 						op = secretaria.operaSecretaria();

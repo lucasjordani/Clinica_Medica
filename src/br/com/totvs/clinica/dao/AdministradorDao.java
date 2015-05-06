@@ -29,18 +29,17 @@ public class AdministradorDao implements Dao<Administrador> {
 		ResultSet result = statement.executeQuery();
 
 		List<Administrador> administradores = new ArrayList<Administrador>();
-		Endereco endereco = new Endereco();
+		Administrador administrador = new Administrador();
+		administrador.setEndereco(new Endereco());
 		while (result.next()) {
-			Administrador administrador = new Administrador();
 
 			administrador.setNome(result.getString("nome"));
 			administrador.setLogin(result.getString("login"));
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
-			endereco.setLogradouro(result.getString("logradouro"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setCidade(result.getString("cidade"));
-			administrador.setEndereco(endereco);
+			administrador.setLogradouro(result.getString("logradouro"));
+			administrador.setBairro(result.getString("bairro"));
+			administrador.setCidade(result.getString("cidade"));
 
 			administradores.add(administrador);
 		}
@@ -60,16 +59,15 @@ public class AdministradorDao implements Dao<Administrador> {
 		ResultSet result = statement.executeQuery();
 
 		Administrador administrador = new Administrador();
-		Endereco endereco = new Endereco();
+		administrador.setEndereco(new Endereco());
 		while (result.next()) {
 			administrador.setNome(result.getString("nome"));
 			administrador.setLogin(result.getString("login"));
 			administrador.setRg(result.getString("rg"));
 			administrador.setTelefone(result.getString("telefone"));
-			endereco.setLogradouro(result.getString("logradouro"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setCidade(result.getString("cidade"));
-			administrador.setEndereco(endereco);
+			administrador.setLogradouro(result.getString("logradouro"));
+			administrador.setBairro(result.getString("bairro"));
+			administrador.setCidade(result.getString("cidade"));
 		}
 		result.close();
 		return administrador;
@@ -96,38 +94,20 @@ public class AdministradorDao implements Dao<Administrador> {
 		statement.close();
 	}
 	
-	public void editar(String dado, int cod, Administrador adm) throws SQLException {
-		String login = "'"+adm.getLogin()+"'";
-		String sql = null;
-		switch(cod){
-			case 1:
-				System.out.println("Entrei no case 1 Update Nome");
-				sql = "UPDATE ADMINISTRADOR SET nome = " + dado + "WHERE login = " + login;
-				break;
-			case 2:
-				sql = "UPDATE ADMINISTRADOR SET login = " + dado + "WHERE login = " + login;
-				break;
-			case 3:
-				sql = "UPDATE ADMINISTRADOR SET rg = " + dado + "WHERE login = " + login;
-				break;
-			case 4:
-				sql = "UPDATE ADMINISTRADOR SET telefone = " + dado + "WHERE login = " + login;
-				break;
-			case 5:
-				sql = "UPDATE ADMINISTRADOR SET logradouro = " + dado + "WHERE login = " + login;
-				break;
-			case 6:
-				sql = "UPDATE ADMINISTRADOR SET bairro = " + dado + "WHERE login = " + login;
-				break;
-			case 7:
-				sql = "UPDATE ADMINISTRADOR SET cidade = " + dado + "WHERE login = " + login;
-				break;
-			default:
-				System.out.println("Entrei no dafault AdministradorDao");
-				return;
-		}
+	public void editar(Administrador administrador, String login) throws SQLException {
+		login = "'"+login+"'";
+		String sql = "UPDATE ADMINISTRADOR SET nome=?, login=?, rg=?, telefone=?, "
+				+ "								logradouro=?, bairro=?, cidade=?"
+				+ " WHERE login = " + login; 
 		System.out.println("Executando a Statement");
 		PreparedStatement statement = conexao.prepareStatement(sql);
+		statement.setString(1, administrador.getNome());
+		statement.setString(2, administrador.getLogin());
+		statement.setString(3, administrador.getRg());
+		statement.setString(4, administrador.getTelefone());
+		statement.setString(5, administrador.getEndereco().getLogradouro());
+		statement.setString(6, administrador.getEndereco().getBairro());
+		statement.setString(7, administrador.getEndereco().getCidade());
 		statement.executeUpdate();
 		statement.close();
 		System.out.println("Executei a Statement");

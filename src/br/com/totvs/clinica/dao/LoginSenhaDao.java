@@ -27,9 +27,8 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		ResultSet result = statement.executeQuery();
 		
 		List<LoginSenha> loginsSenhas = new ArrayList<LoginSenha>();
-		
+		LoginSenha loginSenha = new LoginSenha();
 		while(result.next()){
-			LoginSenha loginSenha = new LoginSenha();
 			
 			loginSenha.setLogin(result.getString("login"));
 			loginSenha.setSenha(result.getString("senha"));
@@ -75,21 +74,14 @@ public class LoginSenhaDao implements Dao<LoginSenha>{
 		statement.close();
 	}
 	
-	public void editar(String dado, int cod, Usuario usuario) throws SQLException{
-		String login = "'"+usuario.getLogin()+"'";
-		String sql = null;
-		switch(cod){
-			case 2:
-				sql = "UPDATE LOGIN_SENHA SET login = " + dado + "WHERE login = " + login;
-				break;
-			case 8:
-				sql = "UPDATE LOGIN_SENHA SET senha = " + dado + "WHERE login = " + login;
-				break;
-			default:
-				System.out.println("Entrei no dafault LoginSenhaDao");
-				return;
-		}
+	public void editar(LoginSenha loginSenha, String login) throws SQLException{
+		login = "'"+login+"'";
+		String sql = "UPDATE LOGIN_SENHA SET login=?, senha=?, nivel=? "
+				+ "WHERE login = " + login;
 		PreparedStatement statement = conexao.prepareStatement(sql);
+		statement.setString(1, loginSenha.getLogin());
+		statement.setString(2, loginSenha.getSenha());
+		statement.setInt(3, loginSenha.getNivel());
 		statement.executeUpdate();
 		statement.close();
 	}
