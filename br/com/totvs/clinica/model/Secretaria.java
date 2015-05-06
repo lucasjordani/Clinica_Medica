@@ -37,21 +37,21 @@ public class Secretaria extends Usuario {
 //				case 1:
 //					cadastraConsulta();
 //					break;
-				case 2:
-					cadastraPacienteBasico();
-					break;
-				case 3:
-					cadastraPacienteComplementar();
-					break;
+//				case 2:
+//					cadastraPacienteBasico();
+//					break;
+//				case 3:
+//					cadastraPacienteComplementar();
+//					break;
 //				case 4:
 //					editaPaciente(getNome());
 //					break;
 //				case 5:
 //					editaStatusConsulta();
 //					break;
-				case 6:
-					excluiConsulta();
-					break;
+//				case 6:
+//					excluiConsulta();
+//					break;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
@@ -61,47 +61,10 @@ public class Secretaria extends Usuario {
 		return 0;
 	}
 	
-//	private void cadastraConsulta() {
-//		Scanner sc = new Scanner(System.in);
-//		Consulta con = new Consulta();
-//		System.out.println("Cadastrar Consulta");
-//		System.out.println("Digite o nome:");
-//		adm.setNome(sc.nextLine());
-//		System.out.println("Digite o RG:");
-//		adm.setRg(sc.next());
-//		System.out.println("Digite o telefone:");
-//		adm.setTelefone(sc.next());
-//		adm.setEndereco(cadastraEndereco());
-//		cadastraLoginSenha(loginSenha, adm);
-//		loginSenha.setNivel(1);
-//		int op;
-//		boolean loop = true;
-//		while (loop == true){
-//			System.out.println("Confirma o cadastro do Administrador?\n" + adm.toString());
-//			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-//			op = sc.nextInt();
-//			switch (op){
-//				case 0:
-//					System.out.println("Operação Cancelada!\nUsuário não cadastrado!");
-//					return;
-//				case 1:
-//					try{
-//						LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
-//						loginSenhaDao.inserir(loginSenha);
-//						AdministradorDao admDao = new AdministradorDao();
-//						admDao.inserir(adm);
-//					}catch(SQLException e){
-//						System.out.println(e.getMessage());
-//					}
-//						System.out.println("Usuário cadastrado com sucesso!");
-//					return;
-//				default:
-//					System.out.println("Opção Inválida!\nTenta novamente.");
-//					break;
-//			}
-//		}
-//	}
 	
+// CADASTRAR CONSULTA	
+	
+// NÃO ESTÁ CADASTRANDO NO BANCO	
 	public void cadastraPacienteBasico(){
 		Scanner sc = new Scanner(System.in);
 		Paciente pacienteBasico = new Paciente();
@@ -137,6 +100,8 @@ public class Secretaria extends Usuario {
 		}
 	}
 	
+// NÃO ESTÁ CADASTRANDO NO BANCO, FALTA COLOCAR UMA LISTA TAMBÉM DOS PACIENTES CADASTRADOS PARA ESCOLHER QUAL DELES
+// SE QUER COMPLEMENTAR O CADASTRO
 	public void cadastraPacienteComplementar(){
 		Scanner sc = new Scanner(System.in);
 		Paciente pacienteComplementar = new Paciente();
@@ -171,34 +136,14 @@ public class Secretaria extends Usuario {
 		}
 	}
 	
-//	private void editaPaciente(String nome) {
-//		Paciente pac = new Paciente();
-//		pac.buscaPaciente(nome);
-//		String nome = pac.getNome();
-//		Scanner sc = new Scanner(System.in);
-//		boolean loop = true;
-//		while (loop == true){
-//			System.out.println("O que deseja editar no Administrador " + adm.getNome());
-//			menuEditar(loginSenha, adm);
-//			System.out.println("Deseja alterar mais algum dado?");
-//			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
-//			if (sc.nextInt() == 0)
-//				break;
-//		}
-//		try {
-//			LoginSenhaDao loginSenhaDao = new LoginSenhaDao();
-//			loginSenhaDao.editar(loginSenha, login);
-//			AdministradorDao administradorDao = new AdministradorDao();
-//			administradorDao.editar(adm, login);
-//		} catch(SQLException e){
-//		System.out.println(e.getMessage());
-//		}
-//		System.out.println("Atualização de Administrador realizada com sucesso!");
-//		return;
-//	}
 	
+// EDITAR PACIENTE	
+	
+// EDITAR STATUS CONSULTA
 	
 	//TESTAR, DESCOBRIR COMO A PESSOA VAI SABER O ID PARA EXCLUIR CONSULTA
+	//A PESSOA VAI SABER O ID ATRAVÉS DA LISTA DE CONSULTAS, TRAZER A LISTA DE TODAS CONSULTAS E ESCOLHER QUAL EXCLUIR
+	//ACHO QUE PODEMOS FAZER ATRAVÉS DE NOME DE PACIENTE SE FOR FACILITAR, OU SEI LÁ
 	private void excluiConsulta(){
 		Scanner sc = new Scanner(System.in);
 		Consulta consulta = new Consulta();
@@ -244,24 +189,6 @@ public class Secretaria extends Usuario {
 		this.setCidade(secretaria.getEndereco().getCidade());
 
 	}
-	
-//	public void buscaPaciente(String nome){
-//		Secretaria secretaria = new Secretaria();
-//		try{
-//			SecretariaDao secretariaDao = new SecretariaDao();
-//			secretaria = secretariaDao.getPorLogin(loginSenha.getLogin());
-//		}catch(SQLException e){
-//			System.out.println(e.getMessage());
-//		}
-//		this.setNome(secretaria.getNome());
-//		this.setLogin(secretaria.getLogin());
-//		this.setRg(secretaria.getRg());
-//		this.setTelefone(secretaria.getTelefone());
-//		this.setLogradouro(secretaria.getEndereco().getLogradouro());
-//		this.setBairro(secretaria.getEndereco().getBairro());
-//		this.setCidade(secretaria.getEndereco().getCidade());
-//
-//	}
 	
 	private void menuEditar(Paciente paciente){
 		System.out.println("Digite 1 para editar o nome;");

@@ -1,6 +1,7 @@
 package br.com.totvs.clinica.model;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
@@ -26,7 +27,7 @@ public class Medico extends Usuario {
 		this.especialidades = especialidades;
 	}
 
-	public int operaMedico() {
+	public int operaMedico() throws SQLException {
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
 		int op;
@@ -38,10 +39,9 @@ public class Medico extends Usuario {
 			switch (op){
 				case 0:
 					return 0;
-				case 1:
-					//Implementar:
+//				case 1:
 //					registraObservacoes();
-					break;
+//					break;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
@@ -52,17 +52,19 @@ public class Medico extends Usuario {
 		
 	}
 	
-	public void registraObservacoes(){
-
-		boolean loop = true;
-		Scanner sc = new Scanner(System.in);
-		int op;
-		while (loop == true){
-			System.out.println("Digite o código da consulta na qual deseja registrar observações. \nLista das consultas:\n");
-			System.out.println();
-		}
-		
-	}
+//	public void registraObservacoes() throws SQLException{
+//		ConsultaDao consultaDao = new ConsultaDao();
+//		List<Consulta> consultas = consultaDao.getTodos();
+//		boolean loop = true;
+//		Scanner sc = new Scanner(System.in);
+//		int op;
+//		while (loop == true){
+//			System.out.println("Digite o código da consulta na qual deseja registrar observações. \nLista das consultas:\n");
+//			System.out.println(consultas);
+//			
+//		}
+//		
+//	}
 	
 	public void buscaMedico(LoginSenha loginSenha){
 		Medico medico = new Medico();

@@ -1,5 +1,9 @@
 package br.com.totvs.clinica.model;
 
+import java.sql.SQLException;
+
+import br.com.totvs.clinica.dao.PacienteDao;
+
 public class Paciente {
 	
 	private int codPaciente; 
@@ -81,4 +85,20 @@ public class Paciente {
 		return "Data de nascimento: " + dataNascimento + endereco.toString();
 	}
 	
+	public void buscaPaciente(String nome){
+		Paciente paciente = new Paciente();
+		try{
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(paciente.getNome());
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		this.setNome(paciente.getNome());
+		this.setTelefone(paciente.getTelefone());
+		this.setDataNascimento(paciente.getDataNascimento());
+		this.setLogradouro(paciente.getEndereco().getLogradouro());
+		this.setBairro(paciente.getEndereco().getBairro());
+		this.setCidade(paciente.getEndereco().getCidade());
+
+	}
 }

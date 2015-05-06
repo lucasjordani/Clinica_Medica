@@ -117,6 +117,31 @@ public class PacienteDao implements Dao<Paciente> {
 		result.close();
 		return paciente;
 	}
+	
+	public Paciente getPorNome(String nome) throws SQLException {
+		nome = "'"+nome+"'";
+		String sql = "SELECT cod_paciente, nome, telefone, logradouro, bairro, cidade, "
+				+ "data_nascimento FROM paciente WHERE nome = " + nome;
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		ResultSet result = statement.executeQuery();
+
+		Paciente paciente = new Paciente();
+		Endereco endereco = new Endereco();
+		while(result.next()){
+			
+			paciente.setCodPaciente(result.getInt("cod_paciente"));
+			paciente.setNome(result.getString("nome"));
+			paciente.setTelefone(result.getString("telefone"));
+			endereco.setLogradouro(result.getString("logradouro"));
+			endereco.setBairro(result.getString("bairro"));
+			endereco.setCidade(result.getString("cidade"));
+			paciente.setEndereco(endereco);
+			paciente.setDataNascimento("data_nascimento");
+		}
+		result.close();
+		return paciente;
+	}
 
 
 }
