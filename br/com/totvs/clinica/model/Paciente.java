@@ -1,47 +1,38 @@
 package br.com.totvs.clinica.model;
 
-import java.util.Scanner;
-
-public class Usuario {
+public class Paciente {
 	
+	private int codPaciente; 
 	private String nome;
-	private String login;
-	private String rg;
 	private String telefone;
 	private Endereco endereco;
+	private String dataNascimento;
 	
-	public Usuario(){}
-	
-	public Usuario(String nome, String login, String rg, String telefone, Endereco endereco) {
+	public Paciente() {}
+		
+	public Paciente(int codPaciente, String nome, String telefone, 
+			Endereco endereco, String dataNascimento) {
+		this.codPaciente = codPaciente;
 		this.nome = nome;
-		this.login = login;
-		this.rg = rg;
 		this.telefone = telefone;
 		this.endereco = endereco;
+		this.dataNascimento = dataNascimento;
 	}
-	
+
+	public int getCodPaciente() {
+		return codPaciente;
+	}
+
+	public void setCodPaciente(int codPaciente) {
+		this.codPaciente = codPaciente;
+	}
+
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
 	}
 
 	public String getTelefone() {
@@ -51,7 +42,7 @@ public class Usuario {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -72,10 +63,12 @@ public class Usuario {
 		this.endereco.setCidade(cidade);
 	}
 
-	@Override
-	public String toString() {
-		return "Nome: " + nome + "\nLogin: " + login + "\nRG: " + rg
-				+ "\nTelefone: " + telefone + endereco.toString();
+	public String getDataNascimento() {
+		return dataNascimento;
 	}
 
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	
 }

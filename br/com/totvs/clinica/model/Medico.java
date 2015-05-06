@@ -51,6 +51,10 @@ public class Medico extends Usuario {
 		
 	}
 	
+	public void registraObservacoes(){
+		
+	}
+	
 	public void buscaMedico(LoginSenha loginSenha){
 		Medico medico = new Medico();
 		try{

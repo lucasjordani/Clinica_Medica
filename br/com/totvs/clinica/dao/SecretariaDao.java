@@ -21,7 +21,7 @@ public class SecretariaDao implements Dao<Secretaria>{
 	@Override
 	public List<Secretaria> getTodos() throws SQLException {
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
-				+ "FROM secretaria";
+				+ " FROM secretaria";
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 

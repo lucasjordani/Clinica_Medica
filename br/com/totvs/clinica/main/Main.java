@@ -1,3 +1,6 @@
+package br.com.totvs.clinica.main;
+
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;

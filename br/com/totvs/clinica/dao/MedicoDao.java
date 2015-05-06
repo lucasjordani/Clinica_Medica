@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.totvs.clinica.model.Administrador;
 import br.com.totvs.clinica.model.Endereco;
 import br.com.totvs.clinica.model.Medico;
 
@@ -52,7 +53,7 @@ public class MedicoDao implements Dao<Medico> {
 	@Override
 	public Medico getPorLogin(String login) throws SQLException {
 		login = "'"+login+"'";
-		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade,"
+		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade, "
 				+ "especialidades FROM medico WHERE login = " + login;
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		statement.setString(1, login);
@@ -96,6 +97,26 @@ public class MedicoDao implements Dao<Medico> {
 
 		statement.execute();
 		statement.close();
+	}
+	
+	public void editar(Medico medico, String login) throws SQLException {
+		login = "'"+login+"'";
+		String sql = "UPDATE MEDICO SET nome=?, login=?, rg=?, telefone=?, "
+				+ "								logradouro=?, bairro=?, cidade=?, especialidades=?"
+				+ " WHERE login = " + login; 
+		System.out.println("Executando a Statement");
+		PreparedStatement statement = conexao.prepareStatement(sql);
+		statement.setString(1, medico.getNome());
+		statement.setString(2, medico.getLogin());
+		statement.setString(3, medico.getRg());
+		statement.setString(4, medico.getTelefone());
+		statement.setString(5, medico.getEndereco().getLogradouro());
+		statement.setString(6, medico.getEndereco().getBairro());
+		statement.setString(7, medico.getEndereco().getCidade());
+		statement.setString(8, medico.getEspecialidades());
+		statement.executeUpdate();
+		statement.close();
+		System.out.println("Executei a Statement");
 	}
 	
 	public void excluirPorLogin(String login) throws SQLException {

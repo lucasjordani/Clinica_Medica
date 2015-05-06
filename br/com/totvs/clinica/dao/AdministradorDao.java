@@ -3,6 +3,7 @@ package br.com.totvs.clinica.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +54,17 @@ public class AdministradorDao implements Dao<Administrador> {
 		login = "'"+login+"'";
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
 				+ " FROM administrador WHERE login = "+ login;
+		
+		System.out.println(sql);
 
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
-		ResultSet result = statement.executeQuery();
+		ResultSet result = statement.executeQuery();		
 
 		Administrador administrador = new Administrador();
 		administrador.setEndereco(new Endereco());
 		while (result.next()) {
+			System.out.println("OI");
 			administrador.setNome(result.getString("nome"));
 			administrador.setLogin(result.getString("login"));
 			administrador.setRg(result.getString("rg"));
