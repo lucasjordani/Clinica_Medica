@@ -93,6 +93,19 @@ public class PacienteDao implements Dao<Paciente> {
 		statement.close();
 	}
 	
+public void inserirBasico(Paciente paciente) throws SQLException {
+		
+		String sql = " INSERT INTO PACIENTE (nome, telefone) VALUES (?,?)";
+
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		statement.setString(1, paciente.getNome());
+		statement.setString(2, paciente.getTelefone());
+
+		statement.execute();
+		statement.close();
+	}
+	
 	
 	public Paciente getPorId(int id) throws SQLException {
 		String sql = "SELECT cod_paciente, nome, telefone, logradouro, bairro, cidade, "
@@ -127,16 +140,15 @@ public class PacienteDao implements Dao<Paciente> {
 		ResultSet result = statement.executeQuery();
 
 		Paciente paciente = new Paciente();
-		Endereco endereco = new Endereco();
+		paciente.setEndereco(new Endereco());
 		while(result.next()){
 			
 			paciente.setCodPaciente(result.getInt("cod_paciente"));
 			paciente.setNome(result.getString("nome"));
 			paciente.setTelefone(result.getString("telefone"));
-			endereco.setLogradouro(result.getString("logradouro"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setCidade(result.getString("cidade"));
-			paciente.setEndereco(endereco);
+			paciente.setLogradouro(result.getString("logradouro"));
+			paciente.setBairro(result.getString("bairro"));
+			paciente.setCidade(result.getString("cidade"));
 			paciente.setDataNascimento("data_nascimento");
 		}
 		result.close();
