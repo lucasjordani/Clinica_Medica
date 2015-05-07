@@ -112,6 +112,27 @@ public class ConsultaDao implements Dao<Consulta>{
 			return consulta;
 		}
 		
+		public Consulta getPorMedico (String medico) throws SQLException {
+			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao FROM consulta WHERE "+medico+" = medico";
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			ResultSet result = statement.executeQuery();
+
+			Consulta consulta = new Consulta();
+			while(result.next()){
+				consulta.setCodConsulta(result.getInt("cod_consulta"));
+				consulta.setPaciente(result.getString("paciente"));
+				consulta.setMedico(result.getString("medico"));
+				consulta.setPlanoSaude(result.getString("plano_saude"));
+				consulta.setDataHora(result.getString("data_hora"));
+				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setObservacao(result.getString("observacao"));
+			}
+			result.close();
+			return consulta;
+		}
+		
 		public void excluirPorId(int id) throws SQLException {
 			String sql = "DELETE FROM consulta WHERE cod_consulta = " + id;
 			
