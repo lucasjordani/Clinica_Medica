@@ -156,11 +156,10 @@ public void inserirBasico(Paciente paciente) throws SQLException {
 		return paciente;
 	}
 	
-	public void editar(Paciente paciente, String nome) throws SQLException {
-		nome = "'"+nome+"'";
+	public void editar(Paciente paciente) throws SQLException {
 		String sql = "UPDATE PACIENTE SET nome=?, telefone=?, "
-				+ "								logradouro=?, bairro=?, cidade=?, data_nascimento=?"
-				+ " WHERE nome = " + nome; 
+				+ "		logradouro=?, bairro=?, cidade=?, data_nascimento=?"
+				+ " WHERE cod_paciente  = " + paciente.getCodPaciente(); 
 		System.out.println("Executando a Statement");
 		PreparedStatement statement = conexao.prepareStatement(sql);
 		statement.setString(1, paciente.getNome());

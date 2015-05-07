@@ -25,7 +25,7 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite 1 para cadastrar uma nova consulta;");
 			System.out.println("Digite 2 para cadastrar um paciente;");
 			System.out.println("Digite 3 para editar um paciente cadastrado;");
-			System.out.println("Digite 4 para editar o status de uma consulta marcada;");
+			System.out.println("Digite 4 para editar uma consulta marcada;");
 			System.out.println("Digite 5 para excluir uma consulta marcada;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
 			switch (sc.nextInt()){
@@ -38,15 +38,12 @@ public class Secretaria extends Usuario {
 					cadastraPaciente();
 					break;
 //				case 3:
-//					cadastraPacienteComplementar();
-//					break;
-//				case 4:
 //					editaPaciente(getNome());
 //					break;
-//				case 5:
-//					editaStatusConsulta();
+//				case 4:
+//					editaConsulta();
 //					break;
-//				case 6:
+//				case 5:
 //					excluiConsulta();
 //					break;
 				default:
@@ -64,33 +61,32 @@ public class Secretaria extends Usuario {
 	
 	public void cadastraPaciente() throws SQLException{
 		Scanner sc = new Scanner(System.in);
-		Paciente p = new Paciente();
-		PacienteDao pacienteDao = new PacienteDao();
-		System.out.println("Cadastrar Paciente (cadastro básico)");
-		System.out.println("Digite o nome:");
+		Paciente paciente = new Paciente();
+		System.out.println("Cadastrar Paciente:");
+		System.out.println("Digite o nome do paciente:");
 		String nome = sc.next() + sc.nextLine();
-
-		
 		try{
-			p = pacienteDao.getPorNome(nome);
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nome);
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		if(p.getNome() != null && p.getNome().equals(nome)){
-			System.out.println("Cadastrar Paciente (cadastro complementar)");
-			System.out.println("Digite a data de nascimento:");
-			p.setDataNascimento(sc.nextLine());
-			p.setEndereco(cadastraEndereco());
-			System.out.println("Confirma o cadastro complementar do Paciente?\n" + p.toStringComplementar());
-			
-		} else {
-			p.setNome(nome);
+		if(!(paciente.getNome() != null && paciente.getNome().equals(nome))){
+			paciente.setNome(nome);
 			System.out.println("Digite o telefone:");
-			String telefone = sc.next();
-			p.setTelefone(telefone);
-			p.setEndereco(new Endereco());
-			System.out.println("Confirma o cadastro básico do Paciente?\n" + p.toStringBasico());
+			paciente.setTelefone(sc.next());
 		}
+		System.out.println("Digite a data de nascimento (Digite 0 para pular):");
+		String dataNascimento = sc.next() + sc.nextLine();
+		if(!dataNascimento.equals(0))
+			paciente.setDataNascimento(dataNascimento);
+		System.out.println("Deseja cadastrar o endereço?");
+		System.out.println("Digite 1 para SIM e 0 para NÃO!");
+		if(sc.nextInt() == 1)
+			paciente.setEndereco(cadastraEndereco());
+		else
+			paciente.setEndereco(new Endereco());
+		System.out.println("Confirma o cadastro do Paciente?" + paciente.toString());
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
@@ -100,16 +96,18 @@ public class Secretaria extends Usuario {
 					return;
 				case 1:
 					try{
-						pacienteDao.inserir(p);
-						//pacienteDao.editar(p, nome);
-						
+						PacienteDao pacienteDao = new PacienteDao();
+						if (paciente.getEndereco().getLogradouro() == null)
+							pacienteDao.inserir(paciente);
+						else
+							pacienteDao.editar(paciente);
 					}catch(SQLException e){
 						System.out.println(e.getMessage());
 					}
 						System.out.println("Paciente cadastrado com sucesso!");
 					return;
 				default:
-					System.out.println("Opção Inválida!\nTenta novamente.");
+					System.out.println("Opção Inválida!\nTente novamente.");
 					break;
 			}
 		}

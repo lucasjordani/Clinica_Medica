@@ -142,9 +142,15 @@ public class ConsultaDao implements Dao<Consulta>{
 			return consultas;
 		}
 		
-		public void insereObservacao(Consulta consulta){
+		public void insereObservacao(Consulta consulta) throws SQLException{
 			String sql = "UPDATE ADMINISTRADOR SET observacao=? "
 					+ "WHERE cod_consulta = " + consulta.getCodConsulta(); 
+
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			statement.setString(1, consulta.getObservacao());
+			statement.execute();
+			statement.close();
 		}
 		
 		public void excluirPorId(int id) throws SQLException {
