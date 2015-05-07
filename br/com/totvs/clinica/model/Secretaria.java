@@ -82,10 +82,12 @@ public class Secretaria extends Usuario {
 			p.setDataNascimento(sc.nextLine());
 			p.setEndereco(cadastraEndereco());
 			System.out.println("Confirma o cadastro complementar do Paciente?\n" + p.toStringComplementar());
+			
 		} else {
 			p.setNome(nome);
 			System.out.println("Digite o telefone:");
-			p.setTelefone(sc.next());
+			String telefone = sc.next();
+			p.setTelefone(telefone);
 			p.setEndereco(new Endereco());
 			System.out.println("Confirma o cadastro básico do Paciente?\n" + p.toStringBasico());
 		}
@@ -99,6 +101,8 @@ public class Secretaria extends Usuario {
 				case 1:
 					try{
 						pacienteDao.inserir(p);
+						//pacienteDao.editar(p, nome);
+						
 					}catch(SQLException e){
 						System.out.println(e.getMessage());
 					}

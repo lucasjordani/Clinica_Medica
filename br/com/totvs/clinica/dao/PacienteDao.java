@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.totvs.clinica.model.Endereco;
+import br.com.totvs.clinica.model.Medico;
 import br.com.totvs.clinica.model.Paciente;
 
 public class PacienteDao implements Dao<Paciente> {
@@ -153,6 +154,24 @@ public void inserirBasico(Paciente paciente) throws SQLException {
 		}
 		result.close();
 		return paciente;
+	}
+	
+	public void editar(Paciente paciente, String nome) throws SQLException {
+		nome = "'"+nome+"'";
+		String sql = "UPDATE PACIENTE SET nome=?, telefone=?, "
+				+ "								logradouro=?, bairro=?, cidade=?, data_nascimento=?"
+				+ " WHERE nome = " + nome; 
+		System.out.println("Executando a Statement");
+		PreparedStatement statement = conexao.prepareStatement(sql);
+		statement.setString(1, paciente.getNome());
+		statement.setString(2, paciente.getTelefone());
+		statement.setString(3, paciente.getEndereco().getLogradouro());
+		statement.setString(4, paciente.getEndereco().getBairro());
+		statement.setString(5, paciente.getEndereco().getCidade());
+		statement.setString(6, paciente.getDataNascimento());
+		statement.executeUpdate();
+		statement.close();
+		System.out.println("Executei a Statement");
 	}
 
 
