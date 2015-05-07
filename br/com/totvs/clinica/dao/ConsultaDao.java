@@ -28,9 +28,8 @@ public class ConsultaDao implements Dao<Consulta>{
 			ResultSet result = statement.executeQuery();
 
 			List<Consulta> consultas = new ArrayList<Consulta>();
-
+			Consulta consulta = new Consulta();
 			while (result.next()) {
-				Consulta consulta = new Consulta();
 
 				consulta.setCodConsulta(result.getInt("cod_consulta"));
 				consulta.setPaciente(result.getString("paciente"));
@@ -39,7 +38,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setDataHora(result.getString("data_hora"));
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
 				consulta.setObservacao(result.getString("observacao"));
-				
+		
 				consultas.add(consulta);
 			}
 			result.close();
@@ -91,13 +90,17 @@ public class ConsultaDao implements Dao<Consulta>{
 			statement.close();
 		}
 		
-		public Consulta getPorPaciente (String paciente) throws SQLException {
+		public List<Consulta> getPorPaciente (String paciente, String loginMedico) throws SQLException {
+			paciente = "'"+paciente+"'";
+			loginMedico = "'"+loginMedico+"'";
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
-					+ "status_consulta, observacao FROM consulta WHERE "+paciente+" = paciente";
+					+ "status_consulta, observacao FROM consulta "
+					+ "WHERE paciente = " + paciente+ " AND medico = " + loginMedico;
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
 
+			List<Consulta> consultas = new ArrayList<Consulta>();
 			Consulta consulta = new Consulta();
 			while(result.next()){
 				consulta.setCodConsulta(result.getInt("cod_consulta"));
@@ -107,18 +110,21 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setDataHora(result.getString("data_hora"));
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
 				consulta.setObservacao(result.getString("observacao"));
+				
+				consultas.add(consulta);
 			}
 			result.close();
-			return consulta;
+			return consultas;
 		}
 		
-		public Consulta getPorMedico (String medico) throws SQLException {
+		public List<Consulta> getPorMedico (String medico) throws SQLException {
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
 					+ "status_consulta, observacao FROM consulta WHERE "+medico+" = medico";
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
 
+			List<Consulta> consultas = new ArrayList<Consulta>();
 			Consulta consulta = new Consulta();
 			while(result.next()){
 				consulta.setCodConsulta(result.getInt("cod_consulta"));
@@ -128,9 +134,11 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setDataHora(result.getString("data_hora"));
 				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
 				consulta.setObservacao(result.getString("observacao"));
+				
+				consultas.add(consulta);
 			}
 			result.close();
-			return consulta;
+			return consultas;
 		}
 		
 		public void excluirPorId(int id) throws SQLException {
