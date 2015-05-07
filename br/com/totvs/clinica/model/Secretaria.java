@@ -17,17 +17,16 @@ public class Secretaria extends Usuario {
 		super(nome, login, rg, telefone, endereco);
 	}
 
-	public int operaSecretaria() {
+	public int operaSecretaria() throws SQLException {
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar uma nova consulta;");
-			System.out.println("Digite 2 para cadastrar um paciente (cadastro básico);");
-			System.out.println("Digite 3 para cadastrar um paciente (cadastro complementar);");
-			System.out.println("Digite 4 para editar um paciente cadastrado;");
-			System.out.println("Digite 5 para editar o status de uma consulta marcada;");
-			System.out.println("Digite 6 para excluir uma consulta marcada;");
+			System.out.println("Digite 2 para cadastrar um paciente;");
+			System.out.println("Digite 3 para editar um paciente cadastrado;");
+			System.out.println("Digite 4 para editar o status de uma consulta marcada;");
+			System.out.println("Digite 5 para excluir uma consulta marcada;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
 			switch (sc.nextInt()){
 				case 0:
@@ -35,9 +34,9 @@ public class Secretaria extends Usuario {
 //				case 1:
 //					cadastraConsulta();
 //					break;
-//				case 2:
-//					cadastraPacienteBasico();
-//					break;
+				case 2:
+					cadastraPaciente();
+					break;
 //				case 3:
 //					cadastraPacienteComplementar();
 //					break;
@@ -62,18 +61,38 @@ public class Secretaria extends Usuario {
 	
 // CADASTRAR CONSULTA	
 	
-// NÃO ESTÁ CADASTRANDO NO BANCO	
-	public void cadastraPacienteBasico(){
+	
+	public void cadastraPaciente() throws SQLException{
 		Scanner sc = new Scanner(System.in);
-		Paciente pacienteBasico = new Paciente();
+		Paciente p = new Paciente();
+		PacienteDao pacienteDao = new PacienteDao();
 		System.out.println("Cadastrar Paciente (cadastro básico)");
 		System.out.println("Digite o nome:");
-		pacienteBasico.setNome(sc.nextLine());
-		System.out.println("Digite o telefone:");
-		pacienteBasico.setTelefone(sc.next());
+		String nome = sc.next() + sc.nextLine();
+
+		
+		try{
+			p = pacienteDao.getPorNome(nome);
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		if(p.getNome() != null && p.getNome().equals(nome)){
+			System.out.println("Cadastrar Paciente (cadastro complementar)");
+			System.out.println("Digite a data de nascimento:");
+			p.setDataNascimento(sc.nextLine());
+			p.setEndereco(cadastraEndereco());
+			System.out.println("Confirma o cadastro complementar do Paciente?\n" + p.toStringComplementar());
+			
+		} else {
+			p.setNome(nome);
+			System.out.println("Digite o telefone:");
+			String telefone = sc.next();
+			p.setTelefone(telefone);
+			p.setEndereco(new Endereco());
+			System.out.println("Confirma o cadastro básico do Paciente?\n" + p.toStringBasico());
+		}
 		boolean loop = true;
 		while (loop == true){
-			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toStringBasico());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
 			switch (sc.nextInt()){
 				case 0:
@@ -81,8 +100,9 @@ public class Secretaria extends Usuario {
 					return;
 				case 1:
 					try{
-						PacienteDao pacienteDao = new PacienteDao();
-						pacienteDao.inserir(pacienteBasico);
+						pacienteDao.inserir(p);
+						//pacienteDao.editar(p, nome);
+						
 					}catch(SQLException e){
 						System.out.println(e.getMessage());
 					}
@@ -95,38 +115,71 @@ public class Secretaria extends Usuario {
 		}
 	}
 	
-// NÃO ESTÁ CADASTRANDO NO BANCO, FALTA COLOCAR UMA LISTA TAMBÉM DOS PACIENTES CADASTRADOS PARA ESCOLHER QUAL DELES
-// SE QUER COMPLEMENTAR O CADASTRO
-	public void cadastraPacienteComplementar(){
-		Scanner sc = new Scanner(System.in);
-		Paciente pacienteComplementar = new Paciente();
-		System.out.println("Cadastrar Paciente (cadastro complementar)");
-		System.out.println("Digite a data de nascimento:");
-		pacienteComplementar.setDataNascimento(sc.nextLine());
-		pacienteComplementar.setEndereco(cadastraEndereco());
-		boolean loop = true;
-		while (loop == true){
-			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toStringComplementar());
-			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			switch (sc.nextInt()){
-				case 0:
-					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
-					return;
-				case 1:
-					try{
-						PacienteDao pacienteDao = new PacienteDao();
-						pacienteDao.inserir(pacienteComplementar);
-					}catch(SQLException e){
-						System.out.println(e.getMessage());
-					}
-						System.out.println("Paciente cadastrado com sucesso!");
-					return;
-				default:
-					System.out.println("Opção Inválida!\nTenta novamente.");
-					break;
-			}
-		}
-	}
+// NÃO ESTÁ CADASTRANDO NO BANCO	
+//	public void cadastraPacienteBasico(){
+//		Scanner sc = new Scanner(System.in);
+//		Paciente pacienteBasico = new Paciente();
+//		System.out.println("Cadastrar Paciente (cadastro básico)");
+//		System.out.println("Digite o nome:");
+//		pacienteBasico.setNome(sc.nextLine());
+//		System.out.println("Digite o telefone:");
+//		pacienteBasico.setTelefone(sc.next());
+//		boolean loop = true;
+//		while (loop == true){
+//			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toStringBasico());
+//			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+//			switch (sc.nextInt()){
+//				case 0:
+//					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
+//					return;
+//				case 1:
+//					try{
+//						PacienteDao pacienteDao = new PacienteDao();
+//						pacienteDao.inserir(pacienteBasico);
+//					}catch(SQLException e){
+//						System.out.println(e.getMessage());
+//					}
+//						System.out.println("Paciente cadastrado com sucesso!");
+//					return;
+//				default:
+//					System.out.println("Opção Inválida!\nTenta novamente.");
+//					break;
+//			}
+//		}
+//	}
+//	
+//// NÃO ESTÁ CADASTRANDO NO BANCO, FALTA COLOCAR UMA LISTA TAMBÉM DOS PACIENTES CADASTRADOS PARA ESCOLHER QUAL DELES
+//// SE QUER COMPLEMENTAR O CADASTRO
+//	public void cadastraPacienteComplementar(){
+//		Scanner sc = new Scanner(System.in);
+//		Paciente pacienteComplementar = new Paciente();
+//		System.out.println("Cadastrar Paciente (cadastro complementar)");
+//		System.out.println("Digite a data de nascimento:");
+//		pacienteComplementar.setDataNascimento(sc.nextLine());
+//		pacienteComplementar.setEndereco(cadastraEndereco());
+//		boolean loop = true;
+//		while (loop == true){
+//			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toStringComplementar());
+//			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+//			switch (sc.nextInt()){
+//				case 0:
+//					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
+//					return;
+//				case 1:
+//					try{
+//						PacienteDao pacienteDao = new PacienteDao();
+//						pacienteDao.inserir(pacienteComplementar);
+//					}catch(SQLException e){
+//						System.out.println(e.getMessage());
+//					}
+//						System.out.println("Paciente cadastrado com sucesso!");
+//					return;
+//				default:
+//					System.out.println("Opção Inválida!\nTenta novamente.");
+//					break;
+//			}
+//		}
+//	}
 	
 	
 // EDITAR PACIENTE	

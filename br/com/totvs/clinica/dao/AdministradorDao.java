@@ -55,8 +55,7 @@ public class AdministradorDao implements Dao<Administrador> {
 		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade"
 				+ " FROM administrador WHERE login = "+ login;
 		
-		System.out.println(sql);
-
+		
 		PreparedStatement statement = conexao.prepareStatement(sql);
 
 		ResultSet result = statement.executeQuery();		
