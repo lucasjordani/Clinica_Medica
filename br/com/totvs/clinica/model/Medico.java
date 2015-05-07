@@ -36,8 +36,8 @@ public class Medico extends Usuario {
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
-			System.out.println("Digite 1 para buscar consulta;");
-			System.out.println("Digite 2 para buscar um paciente;");
+			System.out.println("Digite 1 para buscar uma consulta;");
+			System.out.println("Digite 2 para buscar todas suas consultas;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
 			switch (sc.nextInt()){
 				case 0:
@@ -46,7 +46,7 @@ public class Medico extends Usuario {
 					buscaConsulta();
 					break;
 				case 2:
-					buscaPaciente();
+					buscaTodasConsultas();
 					break;
 				default:
 					System.out.println("Opção Inválida!");
@@ -56,32 +56,8 @@ public class Medico extends Usuario {
 		return 0;
 		
 	}
-	
-	private void buscaConsulta() {
-		boolean loop = true;
-		while(loop == true){
-			System.out.println("O que deseja fazer?");
-			System.out.println("Digite 1 para buscar uma consulta;");
-			System.out.println("Digite 2 para buscar todas suas consultas;");
-			System.out.println("Digite 0 para voltar a tela anterior.");
-			Scanner sc = new Scanner(System.in);
-			switch(sc.nextInt()){
-				case 0:
-					return;
-				case 1:
-					buscaPaciente();
-					return;
-				case 2:
-					buscaTodasConsultas();
-					return;
-				case 3:
-					System.out.println("Opção Inválida!");
-					System.out.println("Tente novamente.");
-			}
-		}
-	}
 
-	private void buscaPaciente() {
+	private void buscaConsulta() {
 		Paciente paciente = new Paciente();
 		paciente.setEndereco(new Endereco());
 		List<Consulta> consultas = new ArrayList<>();
@@ -105,27 +81,54 @@ public class Medico extends Usuario {
 			System.out.println("Paciente não existe no sistema!");
 			return;
 		}
-		System.out.println("Digite o código da consulta deseja visualizar:");
-		for (Consulta cons:consultas){
+		System.out.println("Digite o código da consulta que deseja visualizar:");
+		for (Consulta cons:consultas)
 			cons.toString();
+		Consulta consulta = new Consulta();
+		consulta = consultas.get(sc.nextInt());
+		System.out.println("Deseja cadastrar alguma observação nesta consulta?");
+		System.out.println("Digite 1 para SIM e 0 para NÃO.");
+		boolean loop = true;
+		while(loop == true){
+			switch(sc.nextInt()){
+				case 0:
+					return;
+				case 1:
+					registraObservacoes(consulta);
+					return;
+				default:
+					System.out.println("Opção Inválida!");
+					System.out.println("Tente novamente.");
+					break;
+			}
 		}
-		int codConsulta = sc.nextInt();
-		
+	}
+	
+	private List<Consulta> buscaTodasConsultas() {
+		List<Consulta> consultas = new ArrayList<>();
+		try {
+			ConsultaDao consultaDao = new ConsultaDao();
+			consultas = consultaDao.getPorMedico(this.getNome());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return consultas;
 	}
 
-//	public void registraObservacoes() throws SQLException{
-//		ConsultaDao consultaDao = new ConsultaDao();
-//		List<Consulta> consultas = consultaDao.getTodos();
-//		boolean loop = true;
-//		Scanner sc = new Scanner(System.in);
-//		int op;
-//		while (loop == true){
-//			System.out.println("Digite o código da consulta na qual deseja registrar observações. \nLista das consultas:\n");
-//			System.out.println(consultas);
-//			
-//		}
-//		
-//	}
+	public void registraObservacoes(Consulta consulta) {
+		Scanner sc = new Scanner(System.in);
+		consulta.toString();
+		System.out.println("Digite as observações na consulta: ");
+		consulta.setObservacao(sc.next() + sc.nextLine());
+		try {
+			ConsultaDao consultaDao = new ConsultaDao();
+			consultaDao.insereObservacao(consulta);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Observações inseridas com sucesso!");
+		return;
+	}
 	
 	public void buscaMedico(LoginSenha loginSenha){
 		Medico medico = new Medico();

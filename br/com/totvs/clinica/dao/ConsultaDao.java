@@ -117,9 +117,10 @@ public class ConsultaDao implements Dao<Consulta>{
 			return consultas;
 		}
 		
-		public List<Consulta> getPorMedico (String medico) throws SQLException {
+		public List<Consulta> getPorMedico(String medico) throws SQLException {
+			medico = "'" + medico + "'";
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
-					+ "status_consulta, observacao FROM consulta WHERE "+medico+" = medico";
+					+ "status_consulta, observacao FROM consulta WHERE medico = " + medico;
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
@@ -139,6 +140,11 @@ public class ConsultaDao implements Dao<Consulta>{
 			}
 			result.close();
 			return consultas;
+		}
+		
+		public void insereObservacao(Consulta consulta){
+			String sql = "UPDATE ADMINISTRADOR SET observacao=? "
+					+ "WHERE cod_consulta = " + consulta.getCodConsulta(); 
 		}
 		
 		public void excluirPorId(int id) throws SQLException {
