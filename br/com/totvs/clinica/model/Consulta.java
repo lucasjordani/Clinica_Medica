@@ -80,5 +80,14 @@ public class Consulta {
 		this.observacao = observacao;
 	}
 
+	@Override
+	public String toString() {
+		return "Consulta n°: " + codConsulta + "\nPaciente: " + paciente + 
+				"\nMédico: " + medico + "\nPlano de Saúde: " + planoSaude + 
+				"\nData e Hora da Consulta: " + dataHora + 
+				"\nStatus da Consulta: " + statusConsulta + "\nObservacões: " + observacao;
+	}
+
+	
 	
 }
