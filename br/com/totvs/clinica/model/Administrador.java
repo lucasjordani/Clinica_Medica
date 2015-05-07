@@ -250,6 +250,8 @@ public class Administrador extends Usuario {
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja editar no Administrador " + adm.getNome());
+			menuEditar();
+			System.out.println("Digite 0 para voltar.");
 			menuEditar(loginSenha, adm);
 			System.out.println("Deseja alterar mais algum dado?");
 			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
@@ -276,7 +278,10 @@ public class Administrador extends Usuario {
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja editar no Médico " + medico.getNome());
-			menuEditarMedico(loginSenha, medico, medico);
+			menuEditar();
+			System.out.println("Digite 9 para editar as especialidades;");
+			System.out.println("Digite 0 para voltar.");
+			menuEditar(loginSenha, medico);
 			System.out.println("Deseja alterar mais algum dado?");
 			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
 			if (sc.nextInt() == 0)
@@ -294,7 +299,6 @@ public class Administrador extends Usuario {
 		return;
 	}
 	
-	
 	private void editaSecretaria(LoginSenha loginSenha) {
 		Secretaria secretaria = new Secretaria();
 		secretaria.buscaSecretaria(loginSenha);
@@ -303,6 +307,8 @@ public class Administrador extends Usuario {
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja editar no Secretaria " + secretaria.getNome());
+			menuEditar();
+			System.out.println("Digite 0 para voltar.");
 			menuEditar(loginSenha, secretaria);
 			System.out.println("Deseja alterar mais algum dado?");
 			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
@@ -422,7 +428,7 @@ public class Administrador extends Usuario {
 		this.setCidade(administrador.getEndereco().getCidade());
 	}
 	
-	private void menuEditar(LoginSenha loginSenha, Usuario usuario){
+	private void menuEditar(){
 		System.out.println("Digite 1 para editar o nome;");
 		System.out.println("Digite 2 para editar o login;");
 		System.out.println("Digite 3 para editar o RG;");
@@ -431,62 +437,9 @@ public class Administrador extends Usuario {
 		System.out.println("Digite 6 para editar o bairro;");
 		System.out.println("Digite 7 para editar a cidade;");
 		System.out.println("Digite 8 para editar a senha;");
-		System.out.println("Digite 0 para voltar.");
-		Scanner sc = new Scanner(System.in);
-		switch (sc.nextInt()){
-			case 0:
-				return;
-			case 1:
-				System.out.println("Digite o novo nome:");
-				usuario.setNome((sc.next() + sc.nextLine()));
-				System.out.println(usuario.getNome());
-				break;
-			case 2:
-				System.out.println("Digite o novo login:");
-				usuario.setLogin(sc.next());
-				loginSenha.setLogin(usuario.getLogin());
-				break;
-			case 3:
-				System.out.println("Digite o novo RG:");
-				usuario.setRg(sc.next());
-				break;
-			case 4:
-				System.out.println("Digite o novo telefone:");
-				usuario.setTelefone(sc.next());
-				break;
-			case 5:
-				System.out.println("Digite o novo logradouro:");
-				usuario.setLogradouro(sc.next() + sc.nextLine());
-				break;
-			case 6:
-				System.out.println("Digite o novo bairro:");
-				usuario.setBairro(sc.next() + sc.nextLine());
-				break;
-			case 7:
-				System.out.println("Digite a nova cidade:");
-				usuario.setCidade(sc.next() + sc.nextLine());
-				break;
-			case 8:
-				System.out.println("Digite a nova senha:");
-				loginSenha.setSenha(sc.next());
-				break;
-			default:
-				System.out.println("Opção Inválida!");
-				System.out.println("Tente novamente.");
-		}
 	}
 	
-	private void menuEditarMedico(LoginSenha loginSenha, Usuario usuario, Medico medico){
-		System.out.println("Digite 1 para editar o nome;");
-		System.out.println("Digite 2 para editar o login;");
-		System.out.println("Digite 3 para editar o RG;");
-		System.out.println("Digite 4 para editar o telefone;");
-		System.out.println("Digite 5 para editar o logradouro;");
-		System.out.println("Digite 6 para editar o bairro;");
-		System.out.println("Digite 7 para editar a cidade;");
-		System.out.println("Digite 8 para editar a especialidade;");
-		System.out.println("Digite 9 para editar a senha;");
-		System.out.println("Digite 0 para voltar.");
+	private void menuEditar(LoginSenha loginSenha, Usuario usuario){
 		Scanner sc = new Scanner(System.in);
 		switch (sc.nextInt()){
 			case 0:
@@ -494,7 +447,6 @@ public class Administrador extends Usuario {
 			case 1:
 				System.out.println("Digite o novo nome:");
 				usuario.setNome((sc.next() + sc.nextLine()));
-				System.out.println(usuario.getNome());
 				break;
 			case 2:
 				System.out.println("Digite o novo login:");
@@ -522,12 +474,12 @@ public class Administrador extends Usuario {
 				usuario.setCidade(sc.next() + sc.nextLine());
 				break;
 			case 8:
-				System.out.println("Digite a nova especialidade:");
-				medico.setEspecialidades(sc.next());
-				break;
-			case 9:
 				System.out.println("Digite a nova senha:");
 				loginSenha.setSenha(sc.next());
+				break;
+			case 9:
+				System.out.println("Digite a nova especialidade:");
+				((Medico) usuario).setEspecialidades(sc.next() + sc.nextLine());
 				break;
 			default:
 				System.out.println("Opção Inválida!");

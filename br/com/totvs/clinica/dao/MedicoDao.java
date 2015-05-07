@@ -28,18 +28,17 @@ public class MedicoDao implements Dao<Medico> {
 		ResultSet result = statement.executeQuery();
 
 		List<Medico> medicos = new ArrayList<Medico>();
-		Endereco endereco = new Endereco();
+		Medico medico = new Medico();
+		medico.setEndereco(new Endereco());
 		while (result.next()) {
-			Medico medico = new Medico();
 
 			medico.setNome(result.getString("nome"));
 			medico.setLogin(result.getString("login"));
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
-			endereco.setLogradouro(result.getString("logradouro"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setCidade(result.getString("cidade"));
-			medico.setEndereco(endereco);
+			medico.setLogradouro(result.getString("logradouro"));
+			medico.setBairro(result.getString("bairro"));
+			medico.setCidade(result.getString("cidade"));
 			medico.setEspecialidades(result.getString("especialidades"));
 
 			medicos.add(medico);
@@ -59,16 +58,15 @@ public class MedicoDao implements Dao<Medico> {
 		ResultSet result = statement.executeQuery();
 
 		Medico medico = new Medico();
-		Endereco endereco = new Endereco();
+		medico.setEndereco(new Endereco());
 		while(result.next()){
 			medico.setNome(result.getString("nome"));
 			medico.setLogin(result.getString("login"));
 			medico.setRg(result.getString("rg"));
 			medico.setTelefone(result.getString("telefone"));
-			endereco.setLogradouro(result.getString("logradouro"));
-			endereco.setBairro(result.getString("bairro"));
-			endereco.setCidade(result.getString("cidade"));
-			medico.setEndereco(endereco);
+			medico.setLogradouro(result.getString("logradouro"));
+			medico.setBairro(result.getString("bairro"));
+			medico.setCidade(result.getString("cidade"));
 			medico.setEspecialidades(result.getString("especialidades"));
 		}
 		result.close();

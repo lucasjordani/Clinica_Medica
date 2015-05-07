@@ -99,7 +99,5 @@ public class Main {
 		//iniciaAdmin();
 		iniciaSistema();
 		
-		Administrador adm = new Administrador();
-		
 	}
 }

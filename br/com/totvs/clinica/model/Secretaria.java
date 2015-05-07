@@ -20,7 +20,6 @@ public class Secretaria extends Usuario {
 	public int operaSecretaria() {
 		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
-		int op;
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar uma nova consulta;");
@@ -30,8 +29,7 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite 5 para editar o status de uma consulta marcada;");
 			System.out.println("Digite 6 para excluir uma consulta marcada;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					return 0;
 //				case 1:
@@ -73,14 +71,11 @@ public class Secretaria extends Usuario {
 		pacienteBasico.setNome(sc.nextLine());
 		System.out.println("Digite o telefone:");
 		pacienteBasico.setTelefone(sc.next());
-		
-		int op;
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toStringBasico());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
 					return;
@@ -109,14 +104,11 @@ public class Secretaria extends Usuario {
 		System.out.println("Digite a data de nascimento:");
 		pacienteComplementar.setDataNascimento(sc.nextLine());
 		pacienteComplementar.setEndereco(cadastraEndereco());
-		
-		int op;
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toStringComplementar());
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			op = sc.nextInt();
-			switch (op){
+			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
 					return;
