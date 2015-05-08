@@ -36,7 +36,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 		
 				consultas.add(consulta);
@@ -64,7 +64,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 			}
 			result.close();
@@ -108,7 +108,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta)result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 				
 				consultas.add(consulta);
@@ -133,7 +133,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 				
 				consultas.add(consulta);

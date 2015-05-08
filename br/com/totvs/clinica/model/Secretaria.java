@@ -1,6 +1,8 @@
 package br.com.totvs.clinica.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
@@ -42,9 +44,9 @@ public class Secretaria extends Usuario {
 //				case 4:
 //					editaConsulta();
 //					break;
-//				case 5:
-//					excluiConsulta();
-//					break;
+				case 5:
+					excluiConsulta();
+					break;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
@@ -174,12 +176,20 @@ public class Secretaria extends Usuario {
 	
 // EDITAR STATUS CONSULTA
 	
-	//TESTAR, DESCOBRIR COMO A PESSOA VAI SABER O ID PARA EXCLUIR CONSULTA
-	//A PESSOA VAI SABER O ID ATRAVÉS DA LISTA DE CONSULTAS, TRAZER A LISTA DE TODAS CONSULTAS E ESCOLHER QUAL EXCLUIR
-	//ACHO QUE PODEMOS FAZER ATRAVÉS DE NOME DE PACIENTE SE FOR FACILITAR, OU SEI LÁ
+	//FALTA FAZER APARECER A LISTA DAS CONSULTAS
 	private void excluiConsulta(){
 		Scanner sc = new Scanner(System.in);
 		Consulta consulta = new Consulta();
+		List<Consulta> consultas = new ArrayList<>();
+		System.out.println("Lista de todas as Consultas:");
+		try{
+			ConsultaDao consultaDao = new ConsultaDao();
+			consultas = consultaDao.getTodos();
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		for (Consulta cons:consultas)
+			cons.toStringExcluir();
 		System.out.println("Digite o código da Consulta a ser excluída:");
 		int id = sc.nextInt();
 		try{
