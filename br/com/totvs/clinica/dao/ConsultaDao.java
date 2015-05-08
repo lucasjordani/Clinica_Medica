@@ -75,7 +75,7 @@ public class ConsultaDao implements Dao<Consulta>{
 		public void inserir(Consulta consulta) throws SQLException {
 			
 			String sql = "INSERT INTO CONSULTA (paciente, medico, plano_saude, data_hora, "
-					+ "status_consulta, observacao"
+					+ "status_consulta, observacao)"
 					   + " VALUES (?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = conexao.prepareStatement(sql);
