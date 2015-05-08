@@ -18,8 +18,8 @@ public class Secretaria extends Usuario {
 	}
 
 	public int operaSecretaria() throws SQLException {
-		boolean loop = true;
 		Scanner sc = new Scanner(System.in);
+		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar uma nova consulta;");
@@ -112,72 +112,6 @@ public class Secretaria extends Usuario {
 			}
 		}
 	}
-	
-// NÃO ESTÁ CADASTRANDO NO BANCO	
-//	public void cadastraPacienteBasico(){
-//		Scanner sc = new Scanner(System.in);
-//		Paciente pacienteBasico = new Paciente();
-//		System.out.println("Cadastrar Paciente (cadastro básico)");
-//		System.out.println("Digite o nome:");
-//		pacienteBasico.setNome(sc.nextLine());
-//		System.out.println("Digite o telefone:");
-//		pacienteBasico.setTelefone(sc.next());
-//		boolean loop = true;
-//		while (loop == true){
-//			System.out.println("Confirma o cadastro básico do Paciente?\n" + pacienteBasico.toStringBasico());
-//			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-//			switch (sc.nextInt()){
-//				case 0:
-//					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
-//					return;
-//				case 1:
-//					try{
-//						PacienteDao pacienteDao = new PacienteDao();
-//						pacienteDao.inserir(pacienteBasico);
-//					}catch(SQLException e){
-//						System.out.println(e.getMessage());
-//					}
-//						System.out.println("Paciente cadastrado com sucesso!");
-//					return;
-//				default:
-//					System.out.println("Opção Inválida!\nTenta novamente.");
-//					break;
-//			}
-//		}
-//	}
-//	
-//// NÃO ESTÁ CADASTRANDO NO BANCO, FALTA COLOCAR UMA LISTA TAMBÉM DOS PACIENTES CADASTRADOS PARA ESCOLHER QUAL DELES
-//// SE QUER COMPLEMENTAR O CADASTRO
-//	public void cadastraPacienteComplementar(){
-//		Scanner sc = new Scanner(System.in);
-//		Paciente pacienteComplementar = new Paciente();
-//		System.out.println("Cadastrar Paciente (cadastro complementar)");
-//		System.out.println("Digite a data de nascimento:");
-//		pacienteComplementar.setDataNascimento(sc.nextLine());
-//		pacienteComplementar.setEndereco(cadastraEndereco());
-//		boolean loop = true;
-//		while (loop == true){
-//			System.out.println("Confirma o cadastro complementar do Paciente?\n" + pacienteComplementar.toStringComplementar());
-//			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-//			switch (sc.nextInt()){
-//				case 0:
-//					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
-//					return;
-//				case 1:
-//					try{
-//						PacienteDao pacienteDao = new PacienteDao();
-//						pacienteDao.inserir(pacienteComplementar);
-//					}catch(SQLException e){
-//						System.out.println(e.getMessage());
-//					}
-//						System.out.println("Paciente cadastrado com sucesso!");
-//					return;
-//				default:
-//					System.out.println("Opção Inválida!\nTenta novamente.");
-//					break;
-//			}
-//		}
-//	}
 	
 	
 // EDITAR PACIENTE	

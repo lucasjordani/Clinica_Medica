@@ -79,7 +79,7 @@ public class Paciente {
 	
 	public String toString() {
 		return "\nNome: " + nome + "\nTelefone: " + telefone +
-				"Data de nascimento: " + dataNascimento + endereco.toString();
+				"\nData de nascimento: " + dataNascimento + endereco.toString();
 	}
 
 //	public String toStringBasico() {
