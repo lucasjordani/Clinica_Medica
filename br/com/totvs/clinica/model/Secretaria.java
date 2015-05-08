@@ -3,9 +3,7 @@ package br.com.totvs.clinica.model;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import br.com.totvs.clinica.dao.AdministradorDao;
 import br.com.totvs.clinica.dao.ConsultaDao;
-import br.com.totvs.clinica.dao.LoginSenhaDao;
 import br.com.totvs.clinica.dao.PacienteDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
 
@@ -31,9 +29,9 @@ public class Secretaria extends Usuario {
 			switch (sc.nextInt()){
 				case 0:
 					return 0;
-//				case 1:
-//					cadastraConsulta();
-//					break;
+				case 1:
+					cadastraConsulta();
+					break;
 				case 2:
 					cadastraPaciente();
 					break;
@@ -55,11 +53,12 @@ public class Secretaria extends Usuario {
 		return 0;
 	}
 	
-	
-// CADASTRAR CONSULTA	
-	
-	
-	public void cadastraPaciente() throws SQLException{
+	private void cadastraConsulta() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void cadastraPaciente() throws SQLException{
 		Scanner sc = new Scanner(System.in);
 		Paciente paciente = new Paciente();
 		System.out.println("Cadastrar Paciente:");
@@ -76,10 +75,11 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite o telefone:");
 			paciente.setTelefone(sc.next());
 		}
-		System.out.println("Digite a data de nascimento (Digite 0 para pular):");
+		System.out.println("Digite a data de nascimento ou Digite 0 para pular:");
+		System.out.println("Exemplo de data de nascimento: 15/12/1986");
 		String dataNascimento = sc.next() + sc.nextLine();
-		if(!dataNascimento.equals(0))
-			paciente.setDataNascimento(dataNascimento);
+		if(dataNascimento.equals(0))
+			paciente.setDataNascimento(null);
 		System.out.println("Deseja cadastrar o endereço?");
 		System.out.println("Digite 1 para SIM e 0 para NÃO!");
 		if(sc.nextInt() == 1)
