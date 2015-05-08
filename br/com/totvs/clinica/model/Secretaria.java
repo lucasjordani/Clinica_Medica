@@ -3,13 +3,12 @@ package br.com.totvs.clinica.model;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
-import br.com.totvs.clinica.dao.LoginSenhaDao;
 import br.com.totvs.clinica.dao.MedicoDao;
 import br.com.totvs.clinica.dao.PacienteDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
@@ -258,7 +257,9 @@ public class Secretaria extends Usuario {
 	}
 	
 	
-	// EDITAR STATUS CONSULTA
+	private void editaConsulta() {
+		
+	}
 
 	// FALTA FAZER APARECER A LISTA DAS CONSULTAS
 	private void excluiConsulta() {
