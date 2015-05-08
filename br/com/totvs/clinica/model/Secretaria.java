@@ -14,17 +14,19 @@ import br.com.totvs.clinica.dao.PacienteDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
 
 public class Secretaria extends Usuario {
-	
-	public Secretaria(){}
 
-	public Secretaria(String nome, String login, String rg, String telefone, Endereco endereco) {
+	public Secretaria() {
+	}
+
+	public Secretaria(String nome, String login, String rg, String telefone,
+			Endereco endereco) {
 		super(nome, login, rg, telefone, endereco);
 	}
 
 	public int operaSecretaria() throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		boolean loop = true;
-		while (loop == true){
+		while (loop == true) {
 			System.out.println("O que deseja fazer no sistema?");
 			System.out.println("Digite 1 para cadastrar uma nova consulta;");
 			System.out.println("Digite 2 para cadastrar um paciente;");
@@ -32,39 +34,41 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite 4 para editar uma consulta marcada;");
 			System.out.println("Digite 5 para excluir uma consulta marcada;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
-			switch (sc.nextInt()){
-				case 0:
-					return 0;
-				case 1:
-					cadastraConsulta();
-					break;
-				case 2:
-					cadastraPaciente();
-					break;
-//				case 3:
-//					editaPaciente(getNome());
-//					break;
-//				case 4:
-//					editaConsulta();
-//					break;
-				case 5:
-					excluiConsulta();
-					break;
-				default:
-					System.out.println("Opção Inválida!");
-					System.out.println("Tente novamente.");
-					break;
+			switch (sc.nextInt()) {
+			case 0:
+				return 0;
+			case 1:
+				cadastraConsulta();
+				break;
+			case 2:
+				cadastraPaciente();
+				break;
+			 case 3:
+			 editaPaciente(getNome());
+			 break;
+			// case 4:
+			// editaConsulta();
+			// break;
+			case 5:
+				excluiConsulta();
+				break;
+			default:
+				System.out.println("Opção Inválida!");
+				System.out.println("Tente novamente.");
+				break;
 			}
 		}
 		return 0;
 	}
 	
 	private void cadastraConsulta() {
+
 		Scanner sc = new Scanner(System.in);
 		Consulta consulta = new Consulta();
 		System.out.println("Cadastro de Consulta:");
 		System.out.println("Digite o nome do Paciente que irá consultar:");
 		String nomePaciente = sc.next() + sc.nextLine();
+
 		Paciente paciente = new Paciente();
 		try {
 			PacienteDao pacienteDao = new PacienteDao();
@@ -133,23 +137,26 @@ public class Secretaria extends Usuario {
 		}
 	}
 
+
 	private void cadastraPaciente() {
+
 		Scanner sc = new Scanner(System.in);
 		Paciente paciente = new Paciente();
 		System.out.println("Cadastrar Paciente:");
 		System.out.println("Digite o nome do paciente:");
 		String nome = sc.next() + sc.nextLine();
-		try{
+		try {
 			PacienteDao pacienteDao = new PacienteDao();
 			paciente = pacienteDao.getPorNome(nome);
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		if(!(paciente.getNome() != null && paciente.getNome().equals(nome))){
+		if (!(paciente.getNome() != null && paciente.getNome().equals(nome))) {
 			paciente.setNome(nome);
 			System.out.println("Digite o telefone:");
 			paciente.setTelefone(sc.next());
 		}
+
 		System.out.println("Deseja cadastrar a data de nascimento?");
 		System.out.println("Digite 1 para SIM e 0 para NÃO!");
 		if(sc.nextInt() == 1){
@@ -165,16 +172,20 @@ public class Secretaria extends Usuario {
 			}
 			paciente.setDataNascimento(fmt.format(dataFormatada));
 		}
+
 		System.out.println("Deseja cadastrar o endereço?");
 		System.out.println("Digite 1 para SIM e 0 para NÃO!");
-		if(sc.nextInt() == 1)
+		if (sc.nextInt() == 1)
 			paciente.setEndereco(cadastraEndereco());
 		else
 			paciente.setEndereco(new Endereco());
-		System.out.println("Confirma o cadastro do Paciente?" + paciente.toString());
+		System.out.println("Confirma o cadastro do Paciente?"
+				+ paciente.toString());
 		boolean loop = true;
-		while (loop == true){
+		while (loop == true) {
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+
+			
 			switch (sc.nextInt()){
 				case 0:
 					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
@@ -197,44 +208,72 @@ public class Secretaria extends Usuario {
 					return;
 				default:
 					System.out.println("Opção Inválida!\nTente novamente.");
-					break;
+			
+
 			}
 		}
 	}
+
+	// EDITAR PACIENTE (CONSERTAAAAAAAAAAAAAAAAAR)
+	private void editaPaciente(String nome){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Digite o nome do Paciente a ser editado:");
+		Paciente pac = new Paciente();
+		nome = sc.next() + sc.nextLine();
+		pac.buscaPaciente(nome);
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("O que deseja editar no Paciente " + pac.getNome());
+			menuEditar(pac);
+			System.out.println("Digite 0 para voltar.");
+			menuEditar(pac);
+			System.out.println("Deseja alterar mais algum dado?");
+			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+			if (sc.nextInt() == 0)
+				break;
+		}
+		try {
+			PacienteDao pacienteDao = new PacienteDao();
+			pacienteDao.editar(pac);
+		} catch(SQLException e){
+		System.out.println(e.getMessage());
+		}
+		System.out.println("Atualização de Paciente realizada com sucesso!");
+		return;
+	}
 	
 	
-// EDITAR PACIENTE	
-	
-// EDITAR STATUS CONSULTA
-	
-	//FALTA FAZER APARECER A LISTA DAS CONSULTAS
-	private void excluiConsulta(){
+	// EDITAR STATUS CONSULTA
+
+	// FALTA FAZER APARECER A LISTA DAS CONSULTAS
+	private void excluiConsulta() {
 		Scanner sc = new Scanner(System.in);
 		Consulta consulta = new Consulta();
 		List<Consulta> consultas = new ArrayList<>();
 		System.out.println("Lista de todas as Consultas:");
-		try{
+		try {
 			ConsultaDao consultaDao = new ConsultaDao();
 			consultas = consultaDao.getTodos();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		for (Consulta cons:consultas)
+		for (Consulta cons : consultas)
 			cons.toStringExcluir();
 		System.out.println("Digite o código da Consulta a ser excluída:");
 		int id = sc.nextInt();
-		try{
+		try {
 			ConsultaDao consultaDao = new ConsultaDao();
 			consulta = consultaDao.getPorId(id);
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		if(consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id) && consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)){
-			try{
+		if (consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id)
+				&& consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)) {
+			try {
 				ConsultaDao consultaDao = new ConsultaDao();
 				consultaDao.excluirPorId(id);
-				
-			} catch(SQLException e){
+
+			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
 			System.out.println("Consulta excluída com sucesso!");
@@ -244,14 +283,13 @@ public class Secretaria extends Usuario {
 			return;
 		}
 	}
-	
-	
-	public void buscaSecretaria(LoginSenha loginSenha){
+
+	public void buscaSecretaria(LoginSenha loginSenha) {
 		Secretaria secretaria = new Secretaria();
-		try{
+		try {
 			SecretariaDao secretariaDao = new SecretariaDao();
 			secretaria = secretariaDao.getPorLogin(loginSenha.getLogin());
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		this.setNome(secretaria.getNome());
@@ -263,8 +301,8 @@ public class Secretaria extends Usuario {
 		this.setCidade(secretaria.getEndereco().getCidade());
 
 	}
-	
-	private void menuEditar(Paciente paciente){
+
+	private void menuEditar(Paciente paciente) {
 		System.out.println("Digite 1 para editar o nome;");
 		System.out.println("Digite 2 para editar o telefone;");
 		System.out.println("Digite 3 para editar a data de nascimento;");
@@ -273,42 +311,42 @@ public class Secretaria extends Usuario {
 		System.out.println("Digite 6 para editar a cidade;");
 		System.out.println("Digite 0 para voltar.");
 		Scanner sc = new Scanner(System.in);
-		switch (sc.nextInt()){
-			case 0:
-				return;
-			case 1:
-				System.out.println("Digite o novo nome:");
-				paciente.setNome((sc.next() + sc.nextLine()));
-				System.out.println(paciente.getNome());
-				break;
-			case 2:
-				System.out.println("Digite o novo telefone:");
-				paciente.setTelefone(sc.next());
-				break;
-			case 3:
-				System.out.println("Digite a nova data de nascimento:");
-				paciente.setDataNascimento(sc.next());
-				break;
-			case 4:
-				System.out.println("Digite o novo logradouro:");
-				paciente.setLogradouro(sc.next() + sc.nextLine());
-				break;
-			case 5:
-				System.out.println("Digite o novo bairro:");
-				paciente.setBairro(sc.next() + sc.nextLine());
-				break;
-			case 6:
-				System.out.println("Digite a nova cidade:");
-				paciente.setCidade(sc.next() + sc.nextLine());
-				break;
-		
-			default:
-				System.out.println("Opção Inválida!");
-				System.out.println("Tente novamente.");
+		switch (sc.nextInt()) {
+		case 0:
+			return;
+		case 1:
+			System.out.println("Digite o novo nome:");
+			paciente.setNome((sc.next() + sc.nextLine()));
+			System.out.println(paciente.getNome());
+			break;
+		case 2:
+			System.out.println("Digite o novo telefone:");
+			paciente.setTelefone(sc.next());
+			break;
+		case 3:
+			System.out.println("Digite a nova data de nascimento:");
+			paciente.setDataNascimento(sc.next());
+			break;
+		case 4:
+			System.out.println("Digite o novo logradouro:");
+			paciente.setLogradouro(sc.next() + sc.nextLine());
+			break;
+		case 5:
+			System.out.println("Digite o novo bairro:");
+			paciente.setBairro(sc.next() + sc.nextLine());
+			break;
+		case 6:
+			System.out.println("Digite a nova cidade:");
+			paciente.setCidade(sc.next() + sc.nextLine());
+			break;
+
+		default:
+			System.out.println("Opção Inválida!");
+			System.out.println("Tente novamente.");
 		}
 	}
-	
-	private Endereco cadastraEndereco(){
+
+	private Endereco cadastraEndereco() {
 		Scanner sc = new Scanner(System.in);
 		Endereco endereco = new Endereco();
 		System.out.println("Endereço:");
@@ -320,5 +358,5 @@ public class Secretaria extends Usuario {
 		endereco.setCidade(sc.nextLine());
 		return endereco;
 	}
-			
+
 }
