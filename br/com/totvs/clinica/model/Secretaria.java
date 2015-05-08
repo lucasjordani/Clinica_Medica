@@ -53,9 +53,61 @@ public class Secretaria extends Usuario {
 		return 0;
 	}
 	
-	private void cadastraConsulta() {
-		// TODO Auto-generated method stub
+	private void cadastraConsulta() throws SQLException {
+		Scanner sc = new Scanner(System.in);
+		Paciente paciente = new Paciente();
+		Medico medico = new Medico();
+		Consulta consulta = new Consulta();
+		System.out.println("Cadastro de Consulta:");
+		System.out.println("Digite o nome do Paciente que irá consultar:");
+		String nome = sc.next() + sc.nextLine();
 		
+		try{
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nome);
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		
+		if (paciente.getNome() != null && paciente.getNome().equals(nome)) {
+			consulta.setPaciente(nome);
+			System.out.println("Digite o nome do Médico responsável pela consulta:");
+			consulta.setMedico(sc.next() + sc.nextLine());
+			//trazer ele do banco? Para na hora de puxar a lista de medicos e pacientes e consultas
+			//para o método registrar observações funcionar. MESMA COISA COM O PACIENTE.
+			System.out.println("Digite o plano de saúde do Paciente:");
+			consulta.setPlanoSaude(sc.next() + sc.nextLine());
+			System.out.println("Digite a data e a hora da consulta:");
+			consulta.setDataHora(sc.next() + sc.nextLine());
+			//Staus da consulta vai para agendada
+			consulta.setStatusConsulta((StatusConsulta.Agendada));
+			System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
+		} else {
+			System.out.println("Paciente não cadastrado no sistema!");
+			cadastraPaciente();
+		}
+		
+		boolean loop = true;
+		while (loop == true){
+			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+			switch (sc.nextInt()){
+				case 0:
+					System.out.println("Operação Cancelada!\nConsulta não cadastrada!");
+					return;
+				case 1:
+					try{
+						ConsultaDao consultaDao = new ConsultaDao();
+							consultaDao.inserir(consulta);
+					}catch(SQLException e){
+						System.out.println(e.getMessage());
+					}
+						System.out.println("Consulta cadastrada com sucesso!");
+					return;
+				default:
+					System.out.println("Opção Inválida!\nTente novamente.");
+					break;
+			}
+		}
 	}
 
 	private void cadastraPaciente() throws SQLException{

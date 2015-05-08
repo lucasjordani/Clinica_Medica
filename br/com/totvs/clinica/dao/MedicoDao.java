@@ -72,6 +72,30 @@ public class MedicoDao implements Dao<Medico> {
 		result.close();
 		return medico;
 	}
+	
+	public Medico getPorNome(String nome) throws SQLException {
+		nome = "'"+nome+"'";
+		String sql = "SELECT nome, login, rg, telefone, logradouro, bairro, cidade, especialidades"
+				+ " FROM medico WHERE nome = " + nome;
+		PreparedStatement statement = conexao.prepareStatement(sql);
+
+		ResultSet result = statement.executeQuery();
+
+		Medico medico = new Medico();
+		medico.setEndereco(new Endereco());
+		while(result.next()){
+			medico.setNome(result.getString("nome"));
+			medico.setLogin(result.getString("login"));
+			medico.setRg(result.getString("rg"));
+			medico.setTelefone(result.getString("telefone"));
+			medico.setLogradouro(result.getString("logradouro"));
+			medico.setBairro(result.getString("bairro"));
+			medico.setCidade(result.getString("cidade"));
+			medico.setEspecialidades(result.getString("especialidades"));
+		}
+		result.close();
+		return medico;
+	}
 
 	@Override
 	public void inserir(Medico medico) throws SQLException {
