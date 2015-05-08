@@ -1,6 +1,9 @@
 package br.com.totvs.clinica.model;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
@@ -54,45 +57,57 @@ public class Secretaria extends Usuario {
 		return 0;
 	}
 	
-	private void cadastraConsulta() throws SQLException {
+	private void cadastraConsulta() {
 		Scanner sc = new Scanner(System.in);
-		Paciente paciente = new Paciente();
-		Medico medico = new Medico();
 		Consulta consulta = new Consulta();
 		System.out.println("Cadastro de Consulta:");
 		System.out.println("Digite o nome do Paciente que irá consultar:");
 		String nomePaciente = sc.next() + sc.nextLine();
-		System.out.println("Digite o login do Médico responsável pela consulta:");
-		String nomeMedico = sc.next() + sc.nextLine();
-				
+		Paciente paciente = new Paciente();
 		try{
 			PacienteDao pacienteDao = new PacienteDao();
 			paciente = pacienteDao.getPorNome(nomePaciente);
-			MedicoDao medicoDao = new MedicoDao();
-			medico = medicoDao.getPorNome(nomeMedico);
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		
-		
-		
 		if (paciente.getNome() != null && paciente.getNome().equals(nomePaciente)) {
-			consulta.setPaciente(nomePaciente);
-			consulta.setMedico(nomeMedico);
-			//trazer ele do banco? Para na hora de puxar a lista de medicos e pacientes e consultas
-			//para o método registrar observações funcionar. MESMA COISA COM O PACIENTE.
-			System.out.println("Digite o plano de saúde do Paciente:");
-			consulta.setPlanoSaude(sc.next() + sc.nextLine());
-			System.out.println("Digite a data e a hora da consulta:");
-			consulta.setDataHora(sc.next() + sc.nextLine());
-			//Staus da consulta vai para agendada
-			consulta.setStatusConsulta((StatusConsulta.Agendada));
-			System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
+			System.out.println("Digite o nome do Médico responsável pela consulta:");
+			String nomeMedico = sc.next() + sc.nextLine();
+			Medico medico = new Medico();	
+			try{
+				MedicoDao medicoDao = new MedicoDao();
+				medico = medicoDao.getPorNome(nomeMedico);
+			}catch(SQLException e){
+				System.out.println(e.getMessage());
+			}
+			if (medico.getNome() != null && medico.getNome().equals(nomeMedico)){
+				consulta.setPaciente(nomePaciente);
+				consulta.setMedico(medico.getLogin());
+				System.out.println("Digite o plano de saúde do Paciente:");
+				consulta.setPlanoSaude(sc.next() + sc.nextLine());
+				SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+				System.out.println("Digite a data da consulta (exemplo: 10/05/2014):");
+				String data = sc.next() + sc.nextLine();
+				System.out.println("Digite a hora da consulta (exemplo: 15:30:");
+				String hora = sc.next() + sc.nextLine();
+				Date dataHoraFormatada = null;
+				try{
+					dataHoraFormatada = fmt.parse(data +" - "+ hora);
+				} catch(ParseException e){
+					e.getMessage();
+				}
+				consulta.setDataHora(fmt.format(dataHoraFormatada));
+				consulta.setStatusConsulta((StatusConsulta.Agendada));
+				System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
+			} else {
+				System.out.println("Médico não cadastrado!");
+				return;
+			}
 		} else {
 			System.out.println("Paciente não cadastrado no sistema!");
 			cadastraPaciente();
+			return;
 		}
-		
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
@@ -103,7 +118,7 @@ public class Secretaria extends Usuario {
 				case 1:
 					try{
 						ConsultaDao consultaDao = new ConsultaDao();
-							consultaDao.inserir(consulta);
+						consultaDao.inserir(consulta);
 					}catch(SQLException e){
 						System.out.println(e.getMessage());
 					}
@@ -116,7 +131,7 @@ public class Secretaria extends Usuario {
 		}
 	}
 
-	private void cadastraPaciente() throws SQLException{
+	private void cadastraPaciente() {
 		Scanner sc = new Scanner(System.in);
 		Paciente paciente = new Paciente();
 		System.out.println("Cadastrar Paciente:");
@@ -133,11 +148,21 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite o telefone:");
 			paciente.setTelefone(sc.next());
 		}
-		System.out.println("Digite a data de nascimento ou Digite 0 para pular:");
-		System.out.println("Exemplo de data de nascimento: 15/12/1986");
-		String dataNascimento = sc.next() + sc.nextLine();
-		if(dataNascimento.equals(0))
-			paciente.setDataNascimento(null);
+		System.out.println("Deseja cadastrar a data de nascimento?");
+		System.out.println("Digite 1 para SIM e 0 para NÃO!");
+		if(sc.nextInt() == 1){
+			System.out.println("Digite a data de nascimento:");
+			System.out.println("(Exemplo: 15/12/1986)");
+			String dataNascimento = sc.next() + sc.nextLine();
+			SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+			Date dataFormatada = null;
+			try{
+				dataFormatada = fmt.parse(dataNascimento);
+			} catch(ParseException e){
+				e.getMessage();
+			}
+			paciente.setDataNascimento(fmt.format(dataFormatada));
+		}
 		System.out.println("Deseja cadastrar o endereço?");
 		System.out.println("Digite 1 para SIM e 0 para NÃO!");
 		if(sc.nextInt() == 1)
@@ -153,16 +178,20 @@ public class Secretaria extends Usuario {
 					System.out.println("Operação Cancelada!\nPaciente não cadastrado!");
 					return;
 				case 1:
+					PacienteDao pacienteDao;
 					try{
-						PacienteDao pacienteDao = new PacienteDao();
-						if (paciente.getEndereco().getLogradouro() == null)
-							pacienteDao.inserir(paciente);
-						else
-							pacienteDao.editar(paciente);
+						pacienteDao = new PacienteDao();
+						pacienteDao.inserir(paciente);
 					}catch(SQLException e){
+						System.out.println("Paciente já cadastrado, atualizando os dados!");
+					}
+					try{
+						pacienteDao = new PacienteDao();
+						pacienteDao.editar(paciente);
+					} catch(SQLException e){
 						System.out.println(e.getMessage());
 					}
-						System.out.println("Paciente cadastrado com sucesso!");
+					System.out.println("Paciente cadastrado com sucesso!");
 					return;
 				default:
 					System.out.println("Opção Inválida!\nTente novamente.");

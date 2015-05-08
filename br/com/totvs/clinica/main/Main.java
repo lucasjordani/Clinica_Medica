@@ -101,21 +101,7 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 		
 		//iniciaAdmin();
-		//iniciaSistema();
-
-		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-		System.out.println("Digite a data da consulta:");
-		String data = sc.next() + sc.nextLine();
-		System.out.println("Digite a hora da consulta:");
-		String hora = sc.next() + sc.nextLine();
-		Date dataHoraFormatada = null;
-		try{
-			dataHoraFormatada = fmt.parse(data +" - "+ hora);
-		} catch(ParseException e){
-			e.getMessage();
-		}
-		System.out.println(fmt.format(dataHoraFormatada));
+		iniciaSistema();
 		
 	}
 }
