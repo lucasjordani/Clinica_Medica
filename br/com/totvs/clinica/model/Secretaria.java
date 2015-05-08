@@ -62,7 +62,7 @@ public class Secretaria extends Usuario {
 		System.out.println("Cadastro de Consulta:");
 		System.out.println("Digite o nome do Paciente que irá consultar:");
 		String nomePaciente = sc.next() + sc.nextLine();
-		System.out.println("Digite o login do Médico responsável pela consulta:");
+		System.out.println("Digite o nome do Médico responsável pela consulta:");
 		String nomeMedico = sc.next() + sc.nextLine();
 				
 		try{
@@ -73,9 +73,7 @@ public class Secretaria extends Usuario {
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		
-		
-		
+				
 		if (paciente.getNome() != null && paciente.getNome().equals(nomePaciente)) {
 			consulta.setPaciente(nomePaciente);
 			consulta.setMedico(nomeMedico);
@@ -86,7 +84,7 @@ public class Secretaria extends Usuario {
 			System.out.println("Digite a data e a hora da consulta:");
 			consulta.setDataHora(sc.next() + sc.nextLine());
 			//Staus da consulta vai para agendada
-			consulta.setStatusConsulta((StatusConsulta.Agendada));
+			consulta.setStatusConsulta((StatusConsulta.AGENDADA));
 			System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
 		} else {
 			System.out.println("Paciente não cadastrado no sistema!");
@@ -190,7 +188,7 @@ public class Secretaria extends Usuario {
 		} catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		if(consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id) && consulta.getStatusConsulta().equals(StatusConsulta.Agendada)){
+		if(consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id) && consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)){
 			try{
 				ConsultaDao consultaDao = new ConsultaDao();
 				consultaDao.excluirPorId(id);
