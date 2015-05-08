@@ -105,51 +105,35 @@ public class Secretaria extends Usuario {
 				}
 				consulta.setDataHora(fmt.format(dataHoraFormatada));
 				consulta.setStatusConsulta((StatusConsulta.AGENDADA));
-				System.out.println("Confirma o cadastro da Consulta?"
-						+ consulta.toString());
+				System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
 			} else {
 				System.out.println("Médico não cadastrado!");
 				return;
 			}
-			if (paciente.getNome() != null
-					&& paciente.getNome().equals(nomePaciente)) {
-				consulta.setPaciente(nomePaciente);
-				consulta.setMedico(nomeMedico);
-				System.out.println("Digite o plano de saúde do Paciente:");
-				consulta.setPlanoSaude(sc.next() + sc.nextLine());
-				System.out.println("Digite a data e a hora da consulta:");
-				consulta.setDataHora(sc.next() + sc.nextLine());
-				consulta.setStatusConsulta((StatusConsulta.AGENDADA));
-				System.out.println("Confirma o cadastro da Consulta?"
-						+ consulta.toString());
-			} else {
-				System.out.println("Paciente não cadastrado no sistema!");
-				cadastraPaciente();
+		} else {
+			System.out.println("Paciente não cadastrado no sistema!");
+			cadastraPaciente();
+			return;
+		}
+		boolean loop = true;
+		while (loop == true) {
+			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
+			switch (sc.nextInt()) {
+			case 0:
+				System.out.println("Operação Cancelada!\nConsulta não cadastrada!");
 				return;
-			}
-			boolean loop = true;
-			while (loop == true) {
-				System.out
-						.println("Digite 1 para confirmar ou 0 para cancelar.");
-				switch (sc.nextInt()) {
-				case 0:
-					System.out
-							.println("Operação Cancelada!\nConsulta não cadastrada!");
-					return;
-				case 1:
-					try {
-						ConsultaDao consultaDao = new ConsultaDao();
-						consultaDao.inserir(consulta);
-					} catch (SQLException e) {
-						System.out.println(e.getMessage());
-					}
-					System.out.println("Consulta cadastrada com sucesso!");
-					return;
-				default:
-					System.out.println("Opção Inválida!\nTente novamente.");
-					break;
+			case 1:
+				try {
+					ConsultaDao consultaDao = new ConsultaDao();
+					consultaDao.inserir(consulta);
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
 				}
-
+				System.out.println("Consulta cadastrada com sucesso!");
+				return;
+			default:
+				System.out.println("Opção Inválida!\nTente novamente.");
+				break;
 			}
 		}
 	}
