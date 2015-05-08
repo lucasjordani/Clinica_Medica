@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
+import br.com.totvs.clinica.dao.MedicoDao;
 import br.com.totvs.clinica.dao.PacienteDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
 
@@ -60,19 +61,24 @@ public class Secretaria extends Usuario {
 		Consulta consulta = new Consulta();
 		System.out.println("Cadastro de Consulta:");
 		System.out.println("Digite o nome do Paciente que irá consultar:");
-		String nome = sc.next() + sc.nextLine();
-		
+		String nomePaciente = sc.next() + sc.nextLine();
+		System.out.println("Digite o login do Médico responsável pela consulta:");
+		String nomeMedico = sc.next() + sc.nextLine();
+				
 		try{
 			PacienteDao pacienteDao = new PacienteDao();
-			paciente = pacienteDao.getPorNome(nome);
+			paciente = pacienteDao.getPorNome(nomePaciente);
+			MedicoDao medicoDao = new MedicoDao();
+			medico = medicoDao.getPorNome(nomeMedico);
 		}catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
 		
-		if (paciente.getNome() != null && paciente.getNome().equals(nome)) {
-			consulta.setPaciente(nome);
-			System.out.println("Digite o nome do Médico responsável pela consulta:");
-			consulta.setMedico(sc.next() + sc.nextLine());
+		
+		
+		if (paciente.getNome() != null && paciente.getNome().equals(nomePaciente)) {
+			consulta.setPaciente(nomePaciente);
+			consulta.setMedico(nomeMedico);
 			//trazer ele do banco? Para na hora de puxar a lista de medicos e pacientes e consultas
 			//para o método registrar observações funcionar. MESMA COISA COM O PACIENTE.
 			System.out.println("Digite o plano de saúde do Paciente:");
