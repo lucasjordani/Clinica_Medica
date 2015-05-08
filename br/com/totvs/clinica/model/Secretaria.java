@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
+import br.com.totvs.clinica.dao.LoginSenhaDao;
 import br.com.totvs.clinica.dao.MedicoDao;
 import br.com.totvs.clinica.dao.PacienteDao;
 import br.com.totvs.clinica.dao.SecretariaDao;
@@ -44,8 +45,8 @@ public class Secretaria extends Usuario {
 				cadastraPaciente();
 				break;
 			 case 3:
-				 editaPaciente(getNome());
-				 break;
+			 editaPaciente();
+			 break;
 			// case 4:
 			// editaConsulta();
 			// break;
@@ -214,27 +215,41 @@ public class Secretaria extends Usuario {
 		}
 	}
 
-	// EDITAR PACIENTE (CONSERTAAAAAAAAAAAAAAAAAR)
-	private void editaPaciente(String nome){
+	private void editaPaciente(){
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Digite o nome do Paciente a ser editado:");
-		Paciente pac = new Paciente();
-		nome = sc.next() + sc.nextLine();
-		pac.buscaPaciente(nome);
+		String nome = sc.next() + sc.nextLine();
+		Paciente paciente = new Paciente();
+		paciente.buscaPaciente(nome);
+		
+		try{
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nome);
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		
 		boolean loop = true;
 		while (loop == true){
-			System.out.println("O que deseja editar no Paciente " + pac.getNome());
-			menuEditar(pac);
-			System.out.println("Digite 0 para voltar.");
-			menuEditar(pac);
-			System.out.println("Deseja alterar mais algum dado?");
-			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
-			if (sc.nextInt() == 0)
-				break;
+			if (paciente.getNome() != null && paciente.getNome().equals(nome)){
+				System.out.println("O que deseja editar no Paciente " + paciente.getNome());
+				menuEditar(paciente);
+				System.out.println(paciente.toString());
+				System.out.println("Deseja alterar mais algum dado?");
+				System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+				
+				if (sc.nextInt() == 0)
+					break;
+			} else {
+				System.out.println("Paciente não cadastrado no sistema!");
+				cadastraPaciente();
+				return;
+			}
 		}
+		
 		try {
 			PacienteDao pacienteDao = new PacienteDao();
-			pacienteDao.editar(pac);
+			pacienteDao.editar(paciente);
 		} catch(SQLException e){
 		System.out.println(e.getMessage());
 		}
@@ -361,6 +376,9 @@ public class Secretaria extends Usuario {
 	}
 
 	private Endereco cadastraEndereco() {
+//		
+//		new java.sql.Date(new java.util.Date(2013,12,01).getTime());
+		
 		Scanner sc = new Scanner(System.in);
 		Endereco endereco = new Endereco();
 		System.out.println("Endereço:");
