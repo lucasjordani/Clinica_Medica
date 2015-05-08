@@ -44,8 +44,8 @@ public class Secretaria extends Usuario {
 				cadastraPaciente();
 				break;
 			 case 3:
-			 editaPaciente(getNome());
-			 break;
+				 editaPaciente(getNome());
+				 break;
 			// case 4:
 			// editaConsulta();
 			// break;
@@ -246,40 +246,54 @@ public class Secretaria extends Usuario {
 	// EDITAR STATUS CONSULTA
 
 	// FALTA FAZER APARECER A LISTA DAS CONSULTAS
-	private void excluiConsulta() {
+	public void excluiConsulta() {
 		Scanner sc = new Scanner(System.in);
-		Consulta consulta = new Consulta();
-		List<Consulta> consultas = new ArrayList<>();
-		System.out.println("Lista de todas as Consultas:");
+		System.out.println("Excluir consulta:");
+		System.out.println("Digite o nome do paciente:");
+		String nomePaciente = sc.next() + sc.nextLine();
+		Paciente paciente = new Paciente();
 		try {
-			ConsultaDao consultaDao = new ConsultaDao();
-			consultas = consultaDao.getTodos();
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nomePaciente);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		for (Consulta cons : consultas)
-			cons.toStringExcluir();
-		System.out.println("Digite o código da Consulta a ser excluída:");
-		int id = sc.nextInt();
-		try {
-			ConsultaDao consultaDao = new ConsultaDao();
-			consulta = consultaDao.getPorId(id);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		if (consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id)
-				&& consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)) {
+		if(paciente.getNome() != null && paciente.getNome().equals(nomePaciente)){
+			List<Consulta> consultas = new ArrayList<>();
 			try {
 				ConsultaDao consultaDao = new ConsultaDao();
-				consultaDao.excluirPorId(id);
-
+				consultas = consultaDao.getPorPaciente(nomePaciente);
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-			System.out.println("Consulta excluída com sucesso!");
-			return;
+			for (Consulta cons:consultas)
+				System.out.println(cons.toStringExcluir());
+			System.out.println("Digite o código da Consulta a ser excluída:");
+			int id = sc.nextInt();
+			Consulta consulta = new Consulta();
+			try {
+				ConsultaDao consultaDao = new ConsultaDao();
+				consulta = consultaDao.getPorId(id);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			if (consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id)
+					&& consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)) {
+				try {
+					ConsultaDao consultaDao = new ConsultaDao();
+					consultaDao.excluirPorId(id);
+
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				System.out.println("Consulta excluída com sucesso!");
+				return;
+			} else {
+				System.out.println("Consulta inexistente!");
+				return;
+			}
 		} else {
-			System.out.println("Consulta inexistente!");
+			System.out.println("Paciente Inexistente do sistema!");
 			return;
 		}
 	}
