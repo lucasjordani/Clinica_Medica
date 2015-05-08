@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.totvs.clinica.dao.ConsultaDao;
@@ -45,9 +47,9 @@ public class Secretaria extends Usuario {
 //				case 4:
 //					editaConsulta();
 //					break;
-//				case 5:
-//					excluiConsulta();
-//					break;
+				case 5:
+					excluiConsulta();
+					break;
 				default:
 					System.out.println("Opção Inválida!");
 					System.out.println("Tente novamente.");
@@ -64,23 +66,17 @@ public class Secretaria extends Usuario {
 		System.out.println("Digite o nome do Paciente que irá consultar:");
 		String nomePaciente = sc.next() + sc.nextLine();
 		Paciente paciente = new Paciente();
-		try{
-			PacienteDao pacienteDao = new PacienteDao();
-			paciente = pacienteDao.getPorNome(nomePaciente);
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
 		if (paciente.getNome() != null && paciente.getNome().equals(nomePaciente)) {
 			System.out.println("Digite o nome do Médico responsável pela consulta:");
 			String nomeMedico = sc.next() + sc.nextLine();
-			Medico medico = new Medico();	
-			try{
+			Medico medico = new Medico();
+			try {
 				MedicoDao medicoDao = new MedicoDao();
 				medico = medicoDao.getPorNome(nomeMedico);
-			}catch(SQLException e){
+			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-			if (medico.getNome() != null && medico.getNome().equals(nomeMedico)){
+			if (medico.getNome() != null && medico.getNome().equals(nomeMedico)) {
 				consulta.setPaciente(nomePaciente);
 				consulta.setMedico(medico.getLogin());
 				System.out.println("Digite o plano de saúde do Paciente:");
@@ -91,42 +87,57 @@ public class Secretaria extends Usuario {
 				System.out.println("Digite a hora da consulta (exemplo: 15:30:");
 				String hora = sc.next() + sc.nextLine();
 				Date dataHoraFormatada = null;
-				try{
-					dataHoraFormatada = fmt.parse(data +" - "+ hora);
-				} catch(ParseException e){
+				try {
+					dataHoraFormatada = fmt.parse(data + " - " + hora);
+				} catch (ParseException e) {
 					e.getMessage();
 				}
 				consulta.setDataHora(fmt.format(dataHoraFormatada));
-				consulta.setStatusConsulta((StatusConsulta.Agendada));
-				System.out.println("Confirma o cadastro da Consulta?" + consulta.toString());
+				consulta.setStatusConsulta((StatusConsulta.AGENDADA));
+				System.out.println("Confirma o cadastro da Consulta?"
+						+ consulta.toString());
 			} else {
 				System.out.println("Médico não cadastrado!");
 				return;
 			}
-		} else {
-			System.out.println("Paciente não cadastrado no sistema!");
-			cadastraPaciente();
-			return;
-		}
-		boolean loop = true;
-		while (loop == true){
-			System.out.println("Digite 1 para confirmar ou 0 para cancelar.");
-			switch (sc.nextInt()){
+			if (paciente.getNome() != null
+					&& paciente.getNome().equals(nomePaciente)) {
+				consulta.setPaciente(nomePaciente);
+				consulta.setMedico(nomeMedico);
+				System.out.println("Digite o plano de saúde do Paciente:");
+				consulta.setPlanoSaude(sc.next() + sc.nextLine());
+				System.out.println("Digite a data e a hora da consulta:");
+				consulta.setDataHora(sc.next() + sc.nextLine());
+				consulta.setStatusConsulta((StatusConsulta.AGENDADA));
+				System.out.println("Confirma o cadastro da Consulta?"
+						+ consulta.toString());
+			} else {
+				System.out.println("Paciente não cadastrado no sistema!");
+				cadastraPaciente();
+				return;
+			}
+			boolean loop = true;
+			while (loop == true) {
+				System.out
+						.println("Digite 1 para confirmar ou 0 para cancelar.");
+				switch (sc.nextInt()) {
 				case 0:
-					System.out.println("Operação Cancelada!\nConsulta não cadastrada!");
+					System.out
+							.println("Operação Cancelada!\nConsulta não cadastrada!");
 					return;
 				case 1:
-					try{
+					try {
 						ConsultaDao consultaDao = new ConsultaDao();
 						consultaDao.inserir(consulta);
-					}catch(SQLException e){
+					} catch (SQLException e) {
 						System.out.println(e.getMessage());
 					}
-						System.out.println("Consulta cadastrada com sucesso!");
+					System.out.println("Consulta cadastrada com sucesso!");
 					return;
 				default:
 					System.out.println("Opção Inválida!\nTente novamente.");
 					break;
+				}
 			}
 		}
 	}
@@ -205,12 +216,20 @@ public class Secretaria extends Usuario {
 	
 // EDITAR STATUS CONSULTA
 	
-	//TESTAR, DESCOBRIR COMO A PESSOA VAI SABER O ID PARA EXCLUIR CONSULTA
-	//A PESSOA VAI SABER O ID ATRAVÉS DA LISTA DE CONSULTAS, TRAZER A LISTA DE TODAS CONSULTAS E ESCOLHER QUAL EXCLUIR
-	//ACHO QUE PODEMOS FAZER ATRAVÉS DE NOME DE PACIENTE SE FOR FACILITAR, OU SEI LÁ
+	//FALTA FAZER APARECER A LISTA DAS CONSULTAS
 	private void excluiConsulta(){
 		Scanner sc = new Scanner(System.in);
 		Consulta consulta = new Consulta();
+		List<Consulta> consultas = new ArrayList<>();
+		System.out.println("Lista de todas as Consultas:");
+		try{
+			ConsultaDao consultaDao = new ConsultaDao();
+			consultas = consultaDao.getTodos();
+		} catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		for (Consulta cons:consultas)
+			cons.toStringExcluir();
 		System.out.println("Digite o código da Consulta a ser excluída:");
 		int id = sc.nextInt();
 		try{
@@ -219,7 +238,7 @@ public class Secretaria extends Usuario {
 		} catch(SQLException e){
 			System.out.println(e.getMessage());
 		}
-		if(consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id) && consulta.getStatusConsulta().equals(StatusConsulta.Agendada)){
+		if(consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id) && consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)){
 			try{
 				ConsultaDao consultaDao = new ConsultaDao();
 				consultaDao.excluirPorId(id);

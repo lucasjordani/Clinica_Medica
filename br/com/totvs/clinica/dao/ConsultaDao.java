@@ -36,7 +36,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 		
 				consultas.add(consulta);
@@ -64,7 +64,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 			}
 			result.close();
@@ -74,7 +74,7 @@ public class ConsultaDao implements Dao<Consulta>{
 		@Override
 		public void inserir(Consulta consulta) throws SQLException {
 			
-			String sql = " INSERT INTO CONSULTA (cod_consulta, paciente, medico, plano_saude, data_hora, "
+			String sql = "INSERT INTO CONSULTA (paciente, medico, plano_saude, data_hora, "
 					+ "status_consulta, observacao"
 					   + " VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -84,7 +84,7 @@ public class ConsultaDao implements Dao<Consulta>{
 			statement.setString(2, consulta.getMedico());
 			statement.setString(3, consulta.getPlanoSaude());
 			statement.setString(4, consulta.getDataHora());
-			statement.setString(5, consulta.getStatusConsulta().toString());
+			statement.setInt(5, consulta.getStatusConsulta().getNumeroStatus());
 			statement.setString(6, consulta.getObservacao());
 			statement.execute();
 			statement.close();
@@ -108,7 +108,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 				
 				consultas.add(consulta);
@@ -133,7 +133,7 @@ public class ConsultaDao implements Dao<Consulta>{
 				consulta.setMedico(result.getString("medico"));
 				consulta.setPlanoSaude(result.getString("plano_saude"));
 				consulta.setDataHora(result.getString("data_hora"));
-				consulta.setStatusConsulta((StatusConsulta) result.getObject("status_consulta"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
 				consulta.setObservacao(result.getString("observacao"));
 				
 				consultas.add(consulta);
