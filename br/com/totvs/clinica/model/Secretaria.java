@@ -46,9 +46,9 @@ public class Secretaria extends Usuario {
 			 case 3:
 			 editaPaciente();
 			 break;
-			// case 4:
-			// editaConsulta();
-			// break;
+//			 case 4:
+//			 editaConsulta();
+//			 break;
 			case 5:
 				excluiConsulta();
 				break;
@@ -257,11 +257,40 @@ public class Secretaria extends Usuario {
 	}
 	
 	
-	private void editaConsulta() {
-		
-	}
+	// TERMINAR
+//	private void editaConsulta() {
+//		Scanner sc = new Scanner(System.in);
+//		System.out.println("Editar consulta:");
+//		List<Consulta> consultas = new ArrayList<>();
+//		for (Consulta cons:consultas)
+//				System.out.println(cons.toStringExcluir());
+//			System.out.println("Digite o código da Consulta a ser editada:");
+//			int id = sc.nextInt();
+//			Consulta consulta = new Consulta();
+//			try {
+//				ConsultaDao consultaDao = new ConsultaDao();
+//				consulta = consultaDao.getPorId(id);
+//			} catch (SQLException e) {
+//				System.out.println(e.getMessage());
+//			}
+//			if (consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id)
+//					&& consulta.getStatusConsulta().equals(StatusConsulta.AGENDADA)) {
+//				try {
+//					ConsultaDao consultaDao = new ConsultaDao();
+//					consultaDao.editar(consulta);
+//
+//				} catch (SQLException e) {
+//					System.out.println(e.getMessage());
+//				}
+//				System.out.println("Consulta editada com sucesso!");
+//				return;
+//			} else {
+//				System.out.println("Consulta inexistente!");
+//				return;
+//			}
+//	}
 
-	// FALTA FAZER APARECER A LISTA DAS CONSULTAS
+
 	public void excluiConsulta() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Excluir consulta:");
@@ -331,6 +360,38 @@ public class Secretaria extends Usuario {
 		this.setCidade(secretaria.getEndereco().getCidade());
 
 	}
+	
+	// TERMINAR	
+//	private void menuEditarConsulta(Consulta consulta) {
+//		System.out.println("Digite 1 para editar o plano de saúde;");
+//		System.out.println("Digite 2 para editar a data e hora;");
+//		System.out.println("Digite 3 para editar o status da consulta;");
+//
+//		System.out.println("Digite 0 para voltar.");
+//		Scanner sc = new Scanner(System.in);
+//		switch (sc.nextInt()) {
+//		case 0:
+//			return;
+//		case 1:
+//			System.out.println("Digite o novo nome:");
+//			paciente.setNome((sc.next() + sc.nextLine()));
+//			System.out.println(paciente.getNome());
+//			break;
+//		case 2:
+//			System.out.println("Digite o novo telefone:");
+//			paciente.setTelefone(sc.next());
+//			break;
+//		case 3:
+//			System.out.println("Digite a nova data de nascimento:");
+//			paciente.setDataNascimento(sc.next());
+//			break;
+//		
+//
+//		default:
+//			System.out.println("Opção Inválida!");
+//			System.out.println("Tente novamente.");
+//		}
+//	}
 
 	private void menuEditar(Paciente paciente) {
 		System.out.println("Digite 1 para editar o nome;");

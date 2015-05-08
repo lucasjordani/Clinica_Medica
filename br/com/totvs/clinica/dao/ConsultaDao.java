@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.totvs.clinica.model.Consulta;
+import br.com.totvs.clinica.model.Paciente;
 import br.com.totvs.clinica.model.StatusConsulta;
 
 public class ConsultaDao implements Dao<Consulta>{
@@ -177,6 +178,21 @@ public class ConsultaDao implements Dao<Consulta>{
 			statement.setString(1, consulta.getObservacao());
 			statement.execute();
 			statement.close();
+		}
+		
+		public void editar(Consulta consulta) throws SQLException {
+			String sql = "UPDATE CONSULTA SET plano_saude=?, data_hora=?, "
+					+ "		status_consulta=?"
+					+ " WHERE cod_consulta  = " + consulta.getCodConsulta(); 
+			System.out.println("Executando a Statement");
+			PreparedStatement statement = conexao.prepareStatement(sql);
+			statement.setString(1, consulta.getPlanoSaude());
+			statement.setString(2, consulta.getDataHora());
+			statement.setInt(3, consulta.getStatusConsulta().getNumeroStatus());
+			
+			statement.executeUpdate();
+			statement.close();
+			System.out.println("Executei a Statement");
 		}
 		
 		public void excluirPorId(int id) throws SQLException {
