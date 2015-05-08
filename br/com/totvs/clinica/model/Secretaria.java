@@ -66,6 +66,12 @@ public class Secretaria extends Usuario {
 		System.out.println("Digite o nome do Paciente que irá consultar:");
 		String nomePaciente = sc.next() + sc.nextLine();
 		Paciente paciente = new Paciente();
+		try {
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nomePaciente);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		if (paciente.getNome() != null && paciente.getNome().equals(nomePaciente)) {
 			System.out.println("Digite o nome do Médico responsável pela consulta:");
 			String nomeMedico = sc.next() + sc.nextLine();
@@ -84,7 +90,7 @@ public class Secretaria extends Usuario {
 				SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 				System.out.println("Digite a data da consulta (exemplo: 10/05/2014):");
 				String data = sc.next() + sc.nextLine();
-				System.out.println("Digite a hora da consulta (exemplo: 15:30:");
+				System.out.println("Digite a hora da consulta (exemplo: 15:30):");
 				String hora = sc.next() + sc.nextLine();
 				Date dataHoraFormatada = null;
 				try {
