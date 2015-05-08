@@ -116,6 +116,33 @@ public class ConsultaDao implements Dao<Consulta>{
 			return consultas;
 		}
 		
+		
+		public List<Consulta> getPorPaciente (String paciente) throws SQLException {
+			paciente = "'"+paciente+"'";
+			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
+					+ "status_consulta, observacao FROM consulta WHERE paciente = " + paciente;
+			PreparedStatement statement = conexao.prepareStatement(sql);
+
+			ResultSet result = statement.executeQuery();
+
+			List<Consulta> consultas = new ArrayList<Consulta>();
+			
+			while(result.next()){
+				Consulta consulta = new Consulta();
+				consulta.setCodConsulta(result.getInt("cod_consulta"));
+				consulta.setPaciente(result.getString("paciente"));
+				consulta.setMedico(result.getString("medico"));
+				consulta.setPlanoSaude(result.getString("plano_saude"));
+				consulta.setDataHora(result.getString("data_hora"));
+				consulta.setStatusConsulta(StatusConsulta.getStatusPorNumero(result.getInt("status_consulta")));
+				consulta.setObservacao(result.getString("observacao"));
+				
+				consultas.add(consulta);
+			}
+			result.close();
+			return consultas;
+		}
+		
 		public List<Consulta> getPorMedico(String medico) throws SQLException {
 			medico = "'" + medico + "'";
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "

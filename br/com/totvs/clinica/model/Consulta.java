@@ -85,7 +85,7 @@ public class Consulta {
 		return "\nConsulta n°: " + codConsulta + "\nPaciente: " + paciente + 
 				"\nMédico: " + medico + "\nPlano de Saúde: " + planoSaude + 
 				"\nData e Hora da Consulta: " + dataHora + 
-				"\nStatus da Consulta: " + statusConsulta + "\nObservacões: " + observacao + "\n";
+				"\nStatus da Consulta: " + statusConsulta + "\nObservacões: " + observacao;
 	}
 	
 	public String toStringExcluir() {
