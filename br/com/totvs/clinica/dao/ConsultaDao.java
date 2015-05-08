@@ -84,7 +84,7 @@ public class ConsultaDao implements Dao<Consulta>{
 			statement.setString(2, consulta.getMedico());
 			statement.setString(3, consulta.getPlanoSaude());
 			statement.setString(4, consulta.getDataHora());
-			statement.setObject(5, consulta.getStatusConsulta());
+			statement.setString(5, consulta.getStatusConsulta().toString());
 			statement.setString(6, consulta.getObservacao());
 			statement.execute();
 			statement.close();

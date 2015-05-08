@@ -63,7 +63,6 @@ public class AdministradorDao implements Dao<Administrador> {
 		Administrador administrador = new Administrador();
 		administrador.setEndereco(new Endereco());
 		while (result.next()) {
-			System.out.println("OI");
 			administrador.setNome(result.getString("nome"));
 			administrador.setLogin(result.getString("login"));
 			administrador.setRg(result.getString("rg"));
