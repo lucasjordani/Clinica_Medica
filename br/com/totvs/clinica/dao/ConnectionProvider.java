@@ -7,7 +7,7 @@ public class ConnectionProvider {
 
 	private static final String URL = "jdbc:postgresql://localhost:5432/clinica";
 	private static final String USER = "postgres";
-	private static final String PASSWORD = ".";
+	private static final String PASSWORD = "pass@word1";
 
 	private static Connection connection;
 

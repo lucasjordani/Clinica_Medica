@@ -46,9 +46,9 @@ public class Secretaria extends Usuario {
 			case 3:
 				editaPaciente();
 				break;
-			 case 4:
-			 editaConsulta();
-			 break;
+			case 4:
+				editaConsulta();
+				break;
 			case 5:
 				excluiConsulta();
 				break;
@@ -263,51 +263,74 @@ public class Secretaria extends Usuario {
 		return;
 	}
 
-	 private void editaConsulta() {
-	 Scanner sc = new Scanner(System.in);
-	 System.out.println("Editar consulta:");
-	 List<Consulta> consultas = new ArrayList<>();
-	 for (Consulta cons:consultas)
-	 System.out.println(cons.toStringExcluir());
-	 System.out.println("Digite o código da Consulta a ser editada:");
-	 int id = sc.nextInt();
-	 Consulta consulta = new Consulta();
-	 consulta.buscaConsulta(id);
-	 try {
-	 ConsultaDao consultaDao = new ConsultaDao();
-	 consulta = consultaDao.getPorId(id);
-	 } catch (SQLException e) {
-	 System.out.println(e.getMessage());
-	 }
-	
-	boolean loop = true;
-	while (loop == true) {
-		if (consulta.getCodConsulta() != 0 && consulta.getCodConsulta() == (id)) {
-			System.out.println("O que deseja editar na Consulta de código "
-					+ consulta.getCodConsulta());
-			menuEditarConsulta(consulta);
-			System.out.println(consulta.toStringExcluir());
-			System.out.println("Deseja alterar mais algum dado?");
-			System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+	private void editaConsulta() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Editar consulta:");
+		System.out.println("Digite o nome do paciente:");
+		String nomePaciente = sc.next() + sc.nextLine();
+		Paciente paciente = new Paciente();
 
-			if (sc.nextInt() == 0)
-				break;
-		} else {
-			System.out.println("Consulta não cadastrada no sistema!");
-			cadastraConsulta();
-			return;
+		try {
+			PacienteDao pacienteDao = new PacienteDao();
+			paciente = pacienteDao.getPorNome(nomePaciente);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
-	}
 
-	try {
-		ConsultaDao consultaDao = new ConsultaDao();
-		consultaDao.editar(consulta);
-	} catch (SQLException e) {
-		System.out.println(e.getMessage());
+		if (paciente.getNome() != null
+				&& paciente.getNome().equals(nomePaciente)) {
+			List<Consulta> consultas = new ArrayList<>();
+			try {
+				ConsultaDao consultaDao = new ConsultaDao();
+				consultas = consultaDao.getPorPaciente(nomePaciente);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			for (Consulta cons : consultas)
+				System.out.println(cons.toStringExcluir());
+			System.out.println("Digite o código da Consulta a ser editada:");
+			int id = sc.nextInt();
+			Consulta consulta = new Consulta();
+
+			try {
+				ConsultaDao consultaDao = new ConsultaDao();
+				consulta = consultaDao.getPorId(id);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+
+			boolean loop = true;
+			while (loop == true) {
+				if (consulta.getCodConsulta() != 0
+						&& consulta.getCodConsulta() == (id)) {
+					System.out
+							.println("O que deseja editar na Consulta de código "
+									+ consulta.getCodConsulta());
+					menuEditarConsulta(consulta);
+					System.out.println(consulta.toStringExcluir());
+					System.out.println("Deseja alterar mais algum dado?");
+					System.out.println("Digite 1 para SIM ou 0 para NÃO!");
+
+					if (sc.nextInt() == 0)
+						break;
+				} else {
+					System.out.println("Consulta não cadastrada no sistema!");
+					cadastraConsulta();
+					return;
+				}
+			}
+
+			try {
+				ConsultaDao consultaDao = new ConsultaDao();
+				consultaDao.editar(consulta);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			System.out
+					.println("Atualização de Consulta realizada com sucesso!");
+			return;
+		} 
 	}
-	System.out.println("Atualização de Consulta realizada com sucesso!");
-	return;
-}
 
 	public void excluiConsulta() {
 		Scanner sc = new Scanner(System.in);
@@ -382,7 +405,7 @@ public class Secretaria extends Usuario {
 
 	}
 
-	// TERMINAR
+
 	private void menuEditarConsulta(Consulta consulta) {
 		System.out.println("Digite 1 para editar o plano de saúde;");
 		System.out.println("Digite 2 para editar a data e hora;");
@@ -416,7 +439,7 @@ public class Secretaria extends Usuario {
 			break;
 		case 3:
 			System.out
-					.println("Digite o novo status da consulta: \n Digite 1 para Agendada, 2 para Comparecida e 3 para Não comparecida");
+					.println("Digite o novo status da consulta:\n Digite 1 para Agendada, 2 para Comparecida e 3 para Não comparecida");
 			switch (sc.nextInt()) {
 			case 1:
 				consulta.setStatusConsulta((StatusConsulta.AGENDADA));
