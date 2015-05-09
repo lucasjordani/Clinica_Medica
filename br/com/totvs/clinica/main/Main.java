@@ -95,9 +95,9 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 		
 		//iniciaAdmin();
-		//iniciaSistema();
+		iniciaSistema();
 		
-		Secretaria secretaria = new Secretaria();
-		secretaria.excluiConsulta();
+//		Secretaria secretaria = new Secretaria();
+//		secretaria.excluiConsulta();
 	}
 }

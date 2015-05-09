@@ -81,14 +81,6 @@ public class Paciente {
 		return "\nNome: " + nome + "\nTelefone: " + telefone +
 				"\nData de nascimento: " + dataNascimento + endereco.toString();
 	}
-
-//	public String toStringBasico() {
-//		return "Nome: " + nome + "\nTelefone: " + telefone;
-//	}
-//	
-//	public String toStringComplementar() {
-//		return "Data de nascimento: " + dataNascimento + endereco.toString();
-//	}
 	
 	public void buscaPaciente(String nome){
 		Paciente paciente = new Paciente();

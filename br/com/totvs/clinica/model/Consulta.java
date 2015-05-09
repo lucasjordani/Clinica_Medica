@@ -1,5 +1,10 @@
 package br.com.totvs.clinica.model;
 
+import java.sql.SQLException;
+
+import br.com.totvs.clinica.dao.ConsultaDao;
+import br.com.totvs.clinica.dao.PacienteDao;
+
 public class Consulta {
 	
 	private int codConsulta;
@@ -92,6 +97,23 @@ public class Consulta {
 		return "Consulta n°: " + codConsulta + "\nPaciente: " + paciente + 
 				"\nMédico: " + medico + "\nData e Hora da Consulta: " + dataHora + 
 				"\nStatus da Consulta: " + statusConsulta + "\n";
+	}
+	
+	public void buscaConsulta(int codConsulta){
+		Consulta consulta = new Consulta();
+		try{
+			ConsultaDao consultaDao = new ConsultaDao();
+			consulta = consultaDao.getPorId(getCodConsulta());
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		this.setPaciente(getPaciente());
+		this.setMedico(getMedico());
+		this.setPlanoSaude(consulta.getPlanoSaude());
+		this.setDataHora(getDataHora());
+		this.setStatusConsulta(getStatusConsulta());
+		this.setObservacao(getObservacao());
+
 	}
 	
 }
