@@ -144,10 +144,10 @@ public class ConsultaDao implements Dao<Consulta>{
 			return consultas;
 		}
 		
-		public List<Consulta> getPorMedico(String medico) throws SQLException {
-			medico = "'" + medico + "'";
+		public List<Consulta> getPorMedico(String loginMedico) throws SQLException {
+			loginMedico = "'" + loginMedico + "'";
 			String sql = "SELECT cod_consulta, paciente, medico, plano_saude, data_hora, "
-					+ "status_consulta, observacao FROM consulta WHERE medico = " + medico;
+					+ "status_consulta, observacao FROM consulta WHERE medico = " + loginMedico;
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
@@ -170,13 +170,13 @@ public class ConsultaDao implements Dao<Consulta>{
 		}
 		
 		public void insereObservacao(Consulta consulta) throws SQLException{
-			String sql = "UPDATE ADMINISTRADOR SET observacao=? "
+			String sql = "UPDATE CONSULTA SET observacao=? "
 					+ "WHERE cod_consulta = " + consulta.getCodConsulta(); 
 
 			PreparedStatement statement = conexao.prepareStatement(sql);
 
 			statement.setString(1, consulta.getObservacao());
-			statement.execute();
+			statement.executeUpdate();
 			statement.close();
 		}
 		

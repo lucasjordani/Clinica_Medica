@@ -36,17 +36,13 @@ public class Medico extends Usuario {
 		boolean loop = true;
 		while (loop == true){
 			System.out.println("O que deseja fazer no sistema?");
-			System.out.println("Digite 1 para buscar uma consulta;");
-			System.out.println("Digite 2 para buscar todas suas consultas;");
+			System.out.println("Digite 1 para inserir observações em uma consulta;");
 			System.out.println("Digite 0 para se deslogar do sistema.");
 			switch (sc.nextInt()){
 				case 0:
 					return 0;
 				case 1:
 					buscaConsulta();
-					break;
-				case 2:
-					buscaTodasConsultas();
 					break;
 				default:
 					System.out.println("Opção Inválida!");
@@ -82,8 +78,8 @@ public class Medico extends Usuario {
 			return;
 		}
 		System.out.println("Digite o código da consulta que deseja visualizar:");
-		for (Consulta cons:consultas)
-			cons.toString();
+		for (int  i = 0; i < consultas.size(); i++)
+			System.out.println("\nConsulta n°: " + i + consultas.get(i).toString());
 		Consulta consulta = new Consulta();
 		consulta = consultas.get(sc.nextInt());
 		System.out.println("Deseja cadastrar alguma observação nesta consulta?");
@@ -102,17 +98,6 @@ public class Medico extends Usuario {
 					break;
 			}
 		}
-	}
-	
-	private List<Consulta> buscaTodasConsultas() {
-		List<Consulta> consultas = new ArrayList<>();
-		try {
-			ConsultaDao consultaDao = new ConsultaDao();
-			consultas = consultaDao.getPorMedico(this.getNome());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return consultas;
 	}
 
 	public void registraObservacoes(Consulta consulta) {

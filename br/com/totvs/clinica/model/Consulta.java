@@ -87,10 +87,10 @@ public class Consulta {
 
 	@Override
 	public String toString() {
-		return "\nConsulta n°: " + codConsulta + "\nPaciente: " + paciente + 
+		return "\nPaciente: " + paciente + 
 				"\nMédico: " + medico + "\nPlano de Saúde: " + planoSaude + 
 				"\nData e Hora da Consulta: " + dataHora + 
-				"\nStatus da Consulta: " + statusConsulta + "\nObservacões: " + observacao;
+				"\nStatus da Consulta: " + statusConsulta + "\nObservacões: " + observacao + "\n";
 	}
 	
 	public String toStringExcluir() {
