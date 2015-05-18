@@ -97,7 +97,5 @@ public class Main {
 		//iniciaAdmin();
 		iniciaSistema();
 		
-//		Secretaria secretaria = new Secretaria();
-//		secretaria.excluiConsulta();
 	}
 }
