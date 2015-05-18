@@ -329,7 +329,10 @@ public class Secretaria extends Usuario {
 			System.out
 					.println("Atualização de Consulta realizada com sucesso!");
 			return;
-		} 
+		} else {
+			System.out.println("Paciente não cadastrado no sistema!");
+			return;
+		}
 	}
 
 	public void excluiConsulta() {
@@ -404,7 +407,6 @@ public class Secretaria extends Usuario {
 		this.setCidade(secretaria.getEndereco().getCidade());
 
 	}
-
 
 	private void menuEditarConsulta(Consulta consulta) {
 		System.out.println("Digite 1 para editar o plano de saúde;");
